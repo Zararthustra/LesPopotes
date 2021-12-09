@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Lapopote } from "./pages/lapopote/lapopote";
 import { Home } from "./pages/home/home";
 import { Lespopotes } from "./pages/lespopotes/lespopotes";
@@ -14,7 +14,7 @@ import { Creation } from "./pages/lapopote/creation";
 import { ProtectedRoutes } from "./components/protectedroutes";
 
 export const App = () => {
-  
+  // forceRefresh={true}
   return (
     <BrowserRouter>
       <Navbar />
