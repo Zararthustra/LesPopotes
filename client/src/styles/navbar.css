@@ -19,7 +19,7 @@
 /*
  * ________________________________________Home
  */
- .home {
+ .homeNav {
   position: absolute;
   top: 0;
   left: 0;
@@ -35,7 +35,7 @@
 /*
  * ________________________________________Profile
  */
-.profile {
+.profileNav {
   position: absolute;
   top: 0;
   right: 0;

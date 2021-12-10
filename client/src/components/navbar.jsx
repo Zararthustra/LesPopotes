@@ -3,33 +3,34 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 export const Navbar = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-
-  // display switch color according to route
+  const location = useLocation().pathname;
+  
+  // Display the switch box color according to route /^\/lapopote\/.*/
   useEffect(() => {
-    console.log(location.pathname);
-    if (location.pathname === "/lapopote") {
-      document.querySelector(".slider").style.background = "var(--popote)";
-      document.querySelector(".slider").style.setProperty('--switch', "var(--dark-popote)")
-    } else if (location.pathname === "/lespopotes") {
-      document.querySelector(".slider").style.background = "var(--popotes)";
-      document.querySelector(".slider").style.setProperty('--switch', "var(--dark-popotes)")
+    let slider = document.querySelector(".slider").style
+    if (location.match(/lapopote/)) {
+      slider.background = "var(--popote)";
+      slider.setProperty('--switch', "var(--dark-popote)")
+    } else if (location.match(/lespopotes/)) {
+      slider.background = "var(--popotes)";
+      slider.setProperty('--switch', "var(--dark-popotes)")
     } else {
-      document.querySelector(".slider").style.background = "grey";
-      document.querySelector(".slider").style.setProperty('--switch', "var(--dark)")
+      slider.background = "grey";
+      slider.setProperty('--switch', "var(--dark)")
     }
-  }, [location.pathname]);
-
+  }, [location]);
+  
   const onSwitch = () => {
-    if (location.pathname === "/lapopote") {
+    let slider = document.querySelector(".slider").style
+    if (location.match(/lapopote/)) {
       navigate("lespopotes");
-      document.querySelector(".slider").style.background = "var(--popotes)";
-      document.querySelector(".slider").style.setProperty('--switch', "var(--dark-popotes)")
+      slider.background = "var(--popotes)";
+      slider.setProperty('--switch', "var(--dark-popotes)")
 
     } else {
       navigate("lapopote");
-      document.querySelector(".slider").style.background = "var(--popote)";
-      document.querySelector(".slider").style.setProperty('--switch', "var(--dark-popote)")
+      slider.background = "var(--popote)";
+      slider.setProperty('--switch', "var(--dark-popote)")
 
     }
   };
@@ -40,8 +41,8 @@ export const Navbar = () => {
         <input type="checkbox" />
         <span className="slider round" onClick={onSwitch}></span>
       </label>
-      <div className="home" onClick={() => navigate("/")} />
-      <div className="profile" onClick={() => navigate("profile")} />
+      <div className="homeNav" onClick={() => navigate("/")} />
+      <div className="profileNav" onClick={() => navigate("profile")} />
     </div>
   );
 };

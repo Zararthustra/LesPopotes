@@ -1,17 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Lapopote } from "./pages/lapopote/lapopote";
+import { ProtectedRoutes } from "./components/protectedroutes";
+import { Navbar } from "./components/navbar";
 import { Home } from "./pages/home/home";
-import { Lespopotes } from "./pages/lespopotes/lespopotes";
+import { Lapopote } from "./pages/lapopote/lapopote";
+import { Creation } from "./pages/lapopote/creation";
 import { Recettes } from "./pages/lapopote/recettes";
 import { Recette } from "./pages/lapopote/recette";
+import { Lespopotes } from "./pages/lespopotes/lespopotes";
+import { Popote } from "./pages/lespopotes/popote";
+import { MesPopotes } from "./pages/lespopotes/mespopotes";
 import { Profile } from "./pages/profile/profile";
 import { Favorites } from "./pages/profile/favorites";
 import { Creations } from "./pages/profile/creations";
-import { Navbar } from "./components/navbar";
-import { MesPopotes } from "./pages/lespopotes/mespopotes";
-import { Popote } from "./pages/lespopotes/popote";
-import { Creation } from "./pages/lapopote/creation";
-import { ProtectedRoutes } from "./components/protectedroutes";
 
 export const App = () => {
   // forceRefresh={true}
@@ -43,7 +43,7 @@ export const App = () => {
         <Route element={<ProtectedRoutes />}>
           <Route path="profile" element={<Profile />}>
             <Route path="favorites" element={<Favorites />} />
-            <Route path="Creations" element={<Creations />} />
+            <Route path="creations" element={<Creations />} />
           </Route>
         </Route>
 

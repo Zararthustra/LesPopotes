@@ -12,7 +12,7 @@ export const Profile = () => {
       <Link style={{ margin: 1 + "em" }} to="favorites">
         Favorites
       </Link>
-      <Link style={{ margin: 1 + "em" }} to="Creations">
+      <Link style={{ margin: 1 + "em" }} to="creations">
         Creations
       </Link>
       <Outlet />
