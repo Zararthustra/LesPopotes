@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Rubik);
 
 :root {
+  --switch: #2c2a3a;
   --popotes: #78F5CA;
   --dark-popotes: #00be7c;
   --popote: #F5A76C;

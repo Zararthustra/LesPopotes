@@ -66,41 +66,36 @@
 .slider {
   position: absolute;
   cursor: pointer;
+  border-radius: 34px;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--popote);
   -webkit-transition: .4s;
   transition: .4s;
 }
 .slider:before {
   position: absolute;
+  border-radius: 50%;
   content: "";
   height: 26px;
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: var(--dark-popote);
+  background-color: var(--switch);
   -webkit-transition: .4s;
   transition: .4s;
 }
-input:checked + .slider {
-  background-color: var(--popotes);
+input:checked {
+  background-color: var(--switch);
 }
-input:focus + .slider {
-  box-shadow: 0 0 1px var(--popotes);
+input:focus {
+  box-shadow: 0 0 1px var(--switch);
 }
 input:checked + .slider:before {
   /* was translateX(26px) */
   -webkit-transform: translateX(46px);
   -ms-transform: translateX(46px);
   transform: translateX(46px);
-  background-color: var(--dark-popotes);
-}
-.slider.round {
-  border-radius: 34px;
-}
-.slider.round:before {
-  border-radius: 50%;
+  background-color: var(--switch);
 }
