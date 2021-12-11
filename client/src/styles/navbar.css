@@ -19,7 +19,7 @@
 /*
  * ________________________________________Home
  */
- .homeNav {
+.homeNav {
   position: absolute;
   top: 0;
   left: 0;
@@ -30,6 +30,10 @@
   margin: 1em;
   width: 2em;
   height: 2em;
+}
+
+.activeIcon {
+  filter: drop-shadow(0 0 10px var(--white));
 }
 
 /*
@@ -51,14 +55,14 @@
 /*
  * ________________________________________Switch
  */
- .switch {
-   /* width was 60px */
-   width: 5em;
-   height: 34px;
-   position: relative;
-   display: inline-block;
+.switch {
+  /* width was 60px */
+  width: 5em;
+  height: 34px;
+  position: relative;
+  display: inline-block;
 }
-.switch input { 
+.switch input {
   opacity: 0;
   width: 0;
   height: 0;
@@ -71,8 +75,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 .slider:before {
   position: absolute;
@@ -83,8 +87,8 @@
   left: 4px;
   bottom: 4px;
   background-color: var(--switch);
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 input:checked {
   background-color: var(--switch);
