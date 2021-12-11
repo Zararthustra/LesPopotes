@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Rubik);
+@import url(https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&display=swap);
 
 :root {
   --switch: #2c2a3a;
@@ -8,8 +9,8 @@
   --dark-popote: #e76400;
   --white: #FAFCED;
   --dark: #2c2a3a;
-  --light-text: #2c2c2c;
-  --dark-text: #9c9c9c;
+  --dark-text: #2c2c2c;
+  --light-text: #9c9c9c;
 }
 
 body {
@@ -18,4 +19,39 @@ body {
   background-color: var(--white);
   /* font-family: -apple-system, BlinkMacSystemFont, */
   font-family: 'Rubik';
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  padding: 0 0 0.5em;
+  box-shadow: inset 0px -7px 9px -3px black;
+  word-spacing: 0.1em;
+  font-family: 'Oswald', sans-serif;
+  font-size: 3em;
+  font-weight: 400;
+  margin: 0;
+  width: 100%;
+  background-color: var(--dark);
+}
+
+a{
+  text-decoration: none;
+}
+.links, .navlink {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #adaaaa;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.3em;
+  font-weight: 300;
+  color: var(--dark);
 }

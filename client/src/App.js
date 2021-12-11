@@ -7,8 +7,8 @@ import { Creation } from "./pages/lapopote/creation";
 import { Recettes } from "./pages/lapopote/recettes";
 import { Recette } from "./pages/lapopote/recette";
 import { Lespopotes } from "./pages/lespopotes/lespopotes";
-import { Popote } from "./pages/lespopotes/popote";
-import { MesPopotes } from "./pages/lespopotes/mespopotes";
+import { Popotes } from "./pages/lespopotes/popotes";
+import { Mespopotes } from "./pages/lespopotes/mespopotes";
 import { Profile } from "./pages/profile/profile";
 import { Favorites } from "./pages/profile/favorites";
 import { Creations } from "./pages/profile/creations";
@@ -34,8 +34,8 @@ export const App = () => {
         {/* Les Popotes */}
         <Route element={<ProtectedRoutes />}>
           <Route path="lespopotes" element={<Lespopotes />}>
-            <Route path="mespopotes" element={<MesPopotes />} />
-            <Route path="popote" element={<Popote />} />
+            <Route path="popotes" element={<Popotes />} />
+            <Route path="mespopotes" element={<Mespopotes />} />
           </Route>
         </Route>
 

@@ -1,25 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Handlee);
-
-.popoteContainer {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  flex-direction: column;
-}
-.popoteTitle {
-  padding: 0.2em;
-  box-shadow: inset 0px -7px 9px -3px black;
-  word-spacing: 0.1em;
+.lapopote {
   color: var(--popote);
-  font-family: "Handlee", cursive;
-  font-size: 3em;
-  margin: 0em;
-  width: 100%;
-  background-color: var(--dark);
 }
-.popoteLinks {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
+.activePopote {
+  background-color: var(--popote);
 }

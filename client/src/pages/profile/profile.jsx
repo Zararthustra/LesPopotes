@@ -1,21 +1,20 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 export const Profile = () => {
-  let navigate = useNavigate();
-
   return (
     <div>
-      <h1 style={{ cursor: "pointer" }} onClick={() => navigate("/profile")}>
-        Profile
-      </h1>
-
-      <Link style={{ margin: 1 + "em" }} to="favorites">
-        Favorites
-      </Link>
-      <Link style={{ margin: 1 + "em" }} to="creations">
-        Creations
-      </Link>
-      <Outlet />
+      <div className="headerContainer">
+        <h1 className="title profile">Profil</h1>
+        <div className="links">
+          <Link className="navlink" to="favorites">
+            Favorites
+          </Link>
+          <Link className="navlink" to="creations">
+            Creations
+          </Link>
+        </div>
+        <Outlet />
+      </div>
     </div>
   );
 };

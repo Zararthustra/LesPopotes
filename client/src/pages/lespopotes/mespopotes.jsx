@@ -1,7 +1,7 @@
-export const MesPopotes = () => {
+export const Mespopotes = () => {
     return (
       <div>
-        <h1>Mes Popotes</h1>
+        <h1>Liste de mes popotes</h1>
       </div>
     );
 };
