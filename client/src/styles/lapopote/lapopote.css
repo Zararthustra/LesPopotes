@@ -1,6 +1,106 @@
+@media all and (max-width: 750px) {
+  .popoteSubdivision {
+    flex-direction: column;
+  }
+}
 .lapopote {
   color: var(--popote);
 }
+
 .activePopote {
   background-color: var(--popote);
+}
+
+.popoteSubdivision {
+  display: flex;
+  padding: 1.2em;
+  gap: 1em;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+/*
+ * SearchBar
+ */
+.search {
+  display: flex;
+  align-items: center;
+  width: 15em;
+  border: 2px solid var(--popote);
+  border-radius: 30px;
+  background-color: white;
+}
+.searchIcon {
+  width: 1.3em;
+  height: 1.3em;
+  margin-left: 0.2em;
+  background-image: url(../../assets/icons/search-512.png);
+  background-size: 1.3em;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.searchBar {
+  width: 85%;
+  outline: none;
+  border: none;
+  border-radius: 0 15px 15px 0;
+  margin-left: 0.2em;
+}
+.searchBar:focus-within {
+  outline: none;
+  border: none;
+}
+.search:hover {
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+}
+.search:focus-within {
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+  outline:none;
+}
+
+/*
+ * Filters boxes
+ */
+.filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.7em;
+  color: var(--dark-text);
+  font-size: 0.9em;
+}
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* 
+ * Create a custom checkbox
+ */
+input[type="checkbox"] {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+}
+.check {
+  display: flex;
+  height: 1em;
+  width: 1em;
+  background: #fff;
+  margin-right: 0.2em;
+  border-radius: 4px;
+  border: 2px var(--popote) solid;
+}
+.check--active {
+  background: var(--popote);
+}
+.check:hover {
+  cursor: pointer;
 }

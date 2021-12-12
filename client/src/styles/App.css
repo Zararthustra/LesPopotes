@@ -17,7 +17,6 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--white);
-  /* font-family: -apple-system, BlinkMacSystemFont, */
   font-family: 'Rubik';
 }
 
@@ -41,7 +40,7 @@ body {
   background-color: var(--dark);
 }
 
-a{
+a {
   text-decoration: none;
 }
 .links, .navlink {

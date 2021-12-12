@@ -20,6 +20,7 @@
  * ________________________________________Home
  */
 .homeNav {
+  cursor: pointer;
   position: absolute;
   top: 0;
   left: 0;
@@ -40,6 +41,7 @@
  * ________________________________________Profile
  */
 .profileNav {
+  cursor: pointer;
   position: absolute;
   top: 0;
   right: 0;
