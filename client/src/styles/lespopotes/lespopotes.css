@@ -4,3 +4,24 @@
 .activePopotes {
   background-color: var(--popotes);
 }
+
+/*
+ * SearchBar
+ */
+ .searchPopotes {
+  display: flex;
+  align-items: center;
+  margin: 1.2em;
+  height: 2em;
+  width: 25em;
+  border: 3px solid var(--popotes);
+  border-radius: 30px;
+  background-color: white;
+}
+.searchPopotes:hover {
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+}
+.searchPopotes:focus-within {
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+  outline:none;
+}

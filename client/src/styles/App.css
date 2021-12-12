@@ -54,3 +54,17 @@ a {
   font-weight: 300;
   color: var(--dark);
 }
+
+/*
+* Separate lines
+*/
+.separatePopote {
+  width: 80%;
+  height: 1px;
+  background-color: var(--popote);
+ }
+ .separatePopotes {
+  width: 80%;
+  height: 1px;
+  background-color: var(--popotes);
+ }

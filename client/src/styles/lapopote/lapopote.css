@@ -1,4 +1,4 @@
-@media all and (max-width: 750px) {
+@media all and (max-width: 810px) {
   .popoteSubdivision {
     flex-direction: column;
   }
@@ -23,25 +23,27 @@
 /*
  * SearchBar
  */
-.search {
+.searchPopote {
   display: flex;
   align-items: center;
-  width: 15em;
-  border: 2px solid var(--popote);
+  width: 25em;
+  height: 2em;
+  border: 3px solid var(--popote);
   border-radius: 30px;
   background-color: white;
 }
 .searchIcon {
   width: 1.3em;
   height: 1.3em;
-  margin-left: 0.2em;
+  margin-left: 0.5em;
   background-image: url(../../assets/icons/search-512.png);
   background-size: 1.3em;
   background-position: center;
   background-repeat: no-repeat;
 }
 .searchBar {
-  width: 85%;
+  width: 90%;
+  height: 90%;
   outline: none;
   border: none;
   border-radius: 0 15px 15px 0;
@@ -51,10 +53,10 @@
   outline: none;
   border: none;
 }
-.search:hover {
+.searchPopote:hover {
   box-shadow: 1px 1px 8px 1px #dcdcdc;
 }
-.search:focus-within {
+.searchPopote:focus-within {
   box-shadow: 1px 1px 8px 1px #dcdcdc;
   outline:none;
 }
@@ -74,6 +76,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.2em;
 }
 
 
@@ -91,8 +94,8 @@ input[type="checkbox"] {
 }
 .check {
   display: flex;
-  height: 1em;
-  width: 1em;
+  height: 1.2em;
+  width: 1.2em;
   background: #fff;
   margin-right: 0.2em;
   border-radius: 4px;
@@ -102,5 +105,24 @@ input[type="checkbox"] {
   background: var(--popote);
 }
 .check:hover {
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
   cursor: pointer;
+}
+
+/*
+ * Create recipe
+ */
+.popoteButton {
+  cursor: pointer;
+  padding: 0.4em 1em;
+  color: var(--white);
+  font-weight: bolder;
+  font-size: 1.2em;
+  background-color: var(--popote);
+  border-radius: 30px;
+  border: none;
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+}
+.popoteButton:hover {
+  box-shadow: 1px 1px 5px 1px #c5c2c2;
 }

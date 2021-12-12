@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Recettes } from "./recettes";
 
 export const Lapopote = () => {
+  const navigate = useNavigate();
+  const location = useLocation().pathname;
+
   const [apero, setApero] = useState(false);
   const [entree, setEntree] = useState(false);
   const [plat, setPlat] = useState(false);
@@ -26,7 +29,7 @@ export const Lapopote = () => {
     <div className="headerContainer">
       <h1 className="title lapopote">La Popote</h1>
       <div className="popoteSubdivision">
-        <div className="search">
+        <div className="searchPopote">
           <div className="searchIcon" />
           <input type="text" className="searchBar" />
         </div>
@@ -137,8 +140,12 @@ export const Lapopote = () => {
             Autres
           </label>
         </div>
+        <button className="popoteButton" onClick={() => navigate("creation")}>
+          Créer une recette
+        </button>
       </div>
-      <Recettes />
+      <div className="separatePopote"></div>
+      { location === "/lapopote/creation" ? <Outlet /> : <Recettes />}
     </div>
   );
 };

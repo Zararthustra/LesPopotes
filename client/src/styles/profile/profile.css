@@ -1,3 +1,7 @@
 .profile {
   color: var(--white);
 }
+.activeProfile {
+  color: var(--white);
+  background-color: var(--dark);
+}
