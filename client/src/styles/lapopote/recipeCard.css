@@ -1,0 +1,88 @@
+@media all and (max-width: 400px) {
+  .card {
+    font-size: 0.7em !important;
+  }
+}
+@media all and (max-width: 810px) {
+  .cardList {
+    gap: 2em !important;
+    max-width: 99% !important;
+    margin: 1em !important;
+  }
+  .card {
+    width: 10em !important;
+  }
+  .cardImg {
+    height: 9em !important;
+  }
+  .cardTitle {
+    margin: 0.1em 0 0.5em !important;
+  }
+  .cardIcons {
+    margin: 0 1em 0.5em !important;
+  }
+  .difficultyImg, .likeImg {
+    width: 4em !important;
+  }
+  .timeImg {
+    width: 1.5em !important;
+  }
+}
+
+.cardList {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2em;
+  max-width: 90%;
+  margin: 2em;
+}
+
+.card {
+  cursor: pointer;
+  width: 12em;
+  color: var(--dark);
+  border: 2px solid var(--dark-popote);
+  border-radius: 15px;
+  box-shadow: 1px 1px 12px 0;
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+}
+.card:hover {
+  transform: scale(1.1);
+}
+
+.cardImg {
+  min-width: 100%;
+  height: 12em;
+  object-fit: cover;
+}
+
+.cardTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.5em;
+  margin: 0.5em 0 0.8em;
+}
+
+.cardIcons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  margin: 0.5em 1em 1em;
+  color: var(--dark-popote);
+}
+
+.cardInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.difficultyImg, .likeImg {
+  width: 5em;
+}
+.timeImg {
+  width: 2em;
+}

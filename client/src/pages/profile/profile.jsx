@@ -5,25 +5,25 @@ export const Profile = () => {
     let activeLink = document.getElementById(id).classList;
     let myprofile = document.getElementById("myprofile").classList;
     let favorites = document.getElementById("favorites").classList;
-    let creations = document.getElementById("creations").classList;
+    let mesrecettes = document.getElementById("mesrecettes").classList;
     let mypopotes = document.getElementById("mypopotes").classList;
 
     if (id === "mypopotes" && activeLink.length === 1) {
       activeLink.add("activePopotes");
       myprofile.remove("activeProfile");
       favorites.remove("activePopote");
-      creations.remove("activePopote");
+      mesrecettes.remove("activePopote");
     } else if (id === "myprofile" && activeLink.length === 1) {
       activeLink.add("activeProfile");
       mypopotes.remove("activePopotes");
       favorites.remove("activePopote");
-      creations.remove("activePopote");
+      mesrecettes.remove("activePopote");
     } else if (id === "favorites" && activeLink.length === 1) {
       activeLink.add("activePopote");
       mypopotes.remove("activePopotes");
       myprofile.remove("activeProfile");
-      creations.remove("activePopote");
-    } else if (id === "creations" && activeLink.length === 1) {
+      mesrecettes.remove("activePopote");
+    } else if (id === "mesrecettes" && activeLink.length === 1) {
       activeLink.add("activePopote");
       mypopotes.remove("activePopotes");
       myprofile.remove("activeProfile");
@@ -52,10 +52,10 @@ export const Profile = () => {
           Mes Favoris
         </Link>
         <Link
-          onClick={() => toggleActiveLink("creations")}
-          id="creations"
+          onClick={() => toggleActiveLink("mesrecettes")}
+          id="mesrecettes"
           className="navlink"
-          to="creations"
+          to="mesrecettes"
         >
           Mes Creations
         </Link>

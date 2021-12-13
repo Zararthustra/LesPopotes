@@ -1,6 +1,17 @@
+@media all and (max-width: 400px) {
+  .searchPopote {
+    width: 15em !important;
+  }
+}
 @media all and (max-width: 810px) {
   .popoteSubdivision {
     flex-direction: column;
+  }
+  .searchPopote {
+    width: 20em !important;
+  }
+  .filters {
+    width: 90%;
   }
 }
 .lapopote {
@@ -43,7 +54,7 @@
 }
 .searchBar {
   width: 90%;
-  height: 90%;
+  height: 80%;
   outline: none;
   border: none;
   border-radius: 0 15px 15px 0;
@@ -58,7 +69,7 @@
 }
 .searchPopote:focus-within {
   box-shadow: 1px 1px 8px 1px #dcdcdc;
-  outline:none;
+  outline: none;
 }
 
 /*
@@ -78,7 +89,6 @@
   align-items: center;
   font-size: 1.2em;
 }
-
 
 /* 
  * Create a custom checkbox

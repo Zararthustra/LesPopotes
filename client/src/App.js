@@ -12,7 +12,7 @@ import { Popotes } from "./pages/lespopotes/popotes";
 import { Mespopotes } from "./pages/lespopotes/mespopotes";
 import { Profile } from "./pages/profile/profile";
 import { Favorites } from "./pages/profile/favorites";
-import { Creations } from "./pages/profile/creations";
+import { Mesrecettes } from "./pages/profile/mesrecettes";
 import { Monprofil } from "./pages/profile/myprofile";
 
 export const App = () => {
@@ -47,7 +47,7 @@ export const App = () => {
           <Route path="profile" element={<Profile />}>
             <Route path="monprofil" element={<Monprofil />} />
             <Route path="favorites" element={<Favorites />} />
-            <Route path="creations" element={<Creations />} />
+            <Route path="mesrecettes" element={<Mesrecettes />} />
             <Route path="mespopotes" element={<Mespopotes />} />
           </Route>
         </Route>

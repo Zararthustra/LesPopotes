@@ -3,11 +3,11 @@
 
 :root {
   --switch: #2c2a3a;
-  --popotes: #78F5CA;
+  --popotes: #78f5ca;
   --dark-popotes: #00be7c;
-  --popote: #F5A76C;
+  --popote: #f5a76c;
   --dark-popote: #e76400;
-  --white: #FAFCED;
+  --white: #fafced;
   --dark: #2c2a3a;
   --dark-text: #2c2c2c;
   --light-text: #9c9c9c;
@@ -17,7 +17,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--white);
-  font-family: 'Rubik';
+  font-family: "Rubik";
 }
 
 .headerContainer {
@@ -32,7 +32,7 @@ body {
   padding: 0 0 0.5em;
   box-shadow: inset 0px -7px 9px -3px black;
   word-spacing: 0.1em;
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
   font-size: 3em;
   font-weight: 400;
   margin: 0;
@@ -43,13 +43,14 @@ body {
 a {
   text-decoration: none;
 }
-.links, .navlink {
+.links,
+.navlink {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
   background-color: #adaaaa;
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
   font-size: 1.3em;
   font-weight: 300;
   color: var(--dark);
@@ -62,9 +63,18 @@ a {
   width: 80%;
   height: 1px;
   background-color: var(--popote);
- }
- .separatePopotes {
+}
+.separatePopotes {
   width: 80%;
   height: 1px;
   background-color: var(--popotes);
- }
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
