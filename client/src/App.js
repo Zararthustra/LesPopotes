@@ -14,6 +14,8 @@ import { Profile } from "./pages/profile/profile";
 import { Favorites } from "./pages/profile/favorites";
 import { Mesrecettes } from "./pages/profile/mesrecettes";
 import { Monprofil } from "./pages/profile/myprofile";
+import { Modifymyprofile } from "./pages/profile/modifymyprofile";
+import { Homelanding } from "./pages/home/homelanding";
 
 export const App = () => {
   // forceRefresh={true}
@@ -21,8 +23,9 @@ export const App = () => {
     <BrowserRouter>
       <Navbar />
       <Routes>
+        <Route path="/" element={<Homelanding />} />
         {/* Home */}
-        <Route path="/" element={<Home />}>
+        <Route path="accueil" element={<Home />}>
           <Route path="nouveautes" element={<Lastpubs />} />
           <Route path="bestof" element={<Bestof />} />
         </Route>
@@ -44,8 +47,9 @@ export const App = () => {
 
         {/* Profile */}
         <Route element={<ProtectedRoutes />}>
-          <Route path="profile" element={<Profile />}>
+          <Route path="profil" element={<Profile />}>
             <Route path="monprofil" element={<Monprofil />} />
+            <Route path="modifier" element={<Modifymyprofile />} />
             <Route path="favorites" element={<Favorites />} />
             <Route path="mesrecettes" element={<Mesrecettes />} />
             <Route path="mespopotes" element={<Mespopotes />} />

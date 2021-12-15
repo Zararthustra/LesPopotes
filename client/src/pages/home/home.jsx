@@ -21,7 +21,7 @@ export const Home = () => {
 
   return (
     <div className="headerContainer">
-      <h1 className="title home" onClick={() => navigate("/")}>
+      <h1 className="title home" onClick={() => navigate("/accueil")}>
         Accueil
       </h1>
       <div className="links">
@@ -42,7 +42,7 @@ export const Home = () => {
           Nouveautés
         </Link>
       </div>
-      {location === "/" ? <Homelanding /> : <Outlet />}
+      <Outlet />
     </div>
   );
 };

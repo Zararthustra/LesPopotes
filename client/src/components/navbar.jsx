@@ -20,8 +20,8 @@ export const Navbar = () => {
     } else {
       slider.background = "grey";
       slider.setProperty("--switch", "var(--dark)");
-      if (location === "/") homeIcon.add("activeIcon");
-      if (location === "/profile") profileIcon.add("activeIcon");
+      if (location === "/accueil") homeIcon.add("activeIcon");
+      if (location === "/profil") profileIcon.add("activeIcon");
     }
   }, [location]);
 
@@ -54,20 +54,20 @@ export const Navbar = () => {
     let profileIcon = document.getElementById("profile").classList;
 
     if (id === "home" && currentIcon.length === 1) {
-      navigate("/");
+      navigate("accueil");
       document.body.scrollTop = 0; // For Safari
       document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
       currentIcon.add("activeIcon");
       profileIcon.remove("activeIcon");
     } else if (id === "profile" && currentIcon.length === 1) {
-      navigate("profile");
+      navigate("profil");
       document.body.scrollTop = 0; // For Safari
       document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
       currentIcon.add("activeIcon");
       homeIcon.remove("activeIcon");
     } else {
-      if (id === "home") id = "/";
-      navigate(id);
+      const redirect = id === "home" ? "accueil" : "profil";
+      navigate(redirect);
       document.body.scrollTop = 0; // For Safari
       document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     }

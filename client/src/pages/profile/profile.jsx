@@ -1,4 +1,5 @@
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Modifymyprofile } from "./modifymyprofile";
 import { Monprofil } from "./myprofile";
 
 export const Profile = () => {
@@ -26,9 +27,11 @@ export const Profile = () => {
     }
   };
 
+  if (location === "/profile/modifier") return <Modifymyprofile />;
+
   return (
     <div className="headerContainer">
-      <h1 className="title profile" onClick={() => navigate("/profile")}>
+      <h1 className="title profile" onClick={() => navigate("/profil")}>
         Profil
       </h1>
       <div className="links">
@@ -57,7 +60,7 @@ export const Profile = () => {
           Mes Popotes
         </Link>
       </div>
-      {location === "/profile" ? <Monprofil /> : <Outlet />}
+      {location === "/profil" ? <Monprofil /> : <Outlet />}
     </div>
   );
 };

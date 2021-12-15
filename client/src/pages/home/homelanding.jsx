@@ -8,9 +8,6 @@ export const Homelanding = () => {
           <h3 className="partager">Partager</h3>
         </div>
       </div>
-      <div className="briefing">
-        <p>Postez et partagez vos recettes préférées entre popotes !</p>
-      </div>
     </div>
   );
 };

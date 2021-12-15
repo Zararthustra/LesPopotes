@@ -1,23 +1,22 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar } from "../../components/Avatar";
 
-export const Monprofil = () => {
+export const Modifymyprofile = () => {
   const location = useLocation().pathname;
   const navigate = useNavigate();
-
-  const modify = () => {
-    navigate("modifier");
+  const validate = () => {
+    navigate("/profil");
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   };
 
   return (
     <div className="myprofileBody">
-      <div className="mypopoteInfos">
+      <div className="modify mypopoteInfos">
         <Avatar />
         <div className="mypopoteNames">
-          <div className="pseudo">Kikoo34</div>
-          <div className="type">Carnassier</div>
+          <input type="text" />
+          <input type="text" />
         </div>
       </div>
       <div className="level">Confirmé</div>
@@ -42,33 +41,33 @@ export const Monprofil = () => {
       <ul className="userInfos">
         <li>
           <p>Mot de passe</p>
-          <p>*******</p>
+          <input type="text" />
         </li>
         <li>
           <p>Email</p>
-          <p>toto123@mail.com</p>
+          <input type="text" />
         </li>
       </ul>
       <ul className="userInfos socialnetworks">
         <li>
           <p>Linkedin</p>
-          <p>https://lienduprofil.com</p>
+          <input type="text" />
         </li>
         <li>
           <p>Facebook</p>
-          <p>https://lienduprofil.com</p>
+          <input type="text" />
         </li>
         <li>
           <p>Snapchat</p>
-          <p>https://lienduprofil.com</p>
+          <input type="text" />
         </li>
         <li>
           <p>Instagram</p>
-          <p>https://lienduprofil.com</p>
+          <input type="text" />
         </li>
       </ul>
-      <button className="myprofileModifyButton" onClick={modify}>
-        Modifier
+      <button className="myprofileModifyButton" onClick={validate}>
+        Valider
       </button>
     </div>
   );

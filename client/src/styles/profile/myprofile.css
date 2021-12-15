@@ -2,15 +2,18 @@
   .myprofileContainer {
     font-size: 0.9em !important;
   }
-  .mypopoteNames {
-    font-size: 1.2em;
-  }
-  .levelInfos {
-    font-size: 0.7em;
+  .userInfos {
+    width: 90% !important;
   }
 }
+
+/*
+ * My Profile
+ */
+.modify {
+  margin-top: 4em !important;
+}
 .myprofileBody {
-  padding: 2em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,6 +21,10 @@
   width: 100%;
   background-color: var(--white);
 }
+.myprofileBody p {
+  margin: 0;
+}
+
 .myprofileContainer {
   display: flex;
   margin: 2em;
@@ -32,13 +39,28 @@
   justify-content: space-between;
 }
 
+/*
+ *_______________________________________________
+ */
 .mypopoteInfos {
+  width: 100%;
+  margin: 0 0 1em;
   height: fit-content;
   display: flex;
+  justify-content: center;
   align-items: center;
+  padding: 1em 0;
+  background-color: var(--popotes);
+  border-top: 3px solid var(--dark-popotes);
+  border-bottom: 3px solid var(--dark-popotes);
   gap: 0.5em;
 }
+.mypopoteInfos .avatar {
+  width: 6em;
+  height: 6em;
+}
 .mypopoteNames {
+  font-size: 2em;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -46,19 +68,62 @@
   line-height: 1.2em;
 }
 
-.userInfos {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 3em 0 1em;
+/*
+ *_______________________________________________
+ */
+.level {
+  color: var(--dark-popotes);
+  font-weight: 600;
+  font-size: 2.5em;
 }
 
-.positionButton {
+/*
+ *_______________________________________________
+ */
+.levelInfos {
+  color: var(--light-text);
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 10em;
+  margin: 2em 0;
 }
+.levelInfos li {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.levelInfos li p + p {
+  color: var(--dark-popotes);
+}
+/*
+ *_______________________________________________
+ */
+.userInfos {
+  color: var(--light-text);
+  width: 20em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 1em 0 1em;
+}
+.userInfos li {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.userInfos li p + p {
+  color: var(--dark-popotes);
+}
+
+/*
+ *_______________________________________________
+ */
 .myprofileModifyButton {
   width: 7em;
+  margin: 1em 0 0;
   cursor: pointer;
   padding: 0.4em 1em;
   color: var(--white);
