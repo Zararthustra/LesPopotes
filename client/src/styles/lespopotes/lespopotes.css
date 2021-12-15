@@ -1,16 +1,11 @@
-@media all and (max-width: 400px) {
+@media all and (max-width: 810px) {
   .searchPopotes {
     width: 15em !important;
   }
 }
 
-@media all and (max-width: 810px) {
-  .searchPopotes {
-    width: 20em !important;
-  }
-}
-
 .lespopotes {
+  cursor: pointer;
   color: var(--popotes);
 }
 .activePopotes {
@@ -36,4 +31,13 @@
 .searchPopotes:focus-within {
   box-shadow: 1px 1px 8px 1px #dcdcdc;
   outline:none;
+}
+
+.itemsContainer {
+  margin: 2em 0;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

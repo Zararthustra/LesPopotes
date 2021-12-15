@@ -1,7 +1,12 @@
+import { Popotesitem } from "../../components/popotesitem";
 export const Mespopotes = () => {
-    return (
-      <div>
-        <h1>Liste de mes popotes</h1>
+  return (
+    <div className="mespopotesBody">
+      <div className="mespopotesList">
+        <Popotesitem />
+        <Popotesitem />
+        <Popotesitem />
       </div>
-    );
+    </div>
+  );
 };

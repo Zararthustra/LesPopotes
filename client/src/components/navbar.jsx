@@ -57,6 +57,9 @@ export const Navbar = () => {
       navigate("profile");
       currentIcon.add("activeIcon");
       homeIcon.remove("activeIcon");
+    } else {
+      if (id === "home") id = "/"
+      navigate(id)
     }
   };
 

@@ -4,6 +4,7 @@ export const Card = ({icons, images}) => {
       <img className="cardImg" src={images.image3} alt="" />
       <div className="cardInfos">
         <h3 className="cardTitle">Muesli fraise aux graines</h3>
+        <div className="separateLine"></div>
         <ul className="cardIcons">
           <li className="cardInfo">
             <img className="difficultyImg" src={icons.diff1} alt="" />

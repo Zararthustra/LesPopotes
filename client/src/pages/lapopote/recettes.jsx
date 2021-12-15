@@ -9,6 +9,7 @@ export const Recettes = () => {
         <img className="cardImg" src={images.image1} alt="" />
         <div className="cardInfos">
           <h3 className="cardTitle">Risotto</h3>
+        <div className="separateLine"></div>
           <ul className="cardIcons">
             <li className="cardInfo">
               <img className="difficultyImg" src={icons.diff3} alt="" />
@@ -30,6 +31,7 @@ export const Recettes = () => {
         <img className="cardImg" src={images.image2} alt="" />
         <div className="cardInfos">
           <h3 className="cardTitle">Tarte aux pommes</h3>
+        <div className="separateLine"></div>
           <ul className="cardIcons">
             <li className="cardInfo">
               <img className="difficultyImg" src={icons.diff2} alt="" />

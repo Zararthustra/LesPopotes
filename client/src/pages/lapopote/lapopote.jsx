@@ -25,9 +25,10 @@ export const Lapopote = () => {
   //     activeLink1.remove("activePopote");
   //   }
   // };
+
   return (
     <div className="headerContainer">
-      <h1 className="title lapopote">La Popote</h1>
+      <h1 className="title lapopote" onClick={() => navigate('/lapopote')}>La Popote</h1>
       <div className="popoteSubdivision">
         <div className="searchPopote">
           <div className="searchIcon" />

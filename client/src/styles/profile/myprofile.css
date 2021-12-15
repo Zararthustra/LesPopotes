@@ -1,0 +1,74 @@
+@media all and (max-width: 810px) {
+  .myprofileContainer {
+    font-size: 0.9em !important;
+  }
+  .mypopoteNames {
+    font-size: 1.2em;
+  }
+  .levelInfos {
+    font-size: 0.7em;
+  }
+}
+.myprofileBody {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--dark);
+}
+.myprofileContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 2em;
+  padding: 0.5em;
+  width: 70%;
+  height: fit-content;
+  font-size: 1.2em;
+  border-radius: 15px;
+  border: 5px solid var(--dark-popotes);
+  background-color: var(--popotes);
+  box-shadow: 0px 0px 15px var(--light-text);
+}
+
+.myprofileHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mypopoteInfos {
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.mypopoteNames {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  font-family: "Oswald", sans-serif;
+  line-height: 1.2em;
+}
+
+.userInfos {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 3em 0 1em;
+}
+
+.positionButton {
+  display: flex;
+  justify-content: flex-end;
+}
+.myprofileModifyButton {
+  width: 7em;
+  cursor: pointer;
+  padding: 0.4em 1em;
+  color: var(--white);
+  font-weight: bolder;
+  font-size: 1.2em;
+  background-color: var(--dark-popotes);
+  border-radius: 30px;
+  border: none;
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+}

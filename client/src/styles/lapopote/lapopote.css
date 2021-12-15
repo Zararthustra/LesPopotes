@@ -1,20 +1,13 @@
-@media all and (max-width: 400px) {
+@media all and (max-width: 810px) {
   .searchPopote {
     width: 15em !important;
   }
-}
-@media all and (max-width: 810px) {
-  .popoteSubdivision {
-    flex-direction: column;
-  }
-  .searchPopote {
-    width: 20em !important;
-  }
   .filters {
-    width: 90%;
+    width: 87%;
   }
 }
 .lapopote {
+  cursor: pointer;
   color: var(--popote);
 }
 
@@ -24,6 +17,7 @@
 
 .popoteSubdivision {
   display: flex;
+  flex-direction: column;
   padding: 1.2em;
   gap: 1em;
   justify-content: space-evenly;
@@ -128,7 +122,7 @@ input[type="checkbox"] {
   color: var(--white);
   font-weight: bolder;
   font-size: 1.2em;
-  background-color: var(--popote);
+  background-color: var(--dark-popote);
   border-radius: 30px;
   border: none;
   box-shadow: 1px 1px 8px 1px #dcdcdc;

@@ -1,48 +1,37 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Monprofil } from "./myprofile";
 
 export const Profile = () => {
+  const navigate = useNavigate();
+  const location = useLocation().pathname;
+
   const toggleActiveLink = (id) => {
     let activeLink = document.getElementById(id).classList;
-    let myprofile = document.getElementById("myprofile").classList;
     let favorites = document.getElementById("favorites").classList;
     let mesrecettes = document.getElementById("mesrecettes").classList;
     let mypopotes = document.getElementById("mypopotes").classList;
 
     if (id === "mypopotes" && activeLink.length === 1) {
       activeLink.add("activePopotes");
-      myprofile.remove("activeProfile");
-      favorites.remove("activePopote");
-      mesrecettes.remove("activePopote");
-    } else if (id === "myprofile" && activeLink.length === 1) {
-      activeLink.add("activeProfile");
-      mypopotes.remove("activePopotes");
       favorites.remove("activePopote");
       mesrecettes.remove("activePopote");
     } else if (id === "favorites" && activeLink.length === 1) {
       activeLink.add("activePopote");
       mypopotes.remove("activePopotes");
-      myprofile.remove("activeProfile");
       mesrecettes.remove("activePopote");
     } else if (id === "mesrecettes" && activeLink.length === 1) {
       activeLink.add("activePopote");
       mypopotes.remove("activePopotes");
-      myprofile.remove("activeProfile");
       favorites.remove("activePopote");
     }
   };
 
   return (
     <div className="headerContainer">
-      <h1 className="title profile">Profil</h1>
+      <h1 className="title profile" onClick={() => navigate("/profile")}>
+        Profil
+      </h1>
       <div className="links">
-        <Link
-          onClick={() => toggleActiveLink("myprofile")}
-          id="myprofile"
-          className="navlink"
-          to="monprofil"
-        >
-          Mon Profil
-        </Link>
         <Link
           onClick={() => toggleActiveLink("favorites")}
           id="favorites"
@@ -57,7 +46,7 @@ export const Profile = () => {
           className="navlink"
           to="mesrecettes"
         >
-          Mes Creations
+          Mes Recettes
         </Link>
         <Link
           onClick={() => toggleActiveLink("mypopotes")}
@@ -68,7 +57,7 @@ export const Profile = () => {
           Mes Popotes
         </Link>
       </div>
-      <Outlet />
+      {location === "/profile" ? <Monprofil /> : <Outlet />}
     </div>
   );
 };

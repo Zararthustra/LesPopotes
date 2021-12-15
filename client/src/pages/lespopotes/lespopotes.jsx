@@ -1,7 +1,9 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Popotes } from "./popotes";
 
 export const Lespopotes = () => {
+  const navigate = useNavigate();
+  
   const toggleActiveLink = (id) => {
     let activeLink = document.getElementById(id).classList;
     let activeLink1 = document.getElementById("1").classList;
@@ -17,11 +19,13 @@ export const Lespopotes = () => {
   };
   return (
     <div className="headerContainer">
-      <h1 className="title lespopotes">Les Popotes</h1>
+      <h1 className="title lespopotes" onClick={() => navigate("/lespopotes")}>
+        Les Popotes
+      </h1>
       <div className="searchPopotes">
-          <div className="searchIcon" />
-          <input type="text" className="searchBar" />
-        </div>
+        <div className="searchIcon" />
+        <input type="text" className="searchBar" />
+      </div>
       <div className="separatePopotes"></div>
       <Popotes />
     </div>

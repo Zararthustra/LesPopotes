@@ -1,6 +1,10 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Homelanding } from "./homelanding";
 
 export const Home = () => {
+  const location = useLocation().pathname;
+  const navigate = useNavigate();
+
   const toggleActiveLink = (id) => {
     let activeLink = document.getElementById(id).classList;
     let bestof = document.getElementById("bestof").classList;
@@ -17,7 +21,9 @@ export const Home = () => {
 
   return (
     <div className="headerContainer">
-      <h1 className="title home">Accueil</h1>
+      <h1 className="title home" onClick={() => navigate("/")}>
+        Accueil
+      </h1>
       <div className="links">
         <Link
           onClick={() => toggleActiveLink("bestof")}
@@ -36,7 +42,7 @@ export const Home = () => {
           Nouveautés
         </Link>
       </div>
-      <Outlet />
+      {location === "/" ? <Homelanding /> : <Outlet />}
     </div>
   );
 };

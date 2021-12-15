@@ -1,7 +1,39 @@
 .profile {
+  cursor: pointer;
   color: var(--white);
 }
 .activeProfile {
   color: var(--white);
   background-color: var(--dark);
+}
+
+/*
+** Mes popotes
+*/
+.mespopotesBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--white);
+}
+.mespopotesList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 2em;
+}
+
+/*
+** Ma popotes
+*/
+.mapopoteBody{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--white);
 }
