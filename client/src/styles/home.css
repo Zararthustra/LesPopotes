@@ -1,3 +1,23 @@
+@media all and (max-width: 550px) {
+  .landingTitle {
+    padding-top: 2em !important;
+    line-height: 2.5em !important;
+  }
+  .landingTitle1 {
+    font-size: 4em !important;
+  }
+  .landingTitle2 {
+    font-size: 1em !important;
+  }
+  .briefing {
+    height: 37vh !important;
+  }
+  .briefing p {
+    width: 17ch;
+    font-size: 1.5em !important;
+  }
+}
+
 .home {
   cursor: pointer;
   color: var(--white);
@@ -6,4 +26,58 @@
   height: 100vh;
   width: 100%;
   background-color: var(--dark);
+}
+.landingTitle {
+  margin: 0;
+  padding-top: 4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 35vh;
+  background-color: var(--dark-text);
+  line-height: 3.5em;
+}
+.landingTitle1 {
+  color: var(--white);
+  font-weight: 400;
+  margin: 0;
+  text-decoration: underline white;
+  font-size: 7em;
+  font-family: "Oswald", sans-serif;
+}
+.landingTitle2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  gap: 1.5em;
+}
+.cuisiner {
+  color: var(--popote);
+}
+.partager {
+  color: var(--popotes);
+}
+.briefing {
+  background-image: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.3)
+    ),
+    url("../assets/images/eatshare.jpg");
+  filter: grayscale(30%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+}
+.briefing p {
+  color: var(--white);
+  font-size: 2.5em;
 }

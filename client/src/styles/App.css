@@ -1,5 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Rubik);
 @import url(https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Courgette&display=swap);
+
 @media all and (max-width: 810px) {
   .links,
   .navlink {
@@ -24,6 +26,7 @@ body {
   padding: 0;
   background-color: var(--white);
   font-family: "Rubik";
+  overflow-x: hidden;
 }
 ul {
   padding: 0;
@@ -34,6 +37,23 @@ li {
 }
 a {
   text-decoration: none;
+}
+
+/*
+ * Scrollbar
+ */
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background-color: var(--white);
+}
+::-webkit-scrollbar-thumb {
+  background-color: #3d3d42;
+}
+::-webkit-scrollbar-thumb:hover {
+  cursor: pointer !important;
+  background-color: #39364d;
 }
 
 .headerContainer {
@@ -51,7 +71,7 @@ a {
   font-family: "Oswald", sans-serif;
   font-size: 3em;
   font-weight: 400;
-  margin: 0;
+  margin: 1.3em 0 0 0;
   width: 100%;
   background-color: var(--dark);
 }
@@ -67,8 +87,14 @@ a {
   font-size: 1.3em;
   font-weight: 300;
   color: var(--dark);
+  border-right: 1px solid var(--dark);
+  border-left: 1px solid var(--dark);
 }
-
+@media all and (min-width: 810px) {
+  .navlink:hover {
+    background-color: #ffffff0a;
+  }
+}
 /*
 * Separate lines
 */

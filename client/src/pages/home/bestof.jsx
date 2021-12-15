@@ -6,7 +6,13 @@ export const Bestof = () => {
   return (
     <div>
       <h1>Les mieux notées</h1>
-      <Card icons={icons} images={images} />
+      <div className="cardList">
+          <Card icons={icons} images={images} />
+          <Card icons={icons} images={images} />
+          <Card icons={icons} images={images} />
+          <Card icons={icons} images={images} />
+          <Card icons={icons} images={images} />
+        </div>
     </div>
   );
 };

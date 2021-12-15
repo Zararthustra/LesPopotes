@@ -11,6 +11,9 @@
 .activePopotes {
   background-color: var(--popotes);
 }
+.activePopotes:hover {
+  background-color: #67d1ac96;
+}
 
 /*
  * SearchBar

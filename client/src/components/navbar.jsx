@@ -35,10 +35,14 @@ export const Navbar = () => {
 
     if (location.match(/lapopote/)) {
       navigate("lespopotes");
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
       slider.background = "var(--popotes)";
       slider.setProperty("--switch", "var(--dark-popotes)");
     } else {
       navigate("lapopote");
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
       slider.background = "var(--popote)";
       slider.setProperty("--switch", "var(--dark-popote)");
     }
@@ -51,15 +55,21 @@ export const Navbar = () => {
 
     if (id === "home" && currentIcon.length === 1) {
       navigate("/");
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
       currentIcon.add("activeIcon");
       profileIcon.remove("activeIcon");
     } else if (id === "profile" && currentIcon.length === 1) {
       navigate("profile");
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
       currentIcon.add("activeIcon");
       homeIcon.remove("activeIcon");
     } else {
-      if (id === "home") id = "/"
-      navigate(id)
+      if (id === "home") id = "/";
+      navigate(id);
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     }
   };
 
@@ -70,7 +80,11 @@ export const Navbar = () => {
         <span className="slider round" onClick={onSwitch}></span>
       </label>
       <div id="home" className="homeNav" onClick={() => activeIcon("home")} />
-      <div id="profile" className="profileNav" onClick={() => activeIcon("profile")} />
+      <div
+        id="profile"
+        className="profileNav"
+        onClick={() => activeIcon("profile")}
+      />
     </div>
   );
 };

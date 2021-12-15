@@ -51,6 +51,7 @@
   background-color: var(--white);
 }
 .card:hover {
+  box-shadow: none;
   transform: scale(1.1);
 }
 

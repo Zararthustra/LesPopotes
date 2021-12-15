@@ -7,7 +7,13 @@ export const Mesrecettes = () => {
     <div className="mapopoteBody">
       <div>
         <h1>Liste de mes recettes créées</h1>
-        <Card icons={icons} images={images} />
+        <div className="cardList">
+          <Card icons={icons} images={images} />
+          <Card icons={icons} images={images} />
+          <Card icons={icons} images={images} />
+          <Card icons={icons} images={images} />
+          <Card icons={icons} images={images} />
+        </div>
       </div>
     </div>
   );
