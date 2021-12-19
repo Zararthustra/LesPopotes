@@ -10,6 +10,14 @@ export const Popotes = () => {
       <Popotesitem />
       <Popotesitem />
       <Popotesitem />
+      <Popotesitem />
+      <Popotesitem />
+      <Popotesitem />
+      <Popotesitem />
+      <Popotesitem />
+      <Popotesitem />
+      <Popotesitem />
+      <Popotesitem />
     </div>
   );
 };

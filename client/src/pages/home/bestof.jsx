@@ -7,12 +7,12 @@ export const Bestof = () => {
     <div>
       <h1>Les mieux notées</h1>
       <div className="cardList">
-          <Card icons={icons} images={images} />
-          <Card icons={icons} images={images} />
-          <Card icons={icons} images={images} />
-          <Card icons={icons} images={images} />
-          <Card icons={icons} images={images} />
-        </div>
+        <Card icons={icons} images={images} />
+        <Card icons={icons} images={images} />
+        <Card icons={icons} images={images} />
+        <Card icons={icons} images={images} />
+        <Card icons={icons} images={images} />
+      </div>
     </div>
   );
 };

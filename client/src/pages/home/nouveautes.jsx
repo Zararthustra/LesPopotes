@@ -7,12 +7,12 @@ export const Lastpubs = () => {
     <div>
       <h1>Dernières publications</h1>
       <div className="cardList">
-          <Card icons={icons} images={images} />
-          <Card icons={icons} images={images} />
-          <Card icons={icons} images={images} />
-          <Card icons={icons} images={images} />
-          <Card icons={icons} images={images} />
-        </div>
+      <Card icons={icons} images={images} />
+      <Card icons={icons} images={images} />
+      <Card icons={icons} images={images} />
+      <Card icons={icons} images={images} />
+      <Card icons={icons} images={images} />
+    </div>
     </div>
   );
 };

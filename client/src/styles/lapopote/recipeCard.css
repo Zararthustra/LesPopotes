@@ -7,7 +7,6 @@
   .cardList {
     gap: 2em !important;
     max-width: 99% !important;
-    margin: 1em !important;
   }
   .card {
     width: 10em !important;
@@ -35,7 +34,6 @@
   flex-wrap: wrap;
   gap: 2em;
   max-width: 90%;
-  margin: 2em;
 }
 
 .card {
@@ -87,6 +85,7 @@
 }
 
 .cardInfo {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;

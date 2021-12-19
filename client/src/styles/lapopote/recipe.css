@@ -1,0 +1,165 @@
+@media all and (min-width: 810px) {
+  /* Big screens */
+.recipeIngredients {
+  width: 70% !important;
+}
+}
+.recipePage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 2em;
+}
+.recipeContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2em;
+  width: 80%;
+  height: fit-content;
+  overflow: hidden;
+  border: 4px solid var(--dark-popote);
+  border-radius: 30px;
+}
+
+/*
+ * recipeTitles
+ */
+
+ .recipeTitle {
+   font-size: 2em;
+   width: 100%;
+   padding: 0.5em 0 0;
+   color: var(--dark-popote);
+ }
+ .doneBy {
+   font-size: 0.9em;
+   width: 80%;
+   color: var(--dark-popotes);
+   text-align:end;
+   font-style: italic;
+   margin: 0.5em 0;
+ }
+
+/*
+ * recipeInfos
+ */
+.recipeInfos {
+  font-size: 1.3em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+  margin: 1em 0 2em;
+}
+
+.nbpersImg {
+  width: 1.5em;
+}
+
+.diffnote {
+  width: 70%;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5em;
+  color: var(--dark-popote);
+}
+
+.times {
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+  width: 70%;
+  font-size: 0.8em;
+}
+
+.time {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.lighttext {
+  color: var(--light-text);
+}
+.valuedark {
+  color: var(--dark-popote);
+}
+.value {
+  color: var(--popote);
+}
+
+/*
+ * ingredients
+ */
+
+.recipeIngredients {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1em 0 2em;
+}
+
+.ingredientsTitles {
+  padding: 0;
+  margin-bottom: 0.7em;
+  font-size: 1em;
+  color: var(--dark-popote);
+}
+
+.ingredientsCols {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.ingredientsCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 0.5em;
+}
+
+/*
+ * steps
+ */
+.stepTitle {
+  color: var(--dark-popote);
+  font-weight: bolder;
+  font-size: 1.3em;
+}
+.steps {
+  margin: 1em 0;
+  width: 80%;
+  text-align: justify;
+}
+
+/*
+ * Comment
+ */
+.recipeComment {
+  margin: 1em 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.recipeComment h3 {
+  margin: 0;
+  color: var(--popote);
+}
+.recipeComment p {
+  color: var(--light-text);
+  font-style: italic;
+  text-align: start;
+  width: 80%;
+}

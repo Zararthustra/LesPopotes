@@ -1,6 +1,17 @@
-export const Card = ({icons, images}) => {
+import { useNavigate } from "react-router-dom";
+
+export const Card = ({ icons, images, name }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="card">
+    <div
+      onClick={() => {
+        navigate(`/lapopote/${name}`);
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }}
+      className="card"
+    >
       <img className="cardImg" src={images.image3} alt="" />
       <div className="cardInfos">
         <h3 className="cardTitle">Muesli fraise aux graines</h3>
@@ -11,8 +22,7 @@ export const Card = ({icons, images}) => {
             Facile
           </li>
           <li className="cardInfo">
-            <img className="likeImg" src={icons.like45} alt="" />
-            5 avis
+            <img className="likeImg" src={icons.like45} alt="" />5 avis
           </li>
           <li className="cardInfo">
             <img className="timeImg" src={icons.time} alt="" />

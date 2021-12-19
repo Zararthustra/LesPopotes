@@ -12,7 +12,7 @@ export const Popotesitem = () => {
       </div>
       <div className="right">
         <div className="experience">
-          <div className="level">Amateur</div>
+          <div className="popotelevel">Amateur</div>
           <div className="createdRecipes">12 recettes</div>
         </div>
         <div className="addButton" />

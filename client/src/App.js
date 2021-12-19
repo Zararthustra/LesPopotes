@@ -32,7 +32,7 @@ export const App = () => {
 
         {/* La Popote */}
         <Route path="lapopote" element={<Lapopote />}>
-          <Route path="recette" element={<Recette /> /* URI param */} />
+          <Route path=":recette" element={<Recette /> /* URI param */} />
           <Route element={<ProtectedRoutes />}>
             <Route path="creation" element={<Creation />} />
           </Route>
