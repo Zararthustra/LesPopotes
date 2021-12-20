@@ -1,10 +1,12 @@
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Login } from "../login";
 import { Modifymyprofile } from "./modifymyprofile";
 import { Monprofil } from "./myprofile";
 
 export const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation().pathname;
+  const isAuth = localStorage.getItem("username"); //check localstorage
 
   const toggleActiveLink = (id) => {
     let activeLink = document.getElementById(id).classList;
@@ -27,7 +29,7 @@ export const Profile = () => {
     }
   };
 
-  if (location === "/profile/modifier") return <Modifymyprofile />;
+  if (location === "/profil/modifier") return <Modifymyprofile />;
 
   return (
     <div className="headerContainer">
@@ -60,7 +62,7 @@ export const Profile = () => {
           Mes Popotes
         </Link>
       </div>
-      {location === "/profil" ? <Monprofil /> : <Outlet />}
+      {isAuth ? (location === "/profil" ? <Monprofil /> : <Outlet />) : <Login />}
     </div>
   );
 };

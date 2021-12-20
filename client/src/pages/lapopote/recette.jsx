@@ -1,45 +1,40 @@
 import { useParams } from "react-router-dom";
-import { images } from "../../assets/images/importImages";
 import { RecipeInfos } from "../../components/recipeInfos";
 import { RecipeIngredients } from "../../components/recipeIngredients";
+import { Recipes } from "../../components/recipes";
 
 export const Recette = () => {
   const { recette } = useParams();
+  const recipe = Recipes.find(recipe => recipe.name === recette)
 
   return (
     <div className="recipePage">
       <div className="recipeContainer">
-        <img className="cardImg" src={images.image1} alt="" />
+        <img className="cardImg" src={require(`../../assets/images/${recipe.image}.png`).default} alt="" />
         <div className="recipeTitle">{recette}</div>
-        <div className="doneBy">Yoyo L'Asticot</div>
         <div className="separatePopote"></div>
-        <RecipeInfos />
+        <div className="doneBy">{recipe.author}</div>
+        <RecipeInfos infos={recipe} />
         <div className="separatePopote"></div>
-        <RecipeIngredients />
+        <RecipeIngredients ingredients={recipe.ingredients} />
         <div className="separatePopote"></div>
         <div className="steps">
-          <div className="stepTitle">Etape 1</div>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit
-            cumque quas alias numquam, cupiditate voluptate, doloribus eum,
-            voluptatum quo doloremque illo! Dicta aliquid voluptates voluptas
-            repellat est fugiat. Ex, corporis.
-          </p>
-          <div className="stepTitle">Etape 2</div>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit
-            cumque quas alias numquam, cupiditate voluptate, doloribus eum,
-            voluptatum quo doloremque illo! Dicta aliquid voluptates voluptas
-            repellat est fugiat. Ex, corporis.
-          </p>
+          {recipe.steps.map((step, index) => {
+            return (
+              <div key={index} className="step">
+                <div className="stepTitle">Etape {index + 1}</div>
+                <p>{step}</p>
+              </div>
+            );
+          })}
         </div>
         <div className="separatePopote"></div>
         <div className="recipeComment">
-          <h3>Commentaires de l'auteur</h3>
+          <h3>Commentaire de l'auteur</h3>
           <p>
-            {"<< "}Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Quisquam quos at harum neque magni accusantium dolores molestiae
-            voluptatibus.{" >>"}
+            {"<< "}
+            {recipe.comment}
+            {" >>"}
           </p>
         </div>
       </div>

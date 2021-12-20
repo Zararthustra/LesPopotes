@@ -1,21 +1,16 @@
 import { Card } from "../../components/card";
-import { icons } from "../../assets/images/importIcons";
-import { images } from "../../assets/images/importImages";
 import { SearchFilterPopote } from "../../components/searchFilterPopote";
+import { Recipes } from "../../components/recipes";
 
 export const Favorites = () => {
+
   return (
-    <div className="mapopoteBody">
+    <div className="mapopotebody">
       <SearchFilterPopote />
-      <div>
-        <h1>Liste de mes recettes favorites</h1>
-        <div className="cardList">
-          <Card icons={icons} images={images} />
-          <Card icons={icons} images={images} />
-          <Card icons={icons} images={images} />
-          <Card icons={icons} images={images} />
-          <Card icons={icons} images={images} />
-        </div>
+      <div className="cardList">
+        {Recipes.map((recipe, index) => {
+          return <Card key={index} recipe={recipe} />;
+        })}
       </div>
     </div>
   );

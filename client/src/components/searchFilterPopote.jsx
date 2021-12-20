@@ -124,7 +124,7 @@ export const SearchFilterPopote = () => {
           Autres
         </label>
       </div>
-      <button className="popoteButton" onClick={() => navigate("creation")}>
+      <button className="popoteButton" onClick={() => navigate("/lapopote/creation")}>
         Créer une recette
       </button>
       <div className="separatePopote"></div>

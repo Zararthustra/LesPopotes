@@ -1,0 +1,78 @@
+@media all and (max-width: 810px) {
+  .landingTitle {
+    line-height: 2em !important;
+  padding-top: 4em;
+}
+  .landingTitle1 {
+    font-size: 4em !important;
+  }
+  .landingTitle2 {
+    font-size: 1.3em !important;
+    top: 1.8em !important;
+    right: -4em !important;
+  }
+}
+.home {
+  cursor: pointer;
+  color: var(--white);
+}
+.homelandingBody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--dark);
+}
+.landingTitle {
+  margin: 0;
+  padding: 0em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 75vh;
+  width: 100%;
+  background-image: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.9)
+    ),
+    url("../assets/images/friends.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+  line-height: 2em;
+}
+.landingTitle1 {
+  position: relative;
+  top: 0.3em;
+  color: var(--white);
+  font-weight: 400;
+  margin: 0;
+  font-size: 7em;
+  font-family: "Oswald", sans-serif;
+}
+.landingTitle2 {
+  position: relative;
+  top: 2.4em;
+  right: -5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  font-size: 2em;
+  line-height: 1em;
+}
+.cuisiner {
+  color: var(--popote);
+  margin: 0;
+}
+.partager {
+  letter-spacing: 0.001em;
+  margin: 0;
+  color: var(--popotes);
+}
+
+
