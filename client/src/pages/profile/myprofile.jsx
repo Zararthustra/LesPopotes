@@ -31,7 +31,7 @@ export const Monprofil = () => {
           <p>5</p>
         </li>
         <li>
-          <p>Favoris</p>
+          <p>Notes</p>
           <p>18</p>
         </li>
         <li>
