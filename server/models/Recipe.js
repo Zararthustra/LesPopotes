@@ -56,24 +56,23 @@ module.exports = (sequelize, Sequelize) => {
     },
   });
   Recipe.associate = (models) => {
-    Recipe.belongsTo(models.User),
+    Recipe.belongsTo(models.User, {
+      foreignKey: "user_id",
+    }),
       Recipe.hasMany(models.Comment),
       Recipe.hasMany(models.Notification),
       Recipe.hasMany(models.Note),
       Recipe.hasMany(models.Step),
       Recipe.belongsToMany(models.User, {
-        through: "favorite_recipe",
-        as: "users",
+        through: "FavoriteRecipe",
         foreignKey: "recipe_id",
       }),
       Recipe.belongsToMany(models.Ingredient, {
-        through: "recipe_ingredient",
-        as: "ingredients",
+        through: "RecipeIngredient",
         foreignKey: "recipe_id",
       }),
       Recipe.belongsToMany(models.Tag, {
-        through: "recipe_tag",
-        as: "tags",
+        through: "RecipeTag",
         foreignKey: "recipe_id",
       });
   };

@@ -17,8 +17,7 @@ module.exports = (sequelize, Sequelize) => {
   });
   Notification.associate = (models) => {
     Notification.belongsToMany(models.User, {
-      through: "user_notification",
-      as: "users",
+      through: "UserNotification",
       foreignKey: "notification_id",
     });
   };

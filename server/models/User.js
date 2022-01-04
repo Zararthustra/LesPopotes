@@ -48,17 +48,22 @@ module.exports = (sequelize, Sequelize) => {
     },
     isAdmin: {
       type: Sequelize.BOOLEAN,
-      defaultValue: false
+      defaultValue: false,
     },
   });
   User.associate = (models) => {
-    User.hasMany(models.Recipe),
+    User.hasMany(models.Recipe, {
+      foreignKey: "user_id",
+    }),
       User.hasMany(models.Note),
       User.hasMany(models.Like),
       User.hasMany(models.Comment),
       User.belongsToMany(models.Notification, {
-        through: "user_notification",
-        as: "notifications",
+        through: "UserNotification",
+        foreignKey: "user_id",
+      }),
+      User.belongsToMany(models.Recipe, {
+        through: "FavoriteRecipe",
         foreignKey: "user_id",
       });
   };

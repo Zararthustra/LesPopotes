@@ -14,7 +14,12 @@ module.exports = (sequelize, Sequelize) => {
     },
   });
   Note.associate = (models) => {
-    Note.belongsTo(models.User), Note.belongsTo(models.Recipe);
+    Note.belongsTo(models.User, {
+      foreignKey: "user_id",
+    }),
+      Note.belongsTo(models.Recipe, {
+        foreignKey: "recipe_id",
+      });
   };
   return Note;
 };

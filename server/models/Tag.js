@@ -4,15 +4,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    recipe_id: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-    },
   });
   Tag.associate = (models) => {
     Tag.belongsToMany(models.Recipe, {
-      through: "recipe_tag",
-      as: "recipes",
+      through: "RecipeTag",
       foreignKey: "tag_id",
     });
   };

@@ -23,14 +23,13 @@ module.exports = (sequelize, Sequelize) => {
     },
   });
   Comment.associate = (models) => {
-    Comment.belongsTo(models.Recipe),
-      Comment.belongsTo(models.User),
-      Comment.hasMany(models.Like),
-      Comment.hasMany(models.Comment, {
-        as: "thread",
-        foreignKey: "commentId",
-        useJunctionTable: false,
-      });
+    Comment.belongsTo(models.Recipe, {
+      foreignKey: "recipe_id",
+    }),
+      Comment.belongsTo(models.User, {
+        foreignKey: "user_id",
+      }),
+      Comment.hasMany(models.Like);
   };
   return Comment;
 };

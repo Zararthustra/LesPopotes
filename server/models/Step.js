@@ -14,7 +14,9 @@ module.exports = (sequelize, Sequelize) => {
     },
   });
   Step.associate = (models) => {
-    Step.belongsTo(models.Recipe);
+    Step.belongsTo(models.Recipe, {
+      foreignKey: "recipe_id",
+    });
   };
   return Step;
 };

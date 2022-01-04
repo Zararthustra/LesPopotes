@@ -11,11 +11,15 @@ module.exports = (sequelize, Sequelize) => {
     comment_id: {
       type: Sequelize.INTEGER,
       allowNull: false,
-    }
+    },
   });
   Like.associate = (models) => {
-    Like.belongsTo(models.User),
-    Like.belongsTo(models.Comment);
-  }
+    Like.belongsTo(models.User, {
+      foreignKey: "user_id",
+    }),
+      Like.belongsTo(models.Comment, {
+        foreignKey: "comment_id",
+      });
+  };
   return Like;
 };
