@@ -45,7 +45,6 @@
 .mypopoteInfos {
   width: 100%;
   margin: 0 0 1em;
-  height: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,8 +55,8 @@
   gap: 0.5em;
 }
 .mypopoteInfos .avatar {
-  width: 6em;
-  height: 6em;
+  width: 6em !important;
+  height: 6em !important;
 }
 .mypopoteNames {
   font-size: 2em;
@@ -133,4 +132,12 @@
   border-radius: 30px;
   border: none;
   box-shadow: 1px 1px 8px 1px #dcdcdc;
+}
+.disconnectButton {
+  cursor: pointer;
+  background-color: var(--white);
+  border: none;
+  margin: 1em 0;
+  color: red;
+  font-weight: bolder;
 }

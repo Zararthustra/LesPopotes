@@ -1,5 +1,5 @@
-import { icons } from "../assets/images/importIcons";
-import { images } from "../assets/images/importImages";
+import { icons } from "../assets/utils/importIcons";
+import { images } from "../assets/utils/importImages";
 export const RecipeInfos = ({ infos }) => {
   return (
     <div className="recipeInfos">

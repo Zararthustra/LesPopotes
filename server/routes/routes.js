@@ -15,27 +15,27 @@ router.use(cors());
 router.post("/user", (req, res) => {
   const name = req.body.name;
   const password = req.body.password;
-  const mail = req.body.mail;
-  const diet = req.body.diet;
   const type = req.body.type;
-  const avatar = req.body.avatar;
-  const recipes = req.body.recipes;
-  const popotes = req.body.popotes;
-  const comments = req.body.comments;
-  const notes = req.body.notes;
-  const linkedin = req.body.linkedin;
-  const snapchat = req.body.snapchat;
-  const facebook = req.body.facebook;
-  const instagram = req.body.instagram;
-  const isAdmin = req.body.isAdmin;
+  const mail = req.body.mail ? req.body.mail : null;
+  const diet = req.body.diet ? req.body.diet : null;
+  const avatar = req.body.avatar ? req.body.avatar : null;
+  const recipes = req.body.recipes ? req.body.recipes : 0;
+  const popotes = req.body.popotes ? req.body.popotes : 0;
+  const comments = req.body.comments ? req.body.comments : 0;
+  const notes = req.body.notes ? req.body.notes : 0;
+  const linkedin = req.body.linkedin ? req.body.linkedin : null;
+  const snapchat = req.body.snapchat ? req.body.snapchat : null;
+  const facebook = req.body.facebook ? req.body.facebook : null;
+  const instagram = req.body.instagram ? req.body.instagram : null;
+  const isAdmin = req.body.isAdmin ? req.body.isAdmin : false;
 
   db.User.findOrCreate({
     where: {
       name,
       password,
+      type,
       mail,
       diet,
-      type,
       avatar,
       recipes,
       popotes,
@@ -51,6 +51,44 @@ router.post("/user", (req, res) => {
     if (creationStatus[1]) res.json(creationStatus[0]);
     else res.send(creationStatus[1]);
   });
+});
+
+// Check existing account
+router.post("/user/login", (req, res) => {
+  const name = req.body.name;
+  const password = req.body.password;
+
+  db.User.findOne({
+    where: {
+      name: name,
+      password: password,
+    },
+  }).then((userValidated) => {
+    if (!userValidated) res.send("Wrong credentials");
+    else {
+      //const accessToken = createAccessToken({ userValidated });
+      res.send({
+        id: userValidated.id,
+        name: userValidated.name,
+        password: userValidated.password,
+        //accessToken: accessToken,
+      });
+    }
+  });
+});
+
+// Retrieve all
+router.get("/users", (req, res) => {
+  db.User.findAll().then((users) => res.json(users));
+});
+
+// Retrieve one
+router.get("/:user", (req, res) => {
+  db.User.findOne({
+    where: {
+      name: req.params.user,
+    },
+  }).then((user) => res.json(user));
 });
 
 //________________________________________ Recipes

@@ -1,8 +1,7 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Avatar } from "../../components/Avatar";
 
 export const Modifymyprofile = () => {
-  const location = useLocation().pathname;
   const navigate = useNavigate();
   const validate = () => {
     navigate("/profil");

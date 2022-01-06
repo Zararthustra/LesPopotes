@@ -1,5 +1,5 @@
 import { Card } from "../../components/card";
-import { Recipes } from "../../components/recipes";
+import { Recipes } from "../../assets/utils/recipes";
 
 export const Lastpubs = () => {
   return (

@@ -1,12 +1,10 @@
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Login } from "../login";
 import { Modifymyprofile } from "./modifymyprofile";
 import { Monprofil } from "./myprofile";
 
 export const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation().pathname;
-  const isAuth = localStorage.getItem("username"); //check localstorage
 
   const toggleActiveLink = (id) => {
     let activeLink = document.getElementById(id).classList;
@@ -62,7 +60,7 @@ export const Profile = () => {
           Mes Popotes
         </Link>
       </div>
-      {isAuth ? (location === "/profil" ? <Monprofil /> : <Outlet />) : <Login />}
+      {location === "/profil" ? <Monprofil /> : <Outlet />}
     </div>
   );
 };

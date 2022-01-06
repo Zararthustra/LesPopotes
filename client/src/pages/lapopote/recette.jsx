@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { RecipeInfos } from "../../components/recipeInfos";
 import { RecipeIngredients } from "../../components/recipeIngredients";
-import { Recipes } from "../../components/recipes";
+import { Recipes } from "../../assets/utils/recipes";
 
 export const Recette = () => {
   const { recette } = useParams();

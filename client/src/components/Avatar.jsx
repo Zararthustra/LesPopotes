@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-export const Avatar = () => {
-  // Variables
+export const Avatar = ({chosenAvatar}) => {
+  //________________________________________ Variables
 
-  //    Avatar
+  //    Options
   const hair = [
     "shortHair",
     "mohawk",
@@ -70,7 +70,7 @@ export const Avatar = () => {
     "variant08",
   ];
   const [avatar, setAvatar] = useState(
-    "https://avatars.dicebear.com/api/big-smile/sdfq.svg"
+    "https://avatars.dicebear.com/api/big-smile/sdfq.svg?translateY=10"
   );
 
   const getAvatar = () => {
@@ -83,7 +83,10 @@ export const Avatar = () => {
     const hc = hairColor[Math.floor(Math.random() * hairColor.length)];
 
     setAvatar(
-      `https://${basePath}?hair=${h}&mouth=${m}&eyes=${e}&accessories=${a}&skinColor=${s}&hairColor=${hc}&translateY=-20`
+      `https://${basePath}?hair=${h}&mouth=${m}&eyes=${e}&accessories=${a}&skinColor=${s}&hairColor=${hc}&translateY=10`
+    );
+    chosenAvatar(
+      `https://${basePath}?hair=${h}&mouth=${m}&eyes=${e}&accessories=${a}&skinColor=${s}&hairColor=${hc}&translateY=10`
     );
   };
 

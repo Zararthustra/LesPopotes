@@ -1,8 +1,6 @@
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Homelanding } from "./homelanding";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 export const Home = () => {
-  const location = useLocation().pathname;
   const navigate = useNavigate();
 
   const toggleActiveLink = (id) => {

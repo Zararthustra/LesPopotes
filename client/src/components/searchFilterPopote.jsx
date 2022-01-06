@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const SearchFilterPopote = () => {
   const navigate = useNavigate();
-  const location = useLocation().pathname;
 
   const [apero, setApero] = useState(false);
   const [entree, setEntree] = useState(false);

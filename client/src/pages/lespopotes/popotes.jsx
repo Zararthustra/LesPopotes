@@ -1,23 +1,7 @@
-import { Popotesitem } from "../../components/popotesitem";
-
-export const Popotes = () => {
+// page profile d'un popote (TBD)
+export const Popotes = ({ users }) => {
   return (
-    <div className="itemsContainer">
-
-      <Popotesitem />
-      <Popotesitem />
-      <Popotesitem />
-      <Popotesitem />
-      <Popotesitem />
-      <Popotesitem />
-      <Popotesitem />
-      <Popotesitem />
-      <Popotesitem />
-      <Popotesitem />
-      <Popotesitem />
-      <Popotesitem />
-      <Popotesitem />
-      <Popotesitem />
+    <div className="container">
     </div>
   );
 };

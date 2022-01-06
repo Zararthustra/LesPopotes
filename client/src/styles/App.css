@@ -38,7 +38,11 @@ li {
 a {
   text-decoration: none;
 }
-
+.avatar {
+  cursor: pointer;
+  position: relative;
+  top: -0.3em;
+}
 /*
  * Scrollbar
  */

@@ -46,8 +46,8 @@ export const App = () => {
         </Route>
 
         {/* Profile */}
-        <Route path="profil" element={<Profile />}>
-          <Route element={<ProtectedRoutes />}>
+        <Route element={<ProtectedRoutes />}>
+          <Route path="profil" element={<Profile />}>
             <Route path="monprofil" element={<Monprofil />} />
             <Route path="modifier" element={<Modifymyprofile />} />
             <Route path="favorites" element={<Favorites />} />

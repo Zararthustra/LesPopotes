@@ -1,6 +1,6 @@
 import { Card } from "../../components/card";
 import { SearchFilterPopote } from "../../components/searchFilterPopote";
-import { Recipes } from "../../components/recipes";
+import { Recipes } from "../../assets/utils/recipes";
 
 export const Favorites = () => {
 
