@@ -5,6 +5,7 @@ const db = require("../models");
 const { Op } = require("sequelize");
 const cors = require("cors");
 const User = require("../models/User");
+const { response } = require("express");
 
 router.use(express.json());
 router.use(cors());
@@ -29,27 +30,30 @@ router.post("/user", (req, res) => {
   const instagram = req.body.instagram ? req.body.instagram : null;
   const isAdmin = req.body.isAdmin ? req.body.isAdmin : false;
 
-  db.User.findOrCreate({
+  db.User.findOne({
     where: {
       name,
-      password,
-      type,
-      mail,
-      diet,
-      avatar,
-      recipes,
-      popotes,
-      comments,
-      notes,
-      linkedin,
-      snapchat,
-      facebook,
-      instagram,
-      isAdmin,
     },
-  }).then((creationStatus) => {
-    if (creationStatus[1]) res.json(creationStatus[0]);
-    else res.send(creationStatus[1]);
+  }).then((response) => {
+    if (response) return res.send("User already exist");
+    else
+      db.User.create({
+        name,
+        password,
+        type,
+        mail,
+        diet,
+        avatar,
+        recipes,
+        popotes,
+        comments,
+        notes,
+        linkedin,
+        snapchat,
+        facebook,
+        instagram,
+        isAdmin,
+      }).then((createdUser) => res.json(createdUser));
   });
 });
 
@@ -68,9 +72,6 @@ router.post("/user/login", (req, res) => {
     else {
       //const accessToken = createAccessToken({ userValidated });
       res.send({
-        id: userValidated.id,
-        name: userValidated.name,
-        password: userValidated.password,
         //accessToken: accessToken,
       });
     }

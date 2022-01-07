@@ -32,7 +32,7 @@ export const App = () => {
 
         {/* La Popote */}
         <Route path="lapopote" element={<Lapopote />}>
-          <Route path=":recette" element={<Recette /> /* URI param */} />
+          <Route path=":recette" element={<Recette />} />
           <Route element={<ProtectedRoutes />}>
             <Route path="creation" element={<Creation />} />
           </Route>
@@ -41,7 +41,7 @@ export const App = () => {
         {/* Les Popotes */}
         <Route element={<ProtectedRoutes />}>
           <Route path="lespopotes" element={<Lespopotes />}>
-            <Route path="popotes" element={<Popotes />} />
+            <Route path=":popote" element={<Popotes />} />
           </Route>
         </Route>
 

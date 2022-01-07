@@ -13,7 +13,6 @@ export const ProtectedRoutes = () => {
 
   //Check if user exists
   useEffect(() => {
-    let isSubscribed = true;
     axios
       .post(`${Host}api/user/login`, {
         name,
@@ -23,7 +22,7 @@ export const ProtectedRoutes = () => {
         if (response.data === "Wrong credentials") {
           setIsAuth(false);
         } else {
-          if (isSubscribed) setIsAuth(true);
+          setIsAuth(true);
         }
       })
       .catch((error) =>
@@ -32,8 +31,7 @@ export const ProtectedRoutes = () => {
           error
         )
       );
-    return () => (isSubscribed = false);
-  }, [isAuth, name, password]);
+  }, [name, password, isAuth]);
 
   return isAuth ? <Outlet /> : <Login />;
 };

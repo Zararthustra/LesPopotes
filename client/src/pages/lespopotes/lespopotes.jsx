@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Host } from "../../assets/utils/host";
 import { Popotesitem } from "../../components/popotesitem";
 
 export const Lespopotes = () => {
+  const location = useLocation().pathname;
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
@@ -33,6 +34,9 @@ export const Lespopotes = () => {
   //     activeLink1.remove("activePopotes");
   //   }
   // };
+
+  if (location !== '/lespopotes') return <Outlet />
+
   return (
     <div className="headerContainer">
       <h1 className="title lespopotes" onClick={() => navigate("/lespopotes")}>

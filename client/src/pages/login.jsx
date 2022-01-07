@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { Host } from "../assets/utils/host";
 import { Avatar } from "../components/Avatar";
 
 export const Login = () => {
   //___________________________________________________ Variables
-
+  const navigate = useNavigate();
   const [creation, setCreation] = useState(false);
 
   const popoteTypes = [
@@ -33,7 +34,9 @@ export const Login = () => {
   const [type, setType] = useState("");
   const [mail, setMail] = useState("");
   const [diet, setDiet] = useState("");
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState(
+    "https://avatars.dicebear.com/api/big-smile/randooom.svg?translateY=10"
+  );
   const [linkedin, setLinkedin] = useState("");
   const [snapchat, setSnapchat] = useState("");
   const [facebook, setFacebook] = useState("");
@@ -41,7 +44,8 @@ export const Login = () => {
 
   //___________________________________________________ Functions
 
-  async function addUser(event) {
+  const addUser = (event) => {
+    event.preventDefault();
     // Check empty mandatory fields
     if (userName === "") {
       document.getElementsByClassName("inputName")[0].placeholder =
@@ -54,59 +58,52 @@ export const Login = () => {
       return;
     }
     if (type === "") {
-      document.getElementsByClassName("inputType")[0].placeholder =
-        "Entrer un type";
       return;
     }
 
     //Check if user already exists
-    const response = await axios.post(`${Host}api/user`, {
-      name: userName,
-      password,
-      type,
-      avatar,
-      mail,
-      diet,
-      snapchat,
-      facebook,
-      instagram,
-      linkedin,
-    });
-    if (response.data) {
-      localStorage.setItem("username", response.data.name);
-      localStorage.setItem("password", response.data.password);
-      //localStorage.setItem("token", response.data.accessToken);
-    } else {
-      document.getElementsByClassName("inputName")[0].placeholder =
-        "Existe déjà !";
-      document.getElementsByClassName("inputPassword")[0].placeholder = "";
-    }
-    setPassword("");
+    axios
+      .post(`${Host}api/user`, {
+        name: userName,
+        password,
+        type,
+        avatar,
+        mail,
+        diet,
+        snapchat,
+        facebook,
+        instagram,
+        linkedin,
+      })
+      .then((response) => {
+        if (response.data === "User already exist") {
+          document.getElementsByClassName("inputName")[0].placeholder =
+            "Existe déjà !";
+          document.getElementsByClassName("inputPassword")[0].placeholder = "";
+        } else if (response.data.name) {
+          localStorage.setItem("username", response.data.name);
+          localStorage.setItem("password", response.data.password);
+          //localStorage.setItem("token", response.data.accessToken);
+          navigate("/lapopote");
+        }
+      });
     setUserName("");
+    setPassword("");
     setMail("");
     setDiet("");
     setLinkedin("");
     setSnapchat("");
     setFacebook("");
     setInstagram("");
-  }
+  };
 
   async function logUser(event) {
-    const response = await axios.post(`${Host}api/user/login`, {
-      name: userName,
-      password: password,
-    });
-    if (response.data === "Wrong credentials") {
-      document.getElementsByClassName("inputName")[0].placeholder = "Mauvaise";
-      document.getElementsByClassName("inputPassword")[0].placeholder =
-        "Combinaison";
-      setPassword("");
-      setUserName("");
-    } else {
-      localStorage.setItem("username", response.data.name);
-      localStorage.setItem("password", response.data.password);
-      //localStorage.setItem("token", response.data.accessToken);
-    }
+    localStorage.setItem("username", userName);
+    localStorage.setItem("password", password);
+    //localStorage.setItem("token", response.data.accessToken);
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    //}
   }
 
   const handleInputChange = (event) => {

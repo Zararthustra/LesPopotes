@@ -2,14 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { capitalize } from "../../assets/utils/capitalize";
+import { getLevel } from "../../assets/utils/getLevel";
 import { Host } from "../../assets/utils/host";
 
 export const Monprofil = () => {
   const navigate = useNavigate();
   const userName = localStorage.getItem("username");
-  const [userObject, setUserObject] = useState({
-    name: "",
-  });
+  const [userObject, setUserObject] = useState({ name: "" });
 
   const modify = () => {
     navigate("modifier");
@@ -36,13 +35,20 @@ export const Monprofil = () => {
   return (
     <div className="myprofileBody">
       <div className="mypopoteInfos">
-      <img src={userObject.avatar} alt="avatar" className="avatar" />
+        <img src={userObject.avatar} alt="avatar" className="avatar" />
         <div className="mypopoteNames">
           <div className="pseudo">{capitalize(userObject.name)}</div>
           <div className="type">{userObject.type}</div>
         </div>
       </div>
-      <div className="level">Confirmé</div>
+      <div className="level">
+        {getLevel(
+          userObject.recipes,
+          userObject.notes,
+          userObject.popotes,
+          userObject.comments
+        )}
+      </div>
       <ul className="levelInfos">
         <li>
           <p>Recettes</p>
@@ -61,6 +67,8 @@ export const Monprofil = () => {
           <p>{userObject.comments}</p>
         </li>
       </ul>
+      <div className="separatePopotes"></div>
+
       <ul className="userInfos">
         <li>
           <p>Mot de passe</p>

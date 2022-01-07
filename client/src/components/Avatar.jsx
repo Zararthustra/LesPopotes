@@ -70,7 +70,7 @@ export const Avatar = ({chosenAvatar}) => {
     "variant08",
   ];
   const [avatar, setAvatar] = useState(
-    "https://avatars.dicebear.com/api/big-smile/sdfq.svg?translateY=10"
+    "https://avatars.dicebear.com/api/big-smile/randooom.svg?translateY=10"
   );
 
   const getAvatar = () => {

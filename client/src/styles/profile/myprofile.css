@@ -6,6 +6,11 @@
     width: 90% !important;
   }
 }
+@media all and (max-width: 400px) {
+  .mypopoteNames {
+    font-size: 1.3em !important;
+  }
+}
 
 /*
  * My Profile
@@ -23,6 +28,9 @@
 }
 .myprofileBody p {
   margin: 0;
+}
+.popoteProfile {
+  padding-top: 4em;
 }
 
 .myprofileContainer {
@@ -63,6 +71,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  align-items: flex-start;
   font-family: "Oswald", sans-serif;
   line-height: 1.2em;
 }
