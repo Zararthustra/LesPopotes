@@ -15,18 +15,44 @@
   --dark-popotes: #00be7c;
   --popote: #f5a76c;
   --dark-popote: #e76400;
-  --white: #fafced;
+  --white: #fcfaf6;
   --dark: #2c2a3a;
   --dark-text: #2c2c2c;
   --light-text: #9c9c9c;
 }
 
+/*
+ * Popote selection
+ */
+.recipePage ::selection {
+  color: var(--white);
+  background: var(--dark-popote);
+}
+.recipePage ::-moz-selection {
+  color: var(--white);
+  background: var(--dark-popote);
+}
+/*
+ * Popotes selection
+ */
+.myprofileBody ::selection {
+  color: var(--white);
+  background: var(--dark-popotes);
+}
+.myprofileBody ::-moz-selection {
+  color: var(--white);
+  background: var(--dark-popotes);
+}
+
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--white);
+  background-color: white;
   font-family: "Rubik";
   overflow-x: hidden;
+}
+tr {
+  height: 2.5em;
 }
 ul {
   padding: 0;
@@ -111,4 +137,22 @@ a {
   width: 80%;
   height: 1px;
   background-color: var(--popotes);
+}
+
+.addButton {
+  background-image: url("../assets/icons/plus-512.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 3em;
+  height: 3em;
+}
+
+.removeButton {
+  background-image: url("../assets/icons/moins-512.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 3em;
+  height: 3em;
 }

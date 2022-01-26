@@ -6,9 +6,47 @@ const { Op } = require("sequelize");
 const cors = require("cors");
 const User = require("../models/User");
 const { response } = require("express");
+const multer = require("multer");
+const path = require("path");
 
 router.use(express.json());
 router.use(cors());
+
+const customizedError = (error, from) => {
+  return {
+    From: from,
+    Error: error.name,
+    Code: error.parent && error.parent.code,
+    Message: error.parent && error.parent.sqlMessage,
+    Query: error.sql,
+    Parameters: error.parameters,
+    FullError: error,
+  };
+};
+
+//________________________________________ Image storage
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "../Images"); //or server/Images
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: "1000000" }, //1mb
+  fileFilter: (req, file, cb) => {
+    const fileTypes = /jpeg|jpg|png/;
+    const mimeType = fileTypes.test(file.mimetype);
+    const extname = fileTypes.test(path.extname(file.originalname));
+
+    if (mimeType && extname) return cb(null, true);
+    cb("Wrong image format.");
+  },
+})
 
 //________________________________________ Users
 
@@ -57,7 +95,51 @@ router.post("/user", (req, res) => {
   });
 });
 
-// Check existing account
+// Retrieve all
+router.get("/users", (req, res) => {
+  db.User.findAll().then((users) => res.json(users));
+});
+
+// Retrieve one
+router.get("/users/:user", (req, res) => {
+  db.User.findOne({
+    where: {
+      name: req.params.user,
+    },
+  }).then((user) => res.json(user));
+});
+
+// Updates
+router.put("/users/:user/recipes", (req, res) => {
+  const newValue = req.body.newValue;
+
+  db.User.update(
+    {
+      recipes: newValue,
+    },
+    {
+      where: {
+        name: req.params.user,
+      },
+    }
+  ).then((response) => res.json(response));
+});
+// router.put("/users/:user/comments", (req, res) => {
+//   const newValue = req.body.newValue;
+
+//   db.User.update(
+//     {
+//       comments: newValue,
+//     },
+//     {
+//       where: {
+//         name: req.params.user,
+//       },
+//     }
+//   ).then((response) => res.json(response));
+// });
+
+// Login
 router.post("/user/login", (req, res) => {
   const name = req.body.name;
   const password = req.body.password;
@@ -72,32 +154,22 @@ router.post("/user/login", (req, res) => {
     else {
       //const accessToken = createAccessToken({ userValidated });
       res.send({
+        userValidated,
         //accessToken: accessToken,
       });
     }
   });
 });
 
-// Retrieve all
-router.get("/users", (req, res) => {
-  db.User.findAll().then((users) => res.json(users));
-});
-
-// Retrieve one
-router.get("/:user", (req, res) => {
-  db.User.findOne({
-    where: {
-      name: req.params.user,
-    },
-  }).then((user) => res.json(user));
-});
-
 //________________________________________ Recipes
 
 // Create
-router.post("/recipe", (req, res) => {
+router.post("/recipe", upload.single("image"), (req, res) => {
+  console.log("File in req ??", req.file);
+  console.log("Headers :", req.headers);
   const name = req.body.name;
-  const image = req.body.image;
+  const image = req.file.path;
+  console.log("Client image : ", image);
   const nbPers = req.body.nbPers;
   const isNbVariable = req.body.isNbVariable;
   const type = req.body.type;
@@ -128,7 +200,29 @@ router.post("/recipe", (req, res) => {
     notes,
     signal,
     authorComment,
-  }).then((createdRecipe) => res.json(createdRecipe));
+  })
+    .then((createdRecipe) => {
+      if (createdRecipe) return res.json(createdRecipe);
+      return res.send("Could not create recipe.");
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "POST create Recipe"));
+      res.json({ error: err.name });
+    });
+});
+
+// Retrieve all
+router.get("/recipes", (req, res) => {
+  db.Recipe.findAll().then((recipes) => res.json(recipes));
+});
+
+// Retrieve one
+router.get("/recipes/:recipeID", (req, res) => {
+  db.Recipe.findOne({
+    where: {
+      id: req.params.recipeID,
+    },
+  }).then((recipe) => res.json(recipe));
 });
 
 //________________________________________ Favorite Recipes
@@ -177,18 +271,27 @@ router.post("/user/notification", (req, res) => {
 //________________________________________ Ingredients
 
 // Create
-router.post("/ingredient", (req, res) => {
-  const name = req.body.name;
-  const quantity = req.body.quantity;
-  const unity = req.body.unity;
-  const recipe_id = req.body.recipe_id;
+router.post("/ingredients/:recipeId", (req, res) => {
+  const ingredientsArrayInput = req.body.ingredients;
 
-  db.Ingredient.create({
-    name,
-    recipe_id,
-    quantity,
-    unity,
-  }).then((createdIngredient) => res.json(createdIngredient));
+  const ingredientsArrayOutput = ingredientsArrayInput.map((ingredient) => {
+    return {
+      name: ingredient.name,
+      quantity: ingredient.quantity,
+      unity: ingredient.unity,
+      recipe_id: req.params.recipeId,
+    };
+  });
+
+  db.Ingredient.bulkCreate(ingredientsArrayOutput)
+    .then((createdIngredient) => {
+      if (createdIngredient) return res.json(createdIngredient);
+      return res.send("Could not create ingredients.");
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "POST create Ingredients"));
+      res.json({ error: err.name });
+    });
 });
 
 //________________________________________ Recipe Ingredients
@@ -228,16 +331,26 @@ router.post("/recipe/comment", (req, res) => {
 //________________________________________ Steps
 
 // Create
-router.post("/recipe/step", (req, res) => {
-  const content = req.body.content;
-  const nbStep = req.body.nbStep;
-  const recipe_id = req.body.recipe_id;
+router.post("/steps/:recipeId", (req, res) => {
+  const stepsArrayInput = req.body.stepsFormatedForAPI;
 
-  db.Step.create({
-    content,
-    nbStep,
-    recipe_id,
-  }).then((createdStep) => res.json(createdStep));
+  const stepsArrayOutput = stepsArrayInput.map((step) => {
+    return {
+      content: step.content,
+      nbStep: step.nbStep,
+      recipe_id: req.params.recipeId,
+    };
+  });
+
+  db.Step.bulkCreate(stepsArrayOutput)
+    .then((createdStep) => {
+      if (createdStep) return res.json(createdStep);
+      return res.send("Could not create steps.");
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "POST create Steps"));
+      res.json({ error: err.name });
+    });
 });
 
 //________________________________________ Tags

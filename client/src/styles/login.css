@@ -21,11 +21,20 @@
   padding: 0 0 0.5em;
 margin: 1.3em 0 0 0;
 }
+.isFromCreateRecipe {
+  width: 100%;
+  text-align: center;
+  color: var(--popotes);
+  font-family: "Oswald", sans-serif;
+  font-size: 3em;
+  font-weight: 400;
+  padding: 0 0 0.5em;
+}
 
 .loginField {
   margin-top: 2em;
 }
-.form {
+.loginField .form {
   display: flex;
   flex-direction: column;
   font-size: 50px;
@@ -33,14 +42,14 @@ margin: 1.3em 0 0 0;
   text-align: center;
   justify-content: center;
 }
-input {
+.loginField input {
   border: 1px solid #9fe6ff;
   background-color: rgb(238, 238, 238);
   border-radius: 3px;
   outline: none;
   padding: 3px;
 }
-input:focus {
+.loginField input:focus {
   border: 3px solid var(--popotes);
 }
 

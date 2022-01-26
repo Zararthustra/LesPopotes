@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { Host } from "../assets/utils/host";
 import { Avatar } from "../components/Avatar";
@@ -8,7 +8,30 @@ import { Avatar } from "../components/Avatar";
 export const Login = () => {
   //___________________________________________________ Variables
   const navigate = useNavigate();
+  const location = useLocation().pathname;
   const [creation, setCreation] = useState(false);
+
+  const selectStyle = {
+    control: (base, state) => ({
+      ...base,
+      fontSize: "0.8em",
+      cursor: "pointer",
+      border: state.isFocused ? "2px var(--popotes) solid" : "1px black solid",
+      boxShadow: "none",
+      "&:hover": {
+        border: "2px var(--popotes) solid",
+      },
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isFocused ? "var(--dark-popotes)" : "white",
+      color: state.isFocused ? "white" : "var(--dark-popotes)",
+      "&:hover": {
+        backgroundColor: "var(--dark-popotes)",
+        color: "white",
+      },
+    }),
+  };
 
   const popoteTypes = [
     { value: "gourmand", label: "Gourmand" }, //sucré
@@ -83,6 +106,7 @@ export const Login = () => {
         } else if (response.data.name) {
           localStorage.setItem("username", response.data.name);
           localStorage.setItem("password", response.data.password);
+          localStorage.setItem("userid", response.data.id);
           //localStorage.setItem("token", response.data.accessToken);
           navigate("/lapopote");
         }
@@ -134,7 +158,11 @@ export const Login = () => {
   if (creation)
     return (
       <div className="loginContainer">
-        <h1 className="connexion">Création</h1>
+        {location === "/lapopote/creation" ? (
+          ""
+        ) : (
+          <h1 className="connexion">Création</h1>
+        )}
         <div className="loginField">
           <form className="logform">
             <div className="inputs">
@@ -156,6 +184,8 @@ export const Login = () => {
                   onChange={handleInputChange}
                 />
                 <Select
+                  isSearchable={false}
+                  styles={selectStyle}
                   placeholder="Type de popote *"
                   className="inputType"
                   onChange={handleSelectChange}
@@ -226,40 +256,43 @@ export const Login = () => {
         </div>
       </div>
     );
-  else
-    return (
-      <div className="loginContainer">
-        <h1 className="connexion">Connexion</h1>
-        <div className="loginField">
-          <form className="logform">
-            <div className="inputs">
-              <input
-                maxLength="20"
-                placeholder="Pseudo"
-                className="inputName"
-                type="text"
-                value={userName}
-                onChange={handleInputChange}
-              ></input>
-              <input
-                maxLength="20"
-                placeholder="Mot de passe"
-                className="inputPassword"
-                type="password"
-                value={password}
-                onChange={handleInputChange}
-              ></input>
-            </div>
-            <div className="loginDiv">
-              <button onClick={logUser} className="login">
-                Connecter
-              </button>
-              <button onClick={toggleCreation} className="register">
-                Créer
-              </button>
-            </div>
-          </form>
-        </div>
+  return (
+    <div className="loginContainer">
+      {location === "/lapopote/creation" ? (
+        ""
+      ) : (
+        <h1 className="connexion">Création</h1>
+      )}
+      <div className="loginField">
+        <form className="logform">
+          <div className="inputs">
+            <input
+              maxLength="20"
+              placeholder="Pseudo"
+              className="inputName"
+              type="text"
+              value={userName}
+              onChange={handleInputChange}
+            ></input>
+            <input
+              maxLength="20"
+              placeholder="Mot de passe"
+              className="inputPassword"
+              type="password"
+              value={password}
+              onChange={handleInputChange}
+            ></input>
+          </div>
+          <div className="loginDiv">
+            <button onClick={logUser} className="login">
+              Connecter
+            </button>
+            <button onClick={toggleCreation} className="register">
+              Créer
+            </button>
+          </div>
+        </form>
       </div>
-    );
+    </div>
+  );
 };

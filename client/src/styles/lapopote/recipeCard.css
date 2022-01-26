@@ -29,6 +29,7 @@
 }
 
 .cardList {
+  margin-bottom: 2em;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -37,6 +38,7 @@
 }
 
 .card {
+  margin-top: 2em;
   font-size: 0.9em;
   cursor: pointer;
   width: 12em;

@@ -1,0 +1,249 @@
+@media all and (max-width: 450px) {
+  .selectDiff,
+  .selectNbPers,
+  .imgButton,
+  .time {
+    font-size: 0.8em;
+  }
+  .creationIngredients {
+    font-size: 0.8em !important;
+    flex-wrap: wrap !important;
+  }
+}
+@media all and (max-width: 600px) {
+  .recipeTitleCreation {
+    width: 80% !important;
+  }
+  .selectTag {
+    width: 15em !important;
+  }
+  .creationIngredients {
+    width: 100vw !important;
+    font-size: 1em;
+  }
+}
+
+.separateCreation {
+  width: 80%;
+  height: 1px;
+  background-color: var(--popote);
+  margin: 1.5em 0;
+}
+
+.creationImg {
+  width: 100%;
+  object-fit: cover;
+  height: 20em;
+}
+.uploadImg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.imageBlank {
+  margin-right: 0.5em;
+  width: 1em;
+  height: 1em;
+}
+.imgButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1em;
+  margin: 1em 0;
+  background-color: var(--dark-popote);
+  color: var(--white);
+  cursor: pointer;
+  border-radius: 25px;
+  width: auto;
+  z-index: 1;
+  height: 2em;
+}
+.imgButton input[type="file"] {
+  display: none;
+}
+.imgButton:hover {
+  box-shadow: 1px 3px 5px 1px #5e4102;
+}
+
+/*
+ * Titles
+ */
+.recipeTitleCreation {
+  margin-top: 1em;
+  background-color: rgb(238, 238, 238);
+  border-radius: 3px;
+  outline: none;
+  padding: 0.2em;
+  border: none;
+  width: 50%;
+  font-size: 1.5em;
+}
+.recipeTitleCreation:focus {
+  border: 2px solid var(--popote);
+}
+
+.creationTitles {
+  margin: 1em 0;
+  padding: 0;
+  font-size: 2em;
+  color: var(--dark-popote);
+}
+.Infos {
+  font-size: 1.6em;
+}
+
+/*
+ * Infos
+ */
+
+.bakeMode {
+  color: var(--dark-popote);
+  margin: 1em;
+}
+
+.minutesInput:focus-within {
+  border: 2px solid var(--popote);
+}
+.minutesInput {
+  outline: none;
+  width: 3em;
+  margin-right: 1em;
+}
+
+.tags {
+  display: flex;
+  justify-content: center;
+}
+.selectTag {
+  width: 25em;
+}
+
+/*
+ * Ingredients
+ */
+.ingredientsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.creationIngredients {
+  color: var(--dark-popote);
+  padding: 0.5em 0.5em;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  width: 90%;
+}
+.selectIngredient {
+  width: 9em;
+}
+.selectQuantity:focus-within {
+  border: 2px solid var(--popote);
+}
+.selectQuantity:hover {
+  border: 2px solid var(--popote);
+}
+.selectQuantity {
+  outline: none;
+  height: 32px;
+  border: 1px solid black;
+  border-radius: 4px;
+  width: 3em;
+  font-size: 0.9em;
+}
+
+.addIngredient {
+  cursor: pointer;
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.removeIngredient {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*
+ * Steps
+ */
+
+.addStep {
+  display: flex;
+  justify-content: space-between;
+}
+.addButtonStep {
+  background-image: url("../../assets/icons/plus-512.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  width: 2.3em;
+  height: 2.3em;
+}
+.removeButtonStep {
+  background-image: url("../../assets/icons/moins-512.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  width: 2.3em;
+  height: 2.3em;
+}
+
+.stepText {
+  width: 80%;
+  height: 3em;
+}
+
+
+.step {
+  padding: 0.5em;
+  border-radius: 5px;
+}
+.step:hover {
+  background-color: var(--popote);
+}
+
+/*
+ * Steps
+ */
+
+.recipeComment {
+  width: 100%;
+}
+
+.authorComment {
+  margin: 2em 0;
+  height: 5em;
+  width: 60%;
+}
+
+.creationIngredientsButton {
+  cursor: pointer;
+  padding: 0.4em 1em;
+  color: var(--white);
+  font-weight: bolder;
+  font-size: 1.2em;
+  background-color: var(--dark-popote);
+  border-radius: 30px;
+  border: none;
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+}
+.creationIngredientsButton:hover {
+  box-shadow: 1px 1px 7px 1px #858282;
+}
+
+.cancel {
+  cursor: pointer;
+  background-color: var(--white);
+  border: none;
+  margin: 0.5em 0;
+  color: var(--dark-popote);
+  font-weight: 600;
+}

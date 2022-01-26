@@ -9,6 +9,7 @@ import './styles/login.css';
 import './styles/lapopote/lapopote.css';
 import './styles/lapopote/recipeCard.css';
 import './styles/lapopote/recipe.css';
+import './styles/lapopote/creation.css';
 import './styles/profile/profile.css';
 import './styles/profile/myprofile.css';
 import './styles/lespopotes/lespopotes.css';

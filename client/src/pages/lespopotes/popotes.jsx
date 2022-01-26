@@ -9,17 +9,16 @@ export const Popotes = () => {
   const { popote } = useParams();
   const navigate = useNavigate();
   const [userObject, setUserObject] = useState({ name: "" });
+  const [isSubscribed, setIsSubscribed] = useState(true);
 
   // Load data when mounting
   useEffect(() => {
-    let isSubscribed = true;
-
-    axios.get(`${Host}api/${popote}`).then((res) => {
+    axios.get(`${Host}api/users/${popote}`).then((res) => {
       if (isSubscribed) setUserObject(res.data);
     });
 
-    return () => (isSubscribed = false);
-  }, [popote]);
+    setIsSubscribed(false)
+  }, [popote, isSubscribed]);
 
   return (
     <div className="myprofileBody popoteProfile">

@@ -1,33 +1,23 @@
 export const RecipeIngredients = ({ingredients}) => {
   
   return (
-    <div className="recipeIngredients">
-      <div className="ingredientsCols">
-        <div>
-          <h2 className="ingredientsTitles">Ingrédients</h2>
-          {ingredients.map((ingredient, index) => (
-            <div key={index} className="ingredientsCol">
-              {ingredient.name}
-            </div>
-          ))}
-        </div>
-        <div>
-          <h2 className="ingredientsTitles">Quantité</h2>
-          {ingredients.map((ingredient, index) => (
-            <div key={index} className="ingredientsCol">
-              {ingredient.quantity}
-            </div>
-          ))}
-        </div>
-        <div>
-          <h2 className="ingredientsTitles">Unité</h2>
-          {ingredients.map((ingredient, index) => (
-            <div key={index} className="ingredientsCol">
-              {ingredient.unity}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+    <table className="ingredientsTable">
+      <thead>
+        <tr>
+          <th className="ingredientsTH">Ingrédient</th>
+          <th className="ingredientsTH">Quantité</th>
+          <th className="ingredientsTH">Unité</th>
+        </tr>
+      </thead>
+      <tbody>
+        {ingredients.map((ingredient, index) => (
+          <tr key={index}>
+            <td>{ingredient.name}</td>
+            <td>{ingredient.quantity}</td>
+            <td>{ingredient.unity}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };

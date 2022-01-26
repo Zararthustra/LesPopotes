@@ -6,7 +6,6 @@ module.exports = (sequelize, Sequelize) => {
     },
     image: {
       type: Sequelize.STRING,
-      // default value
     },
     nbPers: {
       type: Sequelize.INTEGER,
@@ -67,10 +66,7 @@ module.exports = (sequelize, Sequelize) => {
         through: "FavoriteRecipe",
         foreignKey: "recipe_id",
       }),
-      Recipe.belongsToMany(models.Ingredient, {
-        through: "RecipeIngredient",
-        foreignKey: "recipe_id",
-      }),
+      Recipe.hasMany(models.Ingredient),
       Recipe.belongsToMany(models.Tag, {
         through: "RecipeTag",
         foreignKey: "recipe_id",

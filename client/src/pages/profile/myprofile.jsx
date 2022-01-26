@@ -25,7 +25,7 @@ export const Monprofil = () => {
   useEffect(() => {
     let isSubscribed = true;
 
-    axios.get(`${Host}api/${userName}`).then((res) => {
+    axios.get(`${Host}api/users/${userName}`).then((res) => {
       if (isSubscribed) setUserObject(res.data);
     });
 

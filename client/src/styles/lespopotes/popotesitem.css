@@ -67,13 +67,3 @@
   font-size: 0.9em;
   color: var(--dark-popotes);
 }
-
-.addButton {
-  background-image: url("../../assets/icons/plus-512.png");
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 2em;
-  height: 2em;
-  padding: 0.3em;
-}

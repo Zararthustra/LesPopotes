@@ -1,6 +1,12 @@
+import { capitalize } from "../assets/utils/capitalize";
 import { icons } from "../assets/utils/importIcons";
 import { images } from "../assets/utils/importImages";
+
 export const RecipeInfos = ({ infos }) => {
+
+  //const heartNote = Pick hearts from likes
+  //const diffNote = Pick diff from diff
+
   return (
     <div className="recipeInfos">
       <ul className="diffnote">
@@ -10,36 +16,37 @@ export const RecipeInfos = ({ infos }) => {
         </li>
         <li className="cardInfo">
           <img className="difficultyImg" src={icons.diff1} alt="" />
-          {infos.diff}
+          {infos.difficulty && capitalize(infos.difficulty)}
         </li>
         <li className="cardInfo">
           <img className="likeImg" src={icons.like45} alt="" />
-          {infos.nbNote} avis
+          {infos.notes} avis
         </li>
       </ul>
       <div className="tags">
-        {infos.tags.map((tag, index) => {
-          return <div key={index} className="tag">
-            #{tag}
-          </div>;
-        })}
+        {infos.tag//s.map((tag, index) => {
+        //   return <div key={index} className="tag">
+        //     #{tag}
+        //   </div>;
+        // })
+        }
       </div>
       <div className="times">
         <div className="time">
           <div className="lighttext">Préparation</div>
-          <div className="value">{infos.cooking.prep} min</div>
+          <div className="value">{infos.prepTime} min</div>
         </div>
         <div className="time">
           <div className="lighttext">Cuisson</div>
-          <div className="value">{infos.cooking.bakeType}</div>
-          <div className="value">{infos.cooking.bake} min</div>
+          <div className="value">{infos.bakeType && capitalize(infos.bakeType)}</div>
+          <div className="value">{infos.bakeTime} min</div>
         </div>
         <div className="time">
           <div>
             <strong>Total</strong>
           </div>
           <div className="valuedark">
-            {infos.cooking.prep + infos.cooking.bake} min
+            {infos.prepTime + infos.bakeTime} min
           </div>
         </div>
       </div>

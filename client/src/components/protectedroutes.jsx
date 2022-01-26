@@ -22,6 +22,7 @@ export const ProtectedRoutes = () => {
         if (response.data === "Wrong credentials") {
           setIsAuth(false);
         } else {
+          localStorage.setItem('userid', response.data.userValidated.id);
           setIsAuth(true);
         }
       })

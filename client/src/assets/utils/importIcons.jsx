@@ -13,4 +13,6 @@ export const icons = {
   like45: require("../../assets/images/like4,5.png").default,
   like5: require("../../assets/images/like5.png").default,
   time: require("../../assets/images/time.png").default,
+  imageBlank: require("../../assets/icons/image-512.png").default,
+  plus: require("../../assets/icons/plus-512.png").default,
 };
