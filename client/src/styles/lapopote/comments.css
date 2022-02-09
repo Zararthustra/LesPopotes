@@ -1,0 +1,127 @@
+@media all and (min-width: 910px) {
+  /* Big screens */
+  .comments {
+    height: 100vh !important;
+    overflow: scroll !important;
+  }
+}
+@media all and (max-width: 350px) {
+  .likeCommentImg {
+    width: 5em !important;
+  }
+  .thumbImg {
+    width: 1.3em !important;
+  }
+}
+
+/*
+ * Container
+ */
+ 
+.comments {
+  background-color: #eafaf5;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin: 2em 0;
+  align-items: center;
+  width: 90%;
+  border-radius: 20px;
+  padding: 1em 0.5em;
+  gap: 1em;
+}
+
+.commentsTitle {
+  color: var(--dark-popotes);
+}
+
+/*
+ * Global
+ */
+
+.comment {
+  border-radius: 30px;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1em;
+  gap: 1em;
+}
+.authorComment {
+  background-color: #007c576b;
+  margin: 0;
+}
+.notAuthorComment {
+  background-color: #00ffb34f;
+}
+
+/*
+ * Header
+ */
+.commentHeader {
+  width: 100%;
+  font-family: "Oswald", sans-serif;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.commentTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.pseudoComment {
+  font-weight: bolder;
+  color: var(--dark-popotes);
+  font-size: 1.4em;
+}
+.pseudoAuthorComment {
+  font-weight: bolder;
+  color: var(--popotes);
+  filter: drop-shadow(1px 0px 1px var(--dark-popotes));
+  font-size: 1.4em;
+}
+
+.commentInfos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.likeCommentImg {
+  height: 100%;
+  width: 7em;
+}
+
+.thumbs {
+  display: flex;
+  height: 100%;
+  gap: 0.7em;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0.5em;
+}
+.thumbImg {
+  cursor: pointer;
+  filter: drop-shadow(0px 0px 3px black);
+  width: 1.5em;
+}
+
+.commentDate {
+  margin: 0 0.5em;
+  font-size: 0.7em;
+  color: #525252;
+}
+
+.commentContent {
+  text-align: justify;
+  color: var(--dark-text);
+  width: 80%;
+}

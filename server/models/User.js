@@ -20,7 +20,6 @@ module.exports = (sequelize, Sequelize) => {
     },
     avatar: {
       type: Sequelize.STRING,
-      //default value
     },
     recipes: {
       type: Sequelize.INTEGER,
@@ -51,21 +50,5 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: false,
     },
   });
-  User.associate = (models) => {
-    User.hasMany(models.Recipe, {
-      foreignKey: "user_id",
-    }),
-      User.hasMany(models.Note),
-      User.hasMany(models.Like),
-      User.hasMany(models.Comment),
-      User.belongsToMany(models.Notification, {
-        through: "UserNotification",
-        foreignKey: "user_id",
-      }),
-      User.belongsToMany(models.Recipe, {
-        through: "FavoriteRecipe",
-        foreignKey: "user_id",
-      });
-  };
   return User;
 };

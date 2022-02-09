@@ -1,13 +1,20 @@
-@media all and (max-width: 810px) {
+@media all and (max-width: 400px) {
+  .loginField input {
+    font-size: 1em !important;
+  }
+  .login {
+    font-size: 1em !important;
+  }
+  .register {
+    font-size: 1em !important;
+  }
 }
-
 
 .loginContainer {
   margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
 }
 
 .connexion {
@@ -19,7 +26,7 @@
   font-size: 3em;
   font-weight: 400;
   padding: 0 0 0.5em;
-margin: 1.3em 0 0 0;
+  margin: 1.3em 0 0 0;
 }
 .isFromCreateRecipe {
   width: 100%;
@@ -32,7 +39,11 @@ margin: 1.3em 0 0 0;
 }
 
 .loginField {
-  margin-top: 2em;
+  background-color: #00be7b56;
+  border-radius: 15px;
+  padding: 2em;
+  box-shadow: 1px 1px 5px grey;
+  margin: 2em 0;
 }
 .loginField .form {
   display: flex;
@@ -59,6 +70,9 @@ margin: 1.3em 0 0 0;
   gap: 0.5em;
 }
 
+.loginField input {
+  font-size: 1.5em;
+}
 .mandatory {
   display: flex;
   flex-direction: column;
@@ -73,10 +87,10 @@ margin: 1.3em 0 0 0;
 }
 
 .creationAvatar {
-display: flex;
-justify-content: flex-start;
-align-items: center;
-gap: 1em;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1em;
 }
 .clickToChange {
   font-size: 0.8em;
@@ -85,6 +99,7 @@ gap: 1em;
 }
 
 .login {
+  font-size: 1.5em;
   box-shadow: 3px 3px 10px -5px black;
   font-weight: bolder;
   margin-top: 1em;
@@ -96,6 +111,7 @@ gap: 1em;
   border-radius: 25px;
 }
 .register {
+  font-size: 1.5em;
   font-weight: bolder;
   margin-top: 1em;
   color: var(--dark-popotes);

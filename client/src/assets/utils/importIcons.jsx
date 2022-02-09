@@ -2,6 +2,7 @@ export const icons = {
   diff1: require("../../assets/images/diff1.png").default,
   diff2: require("../../assets/images/diff2.png").default,
   diff3: require("../../assets/images/diff3.png").default,
+  like0: require("../../assets/images/like0.png").default,
   like05: require("../../assets/images/like0,5.png").default,
   like1: require("../../assets/images/like1.png").default,
   like15: require("../../assets/images/like1,5.png").default,
@@ -15,4 +16,8 @@ export const icons = {
   time: require("../../assets/images/time.png").default,
   imageBlank: require("../../assets/icons/image-512.png").default,
   plus: require("../../assets/icons/plus-512.png").default,
+  star: require("../../assets/icons/star.png").default,
+  starChecked: require("../../assets/icons/star-checked.png").default,
+  emptyHeart: require("../../assets/icons/empty-heart.png").default,
+  fullHeart: require("../../assets/icons/full-heart.png").default,
 };

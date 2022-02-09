@@ -1,10 +1,27 @@
-@media all and (min-width: 810px) {
-  /* Big screens */
-  .ingredientsTable {
-    width: 70% !important;
-  }
+@media all and (min-width: 1200px) {
+  /* Big big screens */
+
   .recipeInfos {
-    width: 45% !important;
+    flex-direction: row !important;
+    gap: 2em !important;
+    width: 80% !important;
+  }
+  .guillemets {
+    flex-direction: row !important;
+    justify-content: center;
+  }
+  .times {
+    width: 100%;
+  }
+}
+@media all and (min-width: 910px) {
+  /* Big screens */
+  .recipePage {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+  }
+  .recipeContainer {
+    margin-left: 0.5em !important;
   }
 }
 @media all and (max-width: 400px) {
@@ -19,7 +36,6 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  gap: 2em;
 }
 .recipeContainer {
   background-color: var(--white);
@@ -32,8 +48,58 @@
   padding-bottom: 1.5em;
   height: fit-content;
   overflow: hidden;
-  border: 2px solid var(--dark-popote);
   border-radius: 30px;
+}
+
+.imgContainer {
+  width: 100%;
+  height: 51vh;
+}
+
+.recipeImg {
+  object-fit: cover;
+  width: 100%;
+  height: 50vh;
+}
+
+.overlayImage {
+  position: relative;
+  bottom: 51vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(12, 11, 19, 0.829);
+  width: 100%;
+  height: 4.5em;
+}
+
+.star {
+  cursor: pointer;
+  margin-left: 1.5em;
+  width: 1.5em;
+  height: 1.5em;
+}
+.starChecked {
+  cursor: pointer;
+  margin-left: 0.7em;
+  width: 3em;
+  height: 3em;
+}
+.starChecked:hover {
+  filter: drop-shadow(0px 0px 5px var(--dark-popote));
+}
+.star:hover {
+  filter: drop-shadow(0px 0px 5px var(--dark-popote));
+}
+
+.closeRecipe {
+  margin-right: 1.5em;
+  cursor: pointer;
+  width: 1.5em;
+  height: 1.5em;
+}
+.closeRecipe:hover {
+  filter: drop-shadow(0px 0px 5px var(--dark-popote));
 }
 
 /*
@@ -46,18 +112,30 @@
   padding: 0.5em 0;
   color: var(--dark-popote);
 }
+.doneBy:hover {
+  text-decoration: underline;
+}
 .doneBy {
-  font-size: 0.9em;
-  width: 80%;
+  cursor: pointer;
+  align-self: flex-end;
+  font-size: 1.5em;
   color: var(--dark-popotes);
-  text-align: end;
   font-style: italic;
-  margin: 0.5em 0;
+  margin: 0.5em 2em;
 }
 
 /*
  * recipeInfos
  */
+.allInfos {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1em;
+}
 .recipeInfos {
   font-size: 1.3em;
   width: 100%;
@@ -66,7 +144,6 @@
   justify-content: center;
   align-items: center;
   gap: 2em;
-  margin-bottom: 1em;
 }
 
 .nbpersImg {
@@ -75,7 +152,7 @@
 
 .diffnote {
   width: 80%;
-  margin: 0;
+  margin: 1em 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -85,9 +162,20 @@
 }
 
 .tags {
-  margin: 0;
-  font-size: 0.7em;
-  color: var(--popote);
+  margin-top: 1em;
+  font-weight: 600;
+  color: var(--dark-popote);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+.tag {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 0.2em;
+  background-color: #ffc191;
 }
 
 .times {
@@ -95,7 +183,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 70%;
+  width: 80%;
   font-size: 0.8em;
 }
 
@@ -103,6 +191,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 .lighttext {
   color: var(--light-text);
@@ -132,6 +221,7 @@
   color: var(--white);
 }
 .ingredientsTH {
+  padding-left: 0.5em;
   font-size: 1.2em;
   color: var(--dark-popote);
 }
@@ -157,14 +247,70 @@
 }
 .steps {
   margin: 1em 0;
-  width: 80%;
+  width: 90%;
   text-align: justify;
+}
+
+/*
+ * Opinion
+ */
+
+.opinion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  padding: 1em 0;
+  gap: 1em;
+}
+
+.addNote {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.addComment {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+.userCommentTextArea {
+  font-size: 1.1em;
+  width: 90%;
+  align-self: center;
+  height: 5em;
+  outline: none;
+  border: 1px solid var(--dark-popotes);
+}
+
+.hearts {
+  display: flex;
+}
+
+.heart {
+  cursor: pointer;
+  width: 2em;
+  height: 2em;
 }
 
 /*
  * Comment
  */
+.commentsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 1em;
+}
+
 .recipeComment {
+  width: 100%;
   margin: 1em 0;
   display: flex;
   flex-direction: column;
@@ -175,9 +321,29 @@
   margin: 0;
   color: var(--popote);
 }
+.recipeComment p:last-child {
+  align-self: flex-end;
+}
+.recipeComment p:nth-child(2) {
+  align-self: center;
+}
 .recipeComment p {
+  word-wrap: break-word;
+  padding: 0 1em;
+  max-width: 80%;
   color: var(--light-text);
   font-style: italic;
   text-align: start;
-  width: 80%;
+}
+.guillemets {
+  flex-direction: column;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.ifAuthorComment {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

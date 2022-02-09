@@ -4,11 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { capitalize } from "../../assets/utils/capitalize";
 import { getLevel } from "../../assets/utils/getLevel";
 import { Host } from "../../assets/utils/host";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export const Monprofil = () => {
   const navigate = useNavigate();
   const userName = localStorage.getItem("username");
   const [userObject, setUserObject] = useState({ name: "" });
+  const [loading, setLoading] = useState(false);
 
   const modify = () => {
     navigate("modifier");
@@ -24,14 +26,26 @@ export const Monprofil = () => {
   // Load data when mounting
   useEffect(() => {
     let isSubscribed = true;
+    setLoading(true);
 
     axios.get(`${Host}api/users/${userName}`).then((res) => {
-      if (isSubscribed) setUserObject(res.data);
+      if (isSubscribed && res) {
+        setUserObject(res.data);
+        console.log(res.data);
+        setLoading(false);
+      }
     });
 
     return () => (isSubscribed = false);
   }, [userName]);
 
+  if (loading)
+    return (
+      <div className="myprofileBody">
+        <div className="loaderSpacer" />
+        <ClipLoader css={""} color={"#78f5ca"} loading={loading} size={100} />
+      </div>
+    );
   return (
     <div className="myprofileBody">
       <div className="mypopoteInfos">

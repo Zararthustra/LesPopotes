@@ -8,6 +8,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
+    author: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     recipe_id: {
       type: Sequelize.INTEGER,
       allowNull: false,
@@ -25,9 +29,11 @@ module.exports = (sequelize, Sequelize) => {
   Comment.associate = (models) => {
     Comment.belongsTo(models.Recipe, {
       foreignKey: "recipe_id",
+      onDelete: "cascade",
     }),
       Comment.belongsTo(models.User, {
         foreignKey: "user_id",
+        onDelete: "cascade",
       }),
       Comment.hasMany(models.Like);
   };

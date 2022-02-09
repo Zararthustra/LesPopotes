@@ -9,5 +9,11 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
     },
   });
+  FavoriteRecipe.associate = (models) => {
+    FavoriteRecipe.belongsTo(models.Recipe, {
+      foreignKey: "recipe_id",
+      onDelete: "cascade",
+    });
+  };
   return FavoriteRecipe;
 };

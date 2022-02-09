@@ -19,6 +19,7 @@ module.exports = (sequelize, Sequelize) => {
     }),
       Like.belongsTo(models.Comment, {
         foreignKey: "comment_id",
+        onDelete: "cascade",
       });
   };
   return Like;

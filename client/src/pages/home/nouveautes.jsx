@@ -1,12 +1,43 @@
 import { Card } from "../../components/card";
-import { Recipes } from "../../assets/utils/recipes";
+import { SearchFilterPopote } from "../../components/searchFilterPopote";
+import { Host } from "../../assets/utils/host";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export const Lastpubs = () => {
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // Load data when mounting
+  useEffect(() => {
+    getRecipes();
+    return () => setRecipes();
+  }, []);
+
+  const getRecipes = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${Host}api/recipes`);
+      if (res.data) setRecipes(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.log("An error occured while requesting recipes:\n", error);
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="cardList">
-      {Recipes.map((recipe, index) => {
-        return <Card key={index} recipe={recipe} />;
-      })}
-    </div>
+    <main className="cardList">
+      <SearchFilterPopote />
+      {loading ? (
+        <ClipLoader css={""} color={"#f5a76c"} loading={loading} size={100} />
+      ) : (
+        recipes.map((recipe, index) => {
+          return <Card key={index} recipe={recipe} />;
+        })
+      )}
+    </main>
   );
 };

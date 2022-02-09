@@ -2,7 +2,6 @@ import { useState } from "react";
 import { RecipeIngredientsCreation } from "../../components/recipeIngredientsCreation";
 import { capitalize } from "../../assets/utils/capitalize";
 import { RecipeInfosCreation } from "../../components/recipeInfosCreation";
-import { Recipes } from "../../assets/utils/recipes";
 import Select from "react-select";
 import { icons } from "../../assets/utils/importIcons";
 import { images } from "../../assets/utils/importImages";
@@ -10,22 +9,30 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Host } from "../../assets/utils/host";
 import { useRef } from "react";
+import { ingredientsList } from "../../assets/utils/ingredientsList";
+import { unityList } from "../../assets/utils/unityList";
+const FormData = require("form-data");
 
 export const Creation = () => {
   //___________________________________________________ Variables
 
   const navigate = useNavigate();
-  const selectInputRef = useRef();
+  const selectIngredientRef = useRef();
+  const selectUnityRef = useRef();
+  const clearSelectValues = () => {
+    selectIngredientRef.current.setValue("");
+    selectUnityRef.current.setValue("");
+  };
 
   const selectStyle = {
     control: (base, state) => ({
       ...base,
       fontSize: "0.8em",
       cursor: "pointer",
-      border: state.isFocused ? "2px var(--popote) solid" : "1px black solid",
+      border: state.isFocused ? "1px var(--popote) solid" : "1px black solid",
       boxShadow: "none",
       "&:hover": {
-        border: "2px var(--popote) solid",
+        border: "1px var(--popote) solid",
       },
     }),
     option: (base, state) => ({
@@ -39,10 +46,10 @@ export const Creation = () => {
     }),
   };
 
-  const [userId, setUserId] = useState(0);
-  const [recipe, setRecipe] = useState({});
+  const [fieldMissing, setFieldMissing] = useState(false);
   const [recipeTitle, setRecipeTitle] = useState("");
-  const [recipeImage, setRecipeImage] = useState(images.friends);
+  const [recipeImage, setRecipeImage] = useState();
+  const [displayUserImage, setDisplayUserImage] = useState(images.friends);
   const formData = new FormData();
   const [nbPers, setNbPers] = useState("");
   const [diff, setDiff] = useState("");
@@ -51,15 +58,15 @@ export const Creation = () => {
   const [bakeMode, setBakeMode] = useState("");
   const [prepTime, setPrepTime] = useState(0);
   const [bakeTime, setBakeTime] = useState(0);
-  const [ingredients, setIngredients] = useState([]); //useState(Recipes[0].ingredients);
+  const [ingredients, setIngredients] = useState([]);
   const [addIngredient, setAddIngredient] = useState("");
   const [addQtt, setAddQtt] = useState(0);
   const [addUnity, setAddUnity] = useState("");
-  const [steps, setSteps] = useState([]); //useState(Recipes[0].steps);
+  const [steps, setSteps] = useState([]);
   const [addStep, setAddStep] = useState("");
   const [addComment, setAddComment] = useState("");
 
-  // An object shared with child components for better lisibility
+  // An object shared with child components
   const sharedVars = {
     setNbPers,
     setDiff,
@@ -75,32 +82,31 @@ export const Creation = () => {
     setIngredients,
   };
 
+  const recipePayload = {
+    name: recipeTitle,
+    tags: JSON.stringify(tags).replace(/[[\]"]/g, ""),
+    nbPers,
+    isNbVariable: true,
+    type: type,
+    author: localStorage.getItem("username"),
+    user_id: localStorage.getItem("userid"),
+    bakeTime,
+    prepTime,
+    bakeType: bakeMode,
+    difficulty: diff,
+    comments: 0,
+    notes: 0,
+    signal: 0,
+    authorComment: addComment,
+  };
+
   //___________________________________________________ Functions
 
-  // Load data when mounting
-  // useEffect(() => {
-  //   let isSubscribed = true;
-
-  //   axios.get(`${Host}api/recipes/${recetteID}`).then((res) => {
-  //     if (isSubscribed) setRecipe(res.data);
-  //   });
-
-  //   return () => (isSubscribed = false);
-  // }, [recetteID]);
-
   // Infos
-   const handleUserFile = (event) => {
-  //   console.log('event :', event.target.files[0]);
-     const uploadedImage = event.target.files[0]; //URL.createObjectURL(event.target.files[0]);
-  //   for (var value of formData.values()) {
-  //     console.log("formData",value);
-  //  }
-     formData.append("image", uploadedImage);
-  //   for (var value of formData.values()) {
-  //     console.log("formData",value);
-  //  }
-     setRecipeImage(uploadedImage);
-   };
+  const handleUserFile = (event) => {
+    setRecipeImage(event.target.files[0]);
+    setDisplayUserImage(URL.createObjectURL(event.target.files[0]));
+  };
 
   const handleTitleChange = (event) => {
     setRecipeTitle(event.currentTarget.value);
@@ -125,6 +131,10 @@ export const Creation = () => {
   const handleAddIngredientRow = () => {
     if (!addIngredient) return;
     if (addQtt === 0) return;
+    // Avoid to add same ingredient
+    if (ingredients.find(({ name }) => name === capitalize(addIngredient)))
+      return;
+
     setIngredients([
       ...ingredients,
       { name: capitalize(addIngredient), quantity: addQtt, unity: addUnity },
@@ -132,6 +142,7 @@ export const Creation = () => {
 
     document.getElementsByClassName("selectQuantity")[0].value = "";
     setAddQtt(0);
+    clearSelectValues();
   };
 
   // Step
@@ -160,40 +171,47 @@ export const Creation = () => {
 
   // Save created recipe to DB
   const handleSaveRecipe = () => {
+    if (
+      !recipeTitle ||
+      !nbPers ||
+      !diff ||
+      !type ||
+      !prepTime ||
+      !ingredients ||
+      !steps
+    )
+      return setFieldMissing(true);
     createRecipe();
     navigate("/accueil");
   };
 
-  const createRecipe = async () => {
-    await axios
-      .post(`${Host}api/recipe`, {
-        name: recipeTitle,
-        image: formData,
-        nbPers,
-        isNbVariable: true,
-        type: type,
-        author: localStorage.getItem("username"),
-        user_id: localStorage.getItem("userid"),
-        bakeTime,
-        prepTime,
-        bakeType: bakeMode,
-        difficulty: diff,
-        comments: 0,
-        notes: 0,
-        signal: 0,
-        authorComment: addComment,
-      })
+  const createRecipe = () => {
+    axios
+      .post(`${Host}api/recipe`, recipePayload)
       .then((res) => {
         if (!res) return console.log("No response from server");
         if (res.data.error) return console.log(res.data);
-        setUserId(res.data.user_id);
+        updateRecipeImage(res.data.id);
         createRecipeIngredients(res.data.id);
       })
       .catch((err) => {
         console.log("Error catched: ", err);
       });
+  };
 
-    
+  const updateRecipeImage = (id) => {
+    if (!recipeImage) return;
+    formData.append("image", recipeImage);
+    axios
+      .put(`${Host}api/${id}/recipeimage`, formData)
+      .then((res) => {
+        if (!res) return console.log("No response from server");
+        if (res.data.error) return console.log(res.data);
+        console.log("res from recipeImage: ", res.data);
+      })
+      .catch((err) => {
+        console.log("Error catched: ", err);
+      });
   };
 
   const createRecipeIngredients = async (recipeId) => {
@@ -237,12 +255,21 @@ export const Creation = () => {
   return (
     <main className="recipePage">
       <div className="recipeContainer">
-        <img
-          className="creationImg"
-          src={recipeImage}
-          alt="illustration recette"
-        />
-
+        <div className="imgCreationContainer">
+          <img
+            className="recipeImg"
+            src={displayUserImage}
+            alt="illustration recette"
+          />
+          <div className="overlayCreationImage">
+            <img
+              src={require("../../assets/icons/close.png").default}
+              className="closeRecipe"
+              onClick={() => navigate("/lapopote")}
+              alt="fermer"
+            />
+          </div>
+        </div>
         <label className="imgButton">
           <img src={icons.imageBlank} alt="importer" className="imageBlank" />
           <input
@@ -253,34 +280,26 @@ export const Creation = () => {
           />
           Prendre ou importer une photo
         </label>
-
         <input
           className="recipeTitleCreation"
           placeholder="Titre"
           type="text"
-          maxLength="30"
+          maxLength="25"
           value={recipeTitle}
           onChange={handleTitleChange}
         />
-        <RecipeInfosCreation infos={recipe} sharedVars={sharedVars} />
+        <RecipeInfosCreation sharedVars={sharedVars} />
         <div className="separateCreation" />
         <h3 className="creationTitles Ingredients">Ingrédients</h3>
         <div className="ingredientsContainer">
           <div className="creationIngredients">
             <Select
-              ref={selectInputRef}
+              ref={selectIngredientRef}
               placeholder="Ingrédient"
               styles={selectStyle}
               className="selectIngredient"
               onChange={handleIngredient}
-              options={[
-                { value: "sucre", label: "Sucre" },
-                { value: "lait", label: "Lait" },
-                { value: "farine", label: "Farine" },
-                { value: "tomate", label: "Tomate" },
-                { value: "avocat", label: "Avocat" },
-                { value: "concombre", label: "Concombre" },
-              ]}
+              options={ingredientsList}
             />
             <input
               type="text"
@@ -291,21 +310,12 @@ export const Creation = () => {
               min="0"
             />
             <Select
-              isSearchable={false}
+              ref={selectUnityRef}
               placeholder="Unité"
               styles={selectStyle}
               className="selectUnity"
               onChange={handleUnity}
-              options={[
-                { value: "", label: "Sans unité" },
-                { value: "L", label: "L" },
-                { value: "dl", label: "dl" },
-                { value: "cl", label: "cl" },
-                { value: "ml", label: "ml" },
-                { value: "G", label: "G" },
-                { value: "kg", label: "kg" },
-                { value: "mg", label: "mg" },
-              ]}
+              options={unityList}
             />
             <img
               src={icons.plus}
@@ -347,18 +357,18 @@ export const Creation = () => {
             />
           </li>
         </ul>
-        <button onClick={() => console.log("Ing: ", ingredients)}>LOG</button>
         <div className="separateCreation"></div>
         <div className="recipeComment">
           <h3>Quelque chose à ajouter ?</h3>
           <textarea
             type="text"
             placeholder="Commentaire, astuce, lien, recommandation, ..."
-            className="authorComment"
+            className="authorRecipeComment"
             onChange={handleComment}
           />
         </div>
         <div className="finalButtons">
+          {fieldMissing ? <div>Recette incomplète !</div> : ""}
           <button
             className="creationIngredientsButton"
             onClick={handleSaveRecipe}

@@ -65,7 +65,7 @@ export const Popotes = () => {
           {userObject.instagram && <a href={userObject.instagram}>Instagram</a>}
         </li>
       </ul>
-      <button className="myprofileModifyButton" onClick={() => navigate("/lespopotes")}>Retour</button>
+      <button className="myprofileModifyButton" onClick={() => navigate(-1)}>Retour</button>
     </div>
   );
 };

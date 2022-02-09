@@ -9,7 +9,10 @@
     font-size: 1em !important;
   }
 }
+
 :root {
+  padding: 0;
+  margin: 0;
   --switch: #2c2a3a;
   --popotes: #78f5ca;
   --dark-popotes: #00be7c;
@@ -44,12 +47,18 @@
   background: var(--dark-popotes);
 }
 
+html {
+  padding: 0;
+  margin: 0;
+}
+
 body {
   margin: 0;
   padding: 0;
   background-color: white;
   font-family: "Rubik";
   overflow-x: hidden;
+  min-height: 90vh;
 }
 tr {
   height: 2.5em;
@@ -85,6 +94,10 @@ a {
   cursor: pointer !important;
   background-color: #39364d;
 }
+
+/**
+ * Body
+ */
 
 .headerContainer {
   display: flex;
@@ -155,4 +168,15 @@ a {
   background-repeat: no-repeat;
   width: 3em;
   height: 3em;
+}
+
+.doneButton {
+  cursor: pointer;
+  padding: 0.4em 1em;
+  font-weight: bolder;
+  font-size: 1.2em;
+  color: var(--popote);
+  background-color: transparent;
+  border-radius: 30px;
+  border: none;
 }

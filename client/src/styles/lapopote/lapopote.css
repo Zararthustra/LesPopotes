@@ -28,6 +28,17 @@
   width: 100%;
 }
 
+.loaderBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+.loaderSpacer {
+  height: 4em;
+}
+
 /*
  * SearchBar
  */

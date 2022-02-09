@@ -16,9 +16,11 @@ module.exports = (sequelize, Sequelize) => {
   Note.associate = (models) => {
     Note.belongsTo(models.User, {
       foreignKey: "user_id",
+      onDelete: "cascade",
     }),
       Note.belongsTo(models.Recipe, {
         foreignKey: "recipe_id",
+        onDelete: "cascade",
       });
   };
   return Note;

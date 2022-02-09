@@ -22,6 +22,11 @@
 /*
  * ________________________________________Home
  */
+
+ .activeIcon {
+  filter: drop-shadow(0 0 10px var(--white));
+}
+
 .homeNav {
   cursor: pointer;
   position: absolute;
@@ -36,8 +41,18 @@
   height: 2em;
 }
 
-.activeIcon {
-  filter: drop-shadow(0 0 10px var(--white));
+.backNav {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 3em;
+  background-image: url("../assets/icons/back.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 1em;
+  width: 2em;
+  height: 2em;
 }
 
 /*

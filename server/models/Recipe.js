@@ -7,6 +7,9 @@ module.exports = (sequelize, Sequelize) => {
     image: {
       type: Sequelize.STRING,
     },
+    tags: {
+      type: Sequelize.STRING,
+    },
     nbPers: {
       type: Sequelize.INTEGER,
       allowNull: false,
@@ -54,23 +57,5 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
     },
   });
-  Recipe.associate = (models) => {
-    Recipe.belongsTo(models.User, {
-      foreignKey: "user_id",
-    }),
-      Recipe.hasMany(models.Comment),
-      Recipe.hasMany(models.Notification),
-      Recipe.hasMany(models.Note),
-      Recipe.hasMany(models.Step),
-      Recipe.belongsToMany(models.User, {
-        through: "FavoriteRecipe",
-        foreignKey: "recipe_id",
-      }),
-      Recipe.hasMany(models.Ingredient),
-      Recipe.belongsToMany(models.Tag, {
-        through: "RecipeTag",
-        foreignKey: "recipe_id",
-      });
-  };
   return Recipe;
 };

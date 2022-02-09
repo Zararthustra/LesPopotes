@@ -158,11 +158,9 @@ export const Login = () => {
   if (creation)
     return (
       <div className="loginContainer">
-        {location === "/lapopote/creation" ? (
-          ""
-        ) : (
-          <h1 className="connexion">Création</h1>
-        )}
+        {location !== "/lapopote/creation" && (
+        <h1 className="connexion">Création</h1>
+      )}
         <div className="loginField">
           <form className="logform">
             <div className="inputs">
@@ -258,10 +256,8 @@ export const Login = () => {
     );
   return (
     <div className="loginContainer">
-      {location === "/lapopote/creation" ? (
-        ""
-      ) : (
-        <h1 className="connexion">Création</h1>
+      {location !== "/lapopote/creation" && (
+        <h1 className="connexion">Connexion</h1>
       )}
       <div className="loginField">
         <form className="logform">

@@ -18,7 +18,15 @@ import { Modifymyprofile } from "./pages/profile/modifymyprofile";
 import { Homelanding } from "./pages/home/homelanding";
 
 export const App = () => {
-  // forceRefresh={true}
+  // Loader logo des popotes
+  // const [loading, setLoading] = useState(false);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   setTimeout(() => {
+  //     setLoading(false)
+  //   }, 1000)
+  // }, []);
+  // if (loading) return <Logo des popotes />
   return (
     <BrowserRouter>
       <Navbar />

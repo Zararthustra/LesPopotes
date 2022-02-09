@@ -1,21 +1,22 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 export const Home = () => {
   const navigate = useNavigate();
+  const location = useLocation().pathname;
 
-  const toggleActiveLink = (id) => {
-    let activeLink = document.getElementById(id).classList;
+  useEffect(() => {
     let bestof = document.getElementById("bestof").classList;
     let lastpubs = document.getElementById("lastpubs").classList;
 
-    if (id === "bestof" && activeLink.length === 1) {
-      activeLink.add("activePopote");
+    if (location === "/accueil/bestof") {
+      bestof.add("activePopote");
       lastpubs.remove("activePopote");
-    } else if (id === "lastpubs" && activeLink.length === 1) {
-      activeLink.add("activePopote");
+    } else if (location === "/accueil/nouveautes") {
+      lastpubs.add("activePopote");
       bestof.remove("activePopote");
     }
-  };
+  }, [location]);
 
   return (
     <div className="headerContainer">
@@ -23,20 +24,10 @@ export const Home = () => {
         Accueil
       </h1>
       <div className="links">
-        <Link
-          onClick={() => toggleActiveLink("bestof")}
-          id="bestof"
-          className="navlink"
-          to="bestof"
-        >
+        <Link id="bestof" className="navlink" to="bestof">
           Best Of
         </Link>
-        <Link
-          onClick={() => toggleActiveLink("lastpubs")}
-          id="lastpubs"
-          className="navlink"
-          to="nouveautes"
-        >
+        <Link id="lastpubs" className="navlink" to="nouveautes">
           Nouveautés
         </Link>
       </div>

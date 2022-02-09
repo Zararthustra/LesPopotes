@@ -80,6 +80,7 @@ export const Navbar = () => {
         <span className="slider round" onClick={onSwitch}></span>
       </label>
       <div id="home" className="homeNav" onClick={() => activeIcon("home")} />
+      <div id="back" className="backNav" onClick={() => navigate(-1)} />
       <div
         id="profile"
         className="profileNav"

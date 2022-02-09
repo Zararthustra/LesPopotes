@@ -27,13 +27,13 @@
 }
 
 /*
-** Ma popotes
+** Ma popote
 */
-.mapopoteBody{
+.mapopotebody{
+  width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  height: 100vh;
-  width: 100%;
-  background-color: var(--white);
+  gap: 2em;
 }

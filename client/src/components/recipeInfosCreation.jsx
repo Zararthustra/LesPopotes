@@ -1,11 +1,7 @@
-import { icons } from "../assets/utils/importIcons";
-import { images } from "../assets/utils/importImages";
 import Select from "react-select";
-import { useState } from "react";
 
-export const RecipeInfosCreation = ({ infos, sharedVars }) => {
+export const RecipeInfosCreation = ({ sharedVars }) => {
   //___________________________________________________ Variables
-  const [diffImage, setDiffImage] = useState(icons.diff1);
 
   const setDiff = sharedVars.setDiff;
   const setNbPers = sharedVars.setNbPers;
@@ -16,20 +12,24 @@ export const RecipeInfosCreation = ({ infos, sharedVars }) => {
   const setBakeTime = sharedVars.setBakeTime;
 
   const selectStyle = {
+    singleValue: (base, state) => ({
+      ...base,
+      color: "var(--dark-popote)",
+    }),
     control: (base, state) => ({
       ...base,
-      fontSize: "0.8em",
       cursor: "pointer",
-      minWidth: "8em",
-      border: state.isFocused ? "2px var(--popote) solid" : "1px black solid",
+      minWidth: "12em",
+      border: state.isFocused ? "1px var(--popote) solid" : "1px black solid",
       boxShadow: "none",
       "&:hover": {
-        border: "2px var(--popote) solid",
+        border: "1px var(--popote) solid",
       },
     }),
     option: (base, state) => ({
       ...base,
       backgroundColor: state.isFocused ? "var(--dark-popote)" : "white",
+      fontSize: "0.9em",
       color: state.isFocused ? "white" : "var(--dark-popote)",
       "&:hover": {
         backgroundColor: "var(--dark-popote)",
@@ -42,11 +42,6 @@ export const RecipeInfosCreation = ({ infos, sharedVars }) => {
 
   const handleDiff = (event) => {
     setDiff(event.value);
-    event.value === "3"
-      ? setDiffImage(icons.diff3)
-      : event.value === "2"
-      ? setDiffImage(icons.diff2)
-      : setDiffImage(icons.diff1);
   };
 
   const handlePers = (event) => {
@@ -86,23 +81,9 @@ export const RecipeInfosCreation = ({ infos, sharedVars }) => {
   //___________________________________________________ Render
 
   return (
-    <div className="recipeInfos">
+    <div className="recipeCreationInfos">
       <h3 className="creationTitles Infos">Informations</h3>
-      <Select
-              isSearchable={false}
-              placeholder="Type"
-              styles={selectStyle}
-              className=""
-              onChange={handleType}
-              options={[
-                { value: "apero", label: "Apéro" },
-                { value: "entree", label: "Entrée" },
-                { value: "plat", label: "Plat" },
-                { value: "dessert", label: "Dessert" },
-                { value: "autre", label: "Autre" },
-              ]}
-            />
-      <div className="tags">
+      <div className="infosSelects">
         <Select
           isSearchable={false}
           placeholder="#Tags"
@@ -111,59 +92,61 @@ export const RecipeInfosCreation = ({ infos, sharedVars }) => {
           className="selectTag"
           onChange={handleTags}
           options={[
-            { value: "recettedegrandmère", label: "#recetteDeGrandMère" },
+            { value: "recetteDeGrandMère", label: "#recetteDeGrandMère" },
             { value: "etudiant", label: "#etudiant" },
             { value: "spectaculaire", label: "#spectaculaire" },
             { value: "rapido", label: "#rapido" },
+            { value: "sanscouverts", label: "#sanscouverts" },
+            { value: "romantique", label: "#romantique" },
+            { value: "régional", label: "#régional" },
           ]}
         />
-      </div>
-      <ul className="diffnote">
-        <li className="cardInfo">
-          <img
-            className="nbpersImg"
-            src={images.nbpers}
-            alt="nombre de personnes"
-          />
-          <Select
-            isSearchable={false}
-            placeholder="0 pers"
-            styles={selectStyle}
-            className="selectNbPers"
-            onChange={handlePers}
-            options={[
-              { value: 1, label: "1 pers" },
-              { value: 2, label: "2 pers" },
-              { value: 3, label: "3 pers" },
-              { value: 4, label: "4 pers" },
-              { value: 5, label: "5 pers" },
-              { value: 6, label: "6 pers" },
-              { value: 7, label: "7 pers" },
-              { value: 8, label: "8 pers" },
-              { value: 9, label: "9 pers" },
-              { value: 10, label: "10 pers" },
-              { value: 11, label: "11 pers" },
-              { value: 12, label: "12 pers" },
-            ]}
-          />
-        </li>
-        <li className="cardInfo">
-          <img className="difficultyImg" src={diffImage} alt="difficulté" />
-          <Select
-            isSearchable={false}
-            placeholder="Difficulté"
-            styles={selectStyle}
-            className="selectDiff"
-            onChange={handleDiff}
-            options={[
-              { value: "1", label: "Facile" },
-              { value: "2", label: "Moyen" },
-              { value: "3", label: "Difficile" },
-            ]}
-          />
-        </li>
-      </ul>
-      <div className="times">
+        <Select
+          isSearchable={false}
+          placeholder="Type"
+          styles={selectStyle}
+          onChange={handleType}
+          options={[
+            { value: "apero", label: "Apéro" },
+            { value: "entree", label: "Entrée" },
+            { value: "plat", label: "Plat" },
+            { value: "dessert", label: "Dessert" },
+            { value: "autre", label: "Autre" },
+          ]}
+        />
+        <Select
+          isSearchable={false}
+          placeholder="0 pers"
+          styles={selectStyle}
+          className="selectNbPers"
+          onChange={handlePers}
+          options={[
+            { value: 1, label: "1 pers" },
+            { value: 2, label: "2 pers" },
+            { value: 3, label: "3 pers" },
+            { value: 4, label: "4 pers" },
+            { value: 5, label: "5 pers" },
+            { value: 6, label: "6 pers" },
+            { value: 7, label: "7 pers" },
+            { value: 8, label: "8 pers" },
+            { value: 9, label: "9 pers" },
+            { value: 10, label: "10 pers" },
+            { value: 11, label: "11 pers" },
+            { value: 12, label: "12 pers" },
+          ]}
+        />
+        <Select
+          isSearchable={false}
+          placeholder="Difficulté"
+          styles={selectStyle}
+          className="selectDiff"
+          onChange={handleDiff}
+          options={[
+            { value: "1", label: "Facile" },
+            { value: "2", label: "Moyen" },
+            { value: "3", label: "Difficile" },
+          ]}
+        />
         <Select
           isSearchable={false}
           placeholder="Mode de cuisson"
@@ -174,8 +157,11 @@ export const RecipeInfosCreation = ({ infos, sharedVars }) => {
             { value: "four", label: "Four" },
             { value: "cookeo", label: "Cookeo" },
             { value: "thermomix", label: "Thermomix" },
+            { value: "poele", label: "Poele" },
           ]}
         />
+      </div>
+      <div className="times">
         <div className="time">
           <div className="lighttext">Préparation</div>
           <div>
