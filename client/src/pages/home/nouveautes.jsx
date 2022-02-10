@@ -1,14 +1,14 @@
 import { Card } from "../../components/card";
 import { SearchFilterPopote } from "../../components/searchFilterPopote";
 import { Host } from "../../assets/utils/host";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 
 export const Lastpubs = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState();
 
   // Load data when mounting
   useEffect(() => {
@@ -30,9 +30,15 @@ export const Lastpubs = () => {
 
   return (
     <main className="cardList">
-      <SearchFilterPopote />
+      <SearchFilterPopote setFilter={setFilter} />
       {loading ? (
         <ClipLoader css={""} color={"#f5a76c"} loading={loading} size={100} />
+      ) : filter ? (
+        recipes.map((recipe, index) => {
+          if (recipe.type === filter)
+            return <Card key={index} recipe={recipe} />;
+          return "";
+        })
       ) : (
         recipes.map((recipe, index) => {
           return <Card key={index} recipe={recipe} />;

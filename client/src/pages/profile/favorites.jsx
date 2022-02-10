@@ -8,6 +8,7 @@ import { Host } from "../../assets/utils/host";
 export const Favorites = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState();
 
   // Load data when mounting
   useEffect(() => {
@@ -29,10 +30,10 @@ export const Favorites = () => {
           `${Host}api/userfavorites/${userID}`
         );
         if (resFavorites.data) {
-          const getOnlyFavs = tmpRecipes.filter((recipe) => 
-          resFavorites.data.includes(recipe.id)
-        )
-        setRecipes(getOnlyFavs);
+          const getOnlyFavs = tmpRecipes.filter((recipe) =>
+            resFavorites.data.includes(recipe.id)
+          );
+          setRecipes(getOnlyFavs);
         }
       }
 
@@ -44,17 +45,23 @@ export const Favorites = () => {
   };
 
   return (
-    <div className="mapopotebody">
-      <SearchFilterPopote />
+    <main className="mapopotebody">
+      <SearchFilterPopote setFilter={setFilter} />
       <div className="cardList">
         {loading ? (
           <ClipLoader css={""} color={"#f5a76c"} loading={loading} size={100} />
+        ) : filter ? (
+          recipes.map((recipe, index) => {
+            if (recipe.type === filter)
+              return <Card key={index} recipe={recipe} />;
+            return "";
+          })
         ) : (
           recipes?.map((recipe, index) => {
             return <Card key={index} recipe={recipe} />;
           })
         )}
       </div>
-    </div>
+    </main>
   );
 };

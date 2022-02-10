@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { refreshPage } from "../assets/utils/refreshPage";
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -81,6 +82,7 @@ export const Navbar = () => {
       </label>
       <div id="home" className="homeNav" onClick={() => activeIcon("home")} />
       <div id="back" className="backNav" onClick={() => navigate(-1)} />
+      <div id="refresh" className="refreshNav" onClick={() => refreshPage()} />
       <div
         id="profile"
         className="profileNav"

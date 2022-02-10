@@ -2,6 +2,7 @@ import { capitalize } from "../assets/utils/capitalize";
 import { icons } from "../assets/utils/importIcons";
 
 export const Comment = ({ comment, recipeAuthor }) => {
+  const checkedAuthor = capitalize(comment.author) === capitalize(recipeAuthor)
   const userNote = comment.note;
 
   const date =
@@ -20,7 +21,7 @@ export const Comment = ({ comment, recipeAuthor }) => {
     else return icons.like0;
   };
 
-  if (comment.author === recipeAuthor)
+  if (checkedAuthor)
     return (
       <div className="comment authorComment">
         <div className="commentHeader">

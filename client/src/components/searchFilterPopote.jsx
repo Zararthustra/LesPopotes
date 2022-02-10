@@ -1,7 +1,8 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const SearchFilterPopote = () => {
+export const SearchFilterPopote = ({ setFilter }) => {
   const navigate = useNavigate();
 
   const [apero, setApero] = useState(false);
@@ -9,6 +10,21 @@ export const SearchFilterPopote = () => {
   const [plat, setPlat] = useState(false);
   const [dessert, setDessert] = useState(false);
   const [autre, setAutre] = useState(false);
+  const allFiltersNotChecked = !apero && !entree && !plat && !dessert && !autre;
+  const onlyAperoChecked = !entree && !plat && !dessert && !autre;
+  const onlyEntreeChecked = !apero && !plat && !dessert && !autre;
+  const onlyPlatChecked = !apero && !entree && !dessert && !autre;
+  const onlyDessertChecked = !apero && !entree && !plat && !autre;
+  const onlyAutreChecked = !apero && !entree && !plat && !dessert;
+
+  useEffect(() => {
+    if (allFiltersNotChecked) setFilter();
+    if (apero) setFilter("apero");
+    if (entree) setFilter("entree");
+    if (plat) setFilter("plat");
+    if (dessert) setFilter("dessert");
+    if (autre) setFilter("autre");
+  });
 
   return (
     <div className="popoteSubdivision">
@@ -20,9 +36,7 @@ export const SearchFilterPopote = () => {
         <label className="box">
           <input
             type="checkbox"
-            onChange={() => {
-              setApero(!apero);
-            }}
+            onChange={() => onlyAperoChecked && setApero(!apero)}
           />
           <svg
             className={`check ${apero ? "check--active" : ""}`}
@@ -41,9 +55,7 @@ export const SearchFilterPopote = () => {
         <label className="box">
           <input
             type="checkbox"
-            onChange={() => {
-              setEntree(!entree);
-            }}
+            onChange={() => onlyEntreeChecked && setEntree(!entree)}
           />
           <svg
             className={`check ${entree ? "check--active" : ""}`}
@@ -62,9 +74,7 @@ export const SearchFilterPopote = () => {
         <label className="box">
           <input
             type="checkbox"
-            onChange={() => {
-              setPlat(!plat);
-            }}
+            onChange={() => onlyPlatChecked && setPlat(!plat)}
           />
           <svg
             className={`check ${plat ? "check--active" : ""}`}
@@ -83,9 +93,7 @@ export const SearchFilterPopote = () => {
         <label className="box">
           <input
             type="checkbox"
-            onChange={() => {
-              setDessert(!dessert);
-            }}
+            onChange={() => onlyDessertChecked && setDessert(!dessert)}
           />
           <svg
             className={`check ${dessert ? "check--active" : ""}`}
@@ -104,9 +112,7 @@ export const SearchFilterPopote = () => {
         <label className="box">
           <input
             type="checkbox"
-            onChange={() => {
-              setAutre(!autre);
-            }}
+            onChange={() => onlyAutreChecked && setAutre(!autre)}
           />
           <svg
             className={`check ${autre ? "check--active" : ""}`}
@@ -123,7 +129,10 @@ export const SearchFilterPopote = () => {
           Autres
         </label>
       </div>
-      <button className="popoteButton" onClick={() => navigate("/lapopote/creation")}>
+      <button
+        className="popoteButton"
+        onClick={() => navigate("/lapopote/creation")}
+      >
         Créer une recette
       </button>
       <div className="separatePopote"></div>

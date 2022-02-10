@@ -45,7 +45,7 @@
   cursor: pointer;
   position: absolute;
   top: 0;
-  left: 3em;
+  left: 2.5em;
   background-image: url("../assets/icons/back.png");
   background-size: contain;
   background-position: center;
@@ -53,6 +53,51 @@
   margin: 1em;
   width: 2em;
   height: 2em;
+}
+.backNav:hover {
+  animation: backandforth .8s ease-in-out infinite;
+
+}
+
+.refreshNav {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 3em;
+  background-image: url("../assets/icons/refresh.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 1em;
+  width: 2em;
+  height: 2em;
+}
+.refreshNav:hover {
+  animation: roll .5s linear infinite;
+}
+
+@keyframes roll {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-180deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes backandforth {
+  0% {
+    left: 2.5em;
+  }
+  50% {
+    left: 2.3em;
+  }
+  100% {
+    left: 2.5em;
+  }
 }
 
 /*
