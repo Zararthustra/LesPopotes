@@ -10,6 +10,7 @@ export const Recettes = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState();
+  const [searchFilter, setSearchFilter] = useState("");
 
   // Load data when mounting
   useEffect(() => {
@@ -28,15 +29,26 @@ export const Recettes = () => {
     return () => setRecipes();
   }, []);
 
- 
   return (
     <main className="cardList">
-      <SearchFilterPopote setFilter={setFilter} />
+      <SearchFilterPopote
+        setFilter={setFilter}
+        setSearchFilter={setSearchFilter}
+      />
       {loading ? (
         <ClipLoader css={""} color={"#f5a76c"} loading={loading} size={100} />
       ) : filter ? (
         recipes.map((recipe, index) => {
-          if (recipe.type === filter)
+          if (
+            recipe.type.includes(filter) &&
+            recipe.name.includes(searchFilter)
+          )
+            return <Card key={index} recipe={recipe} />;
+          return "";
+        })
+      ) : searchFilter ? (
+        recipes.map((recipe, index) => {
+          if (recipe.name.includes(searchFilter))
             return <Card key={index} recipe={recipe} />;
           return "";
         })

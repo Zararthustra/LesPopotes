@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const SearchFilterPopote = ({ setFilter }) => {
+export const SearchFilterPopote = ({ setFilter, setSearchFilter }) => {
   const navigate = useNavigate();
 
   const [apero, setApero] = useState(false);
@@ -26,11 +26,16 @@ export const SearchFilterPopote = ({ setFilter }) => {
     if (autre) setFilter("autre");
   });
 
+  const handleSearch = (event) => {
+    const value = event.currentTarget.value;
+    setSearchFilter(value);
+  };
+
   return (
     <div className="popoteSubdivision">
       <div className="searchPopote">
         <div className="searchIcon" />
-        <input type="text" className="searchBar" />
+        <input type="text" className="searchBar" onChange={handleSearch} />
       </div>
       <div className="filters">
         <label className="box">

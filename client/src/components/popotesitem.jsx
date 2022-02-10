@@ -15,24 +15,17 @@ export const Popotesitem = ({ user }) => {
       }}
     >
       <div className="left">
-        <img src={user.avatar} alt="avatar" className="avatar" />
         <div className="names">
-          <div className="pseudo">{capitalize(user.name)}</div>
-          <div className="type">{user.type}</div>
+        <div className="pseudo">{capitalize(user.name)}</div>
+        <div className="type">{user.type}</div>
+        </div>
+        <div className="popotelevel">
+          {getLevel(user.recipes, user.notes, user.popotes, user.comments)}
         </div>
       </div>
       <div className="right">
-        <div className="experience">
-          <div className="popotelevel">
-            {getLevel(user.recipes, user.notes, user.popotes, user.comments)}
-          </div>
-          <div className="createdRecipes">
-            {user.recipes > 1
-              ? user.recipes + " recettes"
-              : user.recipes + " recette"}
-          </div>
-        </div>
-        <div className="addButton" />
+        <img src={user.avatar} alt="avatar" className="avatar" />
+        
       </div>
     </div>
   );

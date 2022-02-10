@@ -1,6 +1,10 @@
-@media all and (max-width: 810px) {
+@media all and (max-width: 550px) {
   .searchPopotes {
     width: 15em !important;
+  }
+  .itemsContainer {
+    gap: 0.5em !important;
+    width: 100% !important;
   }
 }
 
@@ -15,10 +19,25 @@
   background-color: #67d1ac96;
 }
 
+.lesPopotesPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.popotesSubdivision {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
 /*
  * SearchBar
  */
- .searchPopotes {
+.searchPopotes {
   display: flex;
   align-items: center;
   margin: 1.2em;
@@ -33,14 +52,46 @@
 }
 .searchPopotes:focus-within {
   box-shadow: 1px 1px 8px 1px #dcdcdc;
-  outline:none;
+  outline: none;
+}
+
+.filtersPopotes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.7em;
+  color: var(--dark-text);
+  font-size: 0.9em;
+  max-width: 80%;
 }
 
 .itemsContainer {
+  flex-wrap: wrap;
   margin: 2em 0;
   display: flex;
-  width: 100%;
-  flex-direction: column;
+  width: 95%;
+  gap: 1em;
   justify-content: center;
   align-items: center;
+}
+
+
+/* 
+ * Custom checkbox
+ */
+.check-popotes {
+  display: flex;
+  height: 1.2em;
+  width: 1.2em;
+  background: #fff;
+  margin-right: 0.2em;
+  border-radius: 4px;
+  border: 2px var(--popotes) solid;
+}
+.check-popotes--active {
+  background: var(--popotes);
+}
+.check-popotes:hover {
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+  cursor: pointer;
 }
