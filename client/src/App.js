@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ProtectedRoutes } from "./components/protectedroutes";
 import { Navbar } from "./components/navbar";
+import { Footer } from "./components/footer";
 import { Home } from "./pages/home/home";
 import { Bestof } from "./pages/home/bestof";
 import { Lastpubs } from "./pages/home/nouveautes";
@@ -72,6 +73,7 @@ export const App = () => {
           }
         />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };

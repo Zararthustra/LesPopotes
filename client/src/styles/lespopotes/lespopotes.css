@@ -4,7 +4,6 @@
   }
   .itemsContainer {
     gap: 0.5em !important;
-    width: 100% !important;
   }
 }
 
@@ -69,7 +68,7 @@
   flex-wrap: wrap;
   margin: 2em 0;
   display: flex;
-  width: 95%;
+  width: 100%;
   gap: 1em;
   justify-content: center;
   align-items: center;

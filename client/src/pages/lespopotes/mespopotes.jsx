@@ -44,15 +44,15 @@ export const Mespopotes = () => {
           ) : filter ? (
             users.map((user, index) => {
               if (
-                user.type.toLowerCase().includes(filter) &&
-                user.name.includes(searchFilter)
+                user.type.toLowerCase().includes(filter.toLowerCase()) &&
+                user.name.toLowerCase().includes(searchFilter.toLowerCase())
               )
                 return <Popotesitem key={index} user={user} />;
               return "";
             })
           ) : searchFilter ? (
             users.map((user, index) => {
-              if (user.name.includes(searchFilter))
+              if (user.name.toLowerCase().includes(searchFilter.toLowerCase()))
                 return <Popotesitem user={user} key={index} />;
               return "";
             })

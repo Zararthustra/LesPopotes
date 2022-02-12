@@ -20,9 +20,7 @@ export const Recette = () => {
   const [steps, setSteps] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isNoted, setIsNoted] = useState({});
-  const [recipeNote, setRecipeNote] = useState([]);
   const [hasVoted, setHasVoted] = useState(false);
-  const [userNote, setUserNote] = useState(0);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -66,7 +64,7 @@ export const Recette = () => {
     if (localStorage.getItem("userid") && isSubscribed) getFavorite();
 
     // Get recipe Comments
-    const getComments = async (tmpArray) => {
+    const getComments = async () => {
       const res = await axios.get(`${Host}api/comments/${recetteID}`);
       if (res.data) {
         let commentsArray = [];
@@ -78,7 +76,7 @@ export const Recette = () => {
       }
     };
 
-    // Get Notes (first get comments (DB) to setComments (local) to add notes, calculate recipeNote average and set user's vote if already voted)
+    // Get Notes (get comments to map users notes, and set user's vote if already voted)
     const getNotes = async () => {
       await getComments();
 
@@ -86,25 +84,13 @@ export const Recette = () => {
         params: { userId: localStorage.getItem("userid") },
       });
 
-      let notes = [];
-      let average = 0;
-      let total = 0;
-
       if (res.data) {
-        notes = res.data.noteArray;
-
-        if (notes.length > 1) {
-          for (let i = 0; i < notes.length; i++) {
-            total += notes[i].note;
-          }
-          average = total / notes.length;
-        } else if (notes.length === 1) average = res.data.noteArray[0].note;
-
         if (res.data.usersNote) {
-          setUserNote(res.data.usersNote);
           setIsNoted(getUsersNote(res.data.usersNote));
+          setHasVoted(true);
         }
 
+        const notes = res.data.noteArray;
         const addNotesToCommentsObject = TMPComments.map((comment) => {
           const getUserNote = notes.filter((note) => {
             if (note.user_id === comment.user_id) return note.note;
@@ -113,7 +99,6 @@ export const Recette = () => {
           return { ...comment, note: getUserNote[0]?.note };
         });
         setComments(addNotesToCommentsObject);
-        setRecipeNote({ value: average, votes: notes.length });
         setLoading(false);
       }
     };
@@ -130,7 +115,7 @@ export const Recette = () => {
     return require(`../../Images/${recipe.image?.split("\\")[4]}`).default;
   };
 
-  // Favorite
+  //________________ Favorite
   const addToFavorites = () => {
     axios
       .post(`${Host}api/favorites`, {
@@ -151,7 +136,7 @@ export const Recette = () => {
       });
   };
 
-  // Opinion Note
+  //________________ Opinion Note
   const getUsersNote = (note) => {
     if (note === 1) return { heart1: true };
     if (note === 2)
@@ -211,6 +196,8 @@ export const Recette = () => {
           recipe_id: recetteID,
           user_id: localStorage.getItem("userid"),
           value: note,
+          average: parseFloat(recipe.average),
+          notes: recipe.notes
         })
         .then((res) => {
           if (res.status === 200) {
@@ -221,7 +208,7 @@ export const Recette = () => {
         });
   };
 
-  // Opinion Comment
+  //________________ Opinion Comment
   const handleComment = (event) => {
     setComment(event.currentTarget.value);
   };
@@ -293,7 +280,7 @@ export const Recette = () => {
         >
           {recipe.author && capitalize(recipe.author)}
         </div>
-        <RecipeInfos infos={recipe} note={recipeNote} />
+        <RecipeInfos infos={recipe} />
         <div className="separatePopote"></div>
         <RecipeIngredients ingredients={ingredients} />
         <div className="separatePopote"></div>
@@ -334,7 +321,7 @@ export const Recette = () => {
           localStorage.getItem("username") && (
             <div className="opinion">
               {capitalize(localStorage.getItem("username")) ===
-              (recipe.author && capitalize(recipe.author)) ? (
+              (recipe.author && capitalize(recipe.author)) || hasVoted ? (
                 ""
               ) : (
                 <div className="addNote">
@@ -376,10 +363,10 @@ export const Recette = () => {
                     />
                   </div>
                   <button
-                    className="creationIngredientsButton"
+                    className={hasVoted ? "doneButton" : "creationIngredientsButton"}
                     onClick={addNote}
                   >
-                    {hasVoted ? "Noté" : userNote > 0 ? "Renoter" : "Noter"}
+                    {hasVoted ? "Noté" : "Noter"}
                   </button>
                 </div>
               )}

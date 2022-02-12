@@ -124,6 +124,25 @@ export const SearchFilterPopotes = ({ setFilter, setSearchFilter }) => {
         <input type="text" className="searchBar" onChange={handleSearch} />
       </div>
       <div className="filtersPopotes">
+      <label className="box">
+          <input
+            type="checkbox"
+            onChange={() => onlyCuistoChecked && setCuisto(!cuisto)}
+          />
+          <svg
+            className={`check-popotes ${cuisto ? "check-popotes--active" : ""}`}
+            aria-hidden="true"
+            viewBox="0 0 13 10"
+            fill="none"
+          >
+            <path
+              d="M1 4.5L5 9L14 1"
+              strokeWidth="2"
+              stroke={cuisto ? "#fff" : "none"}
+            />
+          </svg>
+          Cuistos du dimanche
+        </label>
         <label className="box">
           <input
             type="checkbox"
@@ -201,25 +220,6 @@ export const SearchFilterPopotes = ({ setFilter, setSearchFilter }) => {
             />
           </svg>
           Carnivores
-        </label>
-        <label className="box">
-          <input
-            type="checkbox"
-            onChange={() => onlyCuistoChecked && setCuisto(!cuisto)}
-          />
-          <svg
-            className={`check-popotes ${cuisto ? "check-popotes--active" : ""}`}
-            aria-hidden="true"
-            viewBox="0 0 13 10"
-            fill="none"
-          >
-            <path
-              d="M1 4.5L5 9L14 1"
-              strokeWidth="2"
-              stroke={cuisto ? "#fff" : "none"}
-            />
-          </svg>
-          Cuistos du dimanche
         </label>
         <label className="box">
           <input

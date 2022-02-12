@@ -50,6 +50,9 @@ module.exports = (sequelize, Sequelize) => {
     notes: {
       type: Sequelize.INTEGER,
     },
+    average: {
+      type: Sequelize.DECIMAL(10, 2),
+    },
     signal: {
       type: Sequelize.INTEGER,
     },

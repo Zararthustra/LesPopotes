@@ -41,14 +41,14 @@ export const Recettes = () => {
         recipes.map((recipe, index) => {
           if (
             recipe.type.includes(filter) &&
-            recipe.name.includes(searchFilter)
+            recipe.name.toLowerCase().includes(searchFilter.toLowerCase())
           )
             return <Card key={index} recipe={recipe} />;
           return "";
         })
       ) : searchFilter ? (
         recipes.map((recipe, index) => {
-          if (recipe.name.includes(searchFilter))
+          if (recipe.name.toLowerCase().includes(searchFilter.toLowerCase()))
             return <Card key={index} recipe={recipe} />;
           return "";
         })

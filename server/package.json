@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Zararthustra/LesPopotes#readme",
   "dependencies": {
+    "axios": "^0.25.0",
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "multer": "^1.4.4",

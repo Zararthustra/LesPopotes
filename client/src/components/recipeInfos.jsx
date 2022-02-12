@@ -2,7 +2,7 @@ import { capitalize } from "../assets/utils/capitalize";
 import { icons } from "../assets/utils/importIcons";
 import { images } from "../assets/utils/importImages";
 
-export const RecipeInfos = ({ infos, note }) => {
+export const RecipeInfos = ({ infos }) => {
   const diff =
     infos.difficulty === "3"
       ? "Difficile"
@@ -17,17 +17,17 @@ export const RecipeInfos = ({ infos, note }) => {
       : icons.diff1;
 
   const noteIcon = () => {
-    if (note.value === 0) return icons.like0;
-    if (0 < note.value && note.value <= 0.5) return icons.like05;
-    if (0.5 < note.value && note.value <= 1) return icons.like1;
-    if (1 < note.value && note.value <= 1.5) return icons.like15;
-    if (1.5 < note.value && note.value <= 2) return icons.like2;
-    if (2 < note.value && note.value <= 2.5) return icons.like25;
-    if (2.5 < note.value && note.value <= 3) return icons.like3;
-    if (3 < note.value && note.value <= 3.5) return icons.like35;
-    if (3.5 < note.value && note.value <= 4) return icons.like4;
-    if (4 < note.value && note.value <= 4.5) return icons.like45;
-    if (note.value > 4.5) return icons.like5;
+    if (0 < infos.average && infos.average <= 0.5) return icons.like05;
+    if (0.5 < infos.average && infos.average <= 1) return icons.like1;
+    if (1 < infos.average && infos.average <= 1.5) return icons.like15;
+    if (1.5 < infos.average && infos.average <= 2) return icons.like2;
+    if (2 < infos.average && infos.average <= 2.5) return icons.like25;
+    if (2.5 < infos.average && infos.average <= 3) return icons.like3;
+    if (3 < infos.average && infos.average <= 3.5) return icons.like35;
+    if (3.5 < infos.average && infos.average <= 4) return icons.like4;
+    if (4 < infos.average && infos.average <= 4.5) return icons.like45;
+    if (infos.average > 4.5) return icons.like5;
+    return icons.like0;
   };
 
   return (
@@ -65,7 +65,7 @@ export const RecipeInfos = ({ infos, note }) => {
           </li>
           <li className="cardInfo">
             <img className="likeImg" src={noteIcon()} alt="note moyenne avis" />
-            {note.votes} avis
+            {infos.notes} avis
           </li>
         </ul>
         <div className="times">

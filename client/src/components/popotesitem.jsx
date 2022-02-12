@@ -16,8 +16,8 @@ export const Popotesitem = ({ user }) => {
     >
       <div className="left">
         <div className="names">
-        <div className="pseudo">{capitalize(user.name)}</div>
-        <div className="type">{user.type}</div>
+          <div className="pseudo">{capitalize(user.name)}</div>
+          <div className="type">{user.type}</div>
         </div>
         <div className="popotelevel">
           {getLevel(user.recipes, user.notes, user.popotes, user.comments)}
@@ -25,7 +25,6 @@ export const Popotesitem = ({ user }) => {
       </div>
       <div className="right">
         <img src={user.avatar} alt="avatar" className="avatar" />
-        
       </div>
     </div>
   );

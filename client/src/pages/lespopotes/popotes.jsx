@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { capitalize } from "../../assets/utils/capitalize";
+import { getLevel } from "../../assets/utils/getLevel";
 import { Host } from "../../assets/utils/host";
 
 export const Popotes = () => {
@@ -17,7 +18,7 @@ export const Popotes = () => {
       if (isSubscribed) setUserObject(res.data);
     });
 
-    setIsSubscribed(false)
+    setIsSubscribed(false);
   }, [popote, isSubscribed]);
 
   return (
@@ -29,7 +30,14 @@ export const Popotes = () => {
           <div className="type">{userObject.type}</div>
         </div>
       </div>
-      <div className="level">debutant</div>
+      <div className="level">
+        {getLevel(
+          userObject.recipes,
+          userObject.notes,
+          userObject.popotes,
+          userObject.comments
+        )}
+      </div>
       <ul className="levelInfos">
         <li>
           <p>Recettes</p>
@@ -65,7 +73,9 @@ export const Popotes = () => {
           {userObject.instagram && <a href={userObject.instagram}>Instagram</a>}
         </li>
       </ul>
-      <button className="myprofileModifyButton" onClick={() => navigate(-1)}>Retour</button>
+      <button className="myprofileModifyButton" onClick={() => navigate(-1)}>
+        Retour
+      </button>
     </div>
   );
 };

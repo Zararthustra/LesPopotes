@@ -78,6 +78,16 @@
   background-color: var(--popote);
 }
 
+.cardsDoneBy {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  width: 95%;
+  justify-content: flex-end;
+  font-style: italic;
+  color: var(--dark-popotes);
+}
+
 .cardIcons {
   display: flex;
   flex-direction: column;

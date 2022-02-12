@@ -10,7 +10,7 @@ import { useCallback } from "react";
 export const ProtectedRoutes = () => {
   const location = useLocation().pathname;
 
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);// refreshToken in localstorage ? true : false
   const [loading, setLoading] = useState(false);
 
   const name = localStorage.getItem("username");

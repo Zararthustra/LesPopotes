@@ -31,7 +31,6 @@ export const Monprofil = () => {
     axios.get(`${Host}api/users/${userName}`).then((res) => {
       if (isSubscribed && res) {
         setUserObject(res.data);
-        console.log(res.data);
         setLoading(false);
       }
     });

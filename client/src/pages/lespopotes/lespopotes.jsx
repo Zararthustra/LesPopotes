@@ -73,18 +73,17 @@ export const Lespopotes = () => {
             />
           ) : filter ? (
             users.map((user, index) => {
-              console.log(filter);
               const userTypeLower = user.type.toLowerCase()
               if (
-                userTypeLower.includes(filter) &&
-                user.name.includes(searchFilter)
+                userTypeLower.includes(filter.toLowerCase()) &&
+                user.name.toLowerCase().includes(searchFilter.toLowerCase())
               )
                   return <Popotesitem key={index} user={user} />;
               return "";
             })
           ) : searchFilter ? (
             users.map((user, index) => {
-              if (user.name.includes(searchFilter))
+              if (user.name.toLowerCase().includes(searchFilter.toLowerCase()))
                 return <Popotesitem user={user} key={index} />;
               return "";
             })

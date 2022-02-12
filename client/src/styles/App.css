@@ -72,6 +72,7 @@ li {
 }
 a {
   text-decoration: none;
+  color: var(--popotes);
 }
 .avatar {
   cursor: pointer;
@@ -171,7 +172,6 @@ a {
 }
 
 .doneButton {
-  cursor: pointer;
   padding: 0.4em 1em;
   font-weight: bolder;
   font-size: 1.2em;

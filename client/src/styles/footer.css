@@ -1,0 +1,86 @@
+@media all and (max-width: 710px) {
+  .footer {
+    font-size: 0.8em;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .footerInfos {
+    width: 90%;
+    flex-direction: row !important;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 1em;
+  }
+  .footerSections {
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 2em;
+  }
+}
+
+.footer {
+  width: 100%;
+  background-color: var(--dark);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5em 0 2em;
+  gap: 2em;
+  flex-direction: column;
+}
+
+.footerSections {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.footerSection {
+  display: flex;
+  flex-direction: row;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--light-text);
+}
+
+.footerTitles {
+  color: var(--white);
+}
+
+.footerRights {
+  display: flex;
+  gap: 1em;
+  margin-top: 3em;
+  color: rgb(3, 3, 24);
+}
+.footerInfos {
+  display: flex;
+  flex-direction: column;
+}
+
+.linkedin,.mail,
+.github,
+.recordit,
+.checklist {
+  width: 3em;
+  height: 3em;
+}
+.contact {
+  gap: 1em;
+  flex-direction: row;
+  align-items: center;
+  color: var(--dark-popotes);
+}
+
+.checklist, .recordit {
+  border-radius: 10px;
+}
+.devs {
+  flex-direction: row;
+  gap: 1em;
+}

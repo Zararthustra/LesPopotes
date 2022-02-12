@@ -4,12 +4,10 @@ const router = express.Router();
 const db = require("../models");
 const { Op } = require("sequelize");
 const cors = require("cors");
-const User = require("../models/User");
-const { response } = require("express");
 const multer = require("multer");
 const path = require("path");
 const { unlink } = require("fs");
-const { stringify } = require("querystring");
+const axios = require("axios");
 
 router.use(express.json());
 router.use(cors());
@@ -125,16 +123,29 @@ router.post("/user/login", (req, res) => {
   });
 });
 
+// Increment user's field (recipes, comments, notes, popotes)
+router.put("/users/:userID/:field", (req, res) => {
+  db.User.increment(req.params.field, {
+    by: 1,
+    where: { id: req.params.userID },
+  })
+    .then((resp) => res.json(resp))
+    .catch((err) => {
+      console.log(customizedError(err, "PUT increment User's field"));
+      res.json({ error: err.name });
+    });
+});
+
 // Retrieve all
 router.get("/users", (req, res) => {
   db.User.findAll().then((users) => res.json(users));
 });
 
 // Retrieve one
-router.get("/users/:user", (req, res) => {
+router.get("/users/:username", (req, res) => {
   db.User.findOne({
     where: {
-      name: req.params.user,
+      name: req.params.username,
     },
   }).then((user) => res.json(user));
 });
@@ -156,7 +167,8 @@ router.post("/recipe", (req, res) => {
   const bakeType = req.body.bakeType;
   const difficulty = req.body.difficulty;
   const comments = req.body.comments;
-  const notes = req.body.notes;
+  const notes = 0;
+  const average = 0;
   const signal = req.body.signal;
   const authorComment = req.body.authorComment;
 
@@ -175,11 +187,23 @@ router.post("/recipe", (req, res) => {
     difficulty,
     comments,
     notes,
+    average,
     signal,
     authorComment,
   })
     .then((createdRecipe) => {
-      if (createdRecipe) return res.json(createdRecipe);
+      if (createdRecipe) {
+        //Increment user's recipes
+        axios
+          .put(
+            `http://localhost:3001/api/users/${createdRecipe.user_id}/recipes`
+          )
+          .then((resp) => {
+            if (resp.status !== 200) console.log("Increment recipes: \n", resp);
+          })
+          .catch((err) => console.log(err));
+        return res.json(createdRecipe);
+      }
       return res.send("Could not create recipe.");
     })
     .catch((err) => {
@@ -189,16 +213,51 @@ router.post("/recipe", (req, res) => {
 });
 
 // Update
-router.put("/recipes/:recipeID", (req, res) => {
-  const payload = req.body.payload;
-  db.Recipe.update(payload, {
-    where: {
-      id: req.params.recipeID,
+// router.put("/recipes/:recipeID", (req, res) => {
+//   const payload = req.body.payload;
+//   db.Recipe.update(payload, {
+//     where: {
+//       id: req.params.recipeID,
+//     },
+//   }).catch((err) => {
+//     console.log(customizedError(err, "PUT update Recipe"));
+//     res.json({ error: err.name });
+//   });
+// });
+
+// Update recipe's fields (average, notes)
+router.put("/recipes/average/:recipeID", (req, res) => {
+  const notes = req.body.notes;
+  const newNote = req.body.value;
+  const average = req.body.average + (newNote - req.body.average) / (notes + 1);
+
+  // Update average
+  db.Recipe.update(
+    {
+      average,
     },
-  }).catch((err) => {
-    console.log(customizedError(err, "PUT update Recipe"));
-    res.json({ error: err.name });
-  });
+    {
+      where: {
+        id: req.params.recipeID,
+      },
+    }
+  )
+    .then((averageUpdated) => {
+      // Increment notes
+      db.Recipe.increment("notes", {
+        by: 1,
+        where: { id: req.params.recipeID },
+      })
+        .then((resp) => res.json(resp))
+        .catch((err) => {
+          console.log(customizedError(err, "PUT increment Recipe's notes"));
+          res.json({ error: err.name });
+        });
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "PUT update Recipe's average"));
+      res.json({ error: err.name });
+    });
 });
 
 // Update image
@@ -431,7 +490,19 @@ router.post("/comments", (req, res) => {
     recipe_id,
   })
     .then((createdComment) => {
-      if (createdComment) res.sendStatus(201);
+      if (createdComment) {
+        //Increment user's comments
+        axios
+          .put(
+            `http://localhost:3001/api/users/${createdComment.user_id}/comments`
+          )
+          .then((resp) => {
+            if (resp.status !== 200)
+              console.log("Increment comments: \n", resp);
+          })
+          .catch((err) => console.log(err));
+        res.sendStatus(201);
+      }
     })
     .catch((err) => {
       console.log(customizedError(err, "POST create Comment"));
@@ -510,31 +581,46 @@ router.post("/notes", (req, res) => {
   const value = req.body.value;
   const recipe_id = req.body.recipe_id;
   const user_id = req.body.user_id;
+  const average = req.body.average;
+  const notes = req.body.notes;
 
   db.Note.findOne({
     where: { user_id, recipe_id },
   })
-    .then((createdNote) => {
-      res.sendStatus(200);
-      if (createdNote)
-        return db.Note.update(
-          {
+    .then((foundNote) => {
+      if (!foundNote) {
+        db.Note.create({
+          value,
+          recipe_id,
+          user_id,
+        }).catch((err) => {
+          console.log(customizedError(err, "POST create Note"));
+          res.json({ error: err.name });
+        });
+        //Increment user's notes
+        axios
+          .put(`http://localhost:3001/api/users/${user_id}/notes`)
+          .then((resp) => {
+            if (resp.status !== 200)
+              console.log("Increment user's Notes: \n", resp);
+          })
+          .catch((err) => console.log(err));
+        //Update recipe's notes & average
+        axios
+          .put(`http://localhost:3001/api/recipes/average/${recipe_id}`, {
             value,
-          },
-          {
-            where: {
-              user_id,
-            },
-          }
-        );
-      return db.Note.create({
-        value,
-        recipe_id,
-        user_id,
-      });
+            average,
+            notes,
+          })
+          .then((resp) => {
+            if (resp.status !== 200) console.log("Increment notes: \n", resp);
+          })
+          .catch((err) => console.log(err));
+        res.sendStatus(200)
+      }
     })
     .catch((err) => {
-      console.log(customizedError(err, "POST create Note"));
+      console.log(customizedError(err, "POST find Note"));
       res.json({ error: err.name });
     });
 });
@@ -578,7 +664,6 @@ router.get("/notes/users/:userID", (req, res) => {
       res.json({ error: err.name });
     });
 });
-
 
 //________________________________________ Not implemented yet:
 

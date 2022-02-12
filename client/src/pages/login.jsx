@@ -159,8 +159,8 @@ export const Login = () => {
     return (
       <div className="loginContainer">
         {location !== "/lapopote/creation" && (
-        <h1 className="connexion">Création</h1>
-      )}
+          <h1 className="connexion">Création</h1>
+        )}
         <div className="loginField">
           <form className="logform">
             <div className="inputs">
@@ -263,7 +263,7 @@ export const Login = () => {
         <form className="logform">
           <div className="inputs">
             <input
-              maxLength="20"
+              maxLength="12"
               placeholder="Pseudo"
               className="inputName"
               type="text"
@@ -271,7 +271,7 @@ export const Login = () => {
               onChange={handleInputChange}
             ></input>
             <input
-              maxLength="20"
+              maxLength="15"
               placeholder="Mot de passe"
               className="inputPassword"
               type="password"

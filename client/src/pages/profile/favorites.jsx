@@ -57,15 +57,15 @@ export const Favorites = () => {
         ) : filter ? (
           recipes.map((recipe, index) => {
             if (
-              recipe.type.includes(filter) &&
-              recipe.name.includes(searchFilter)
+              recipe.type.toLowerCase().includes(filter.toLowerCase()) &&
+              recipe.name.toLowerCase().includes(searchFilter.toLowerCase())
             )
               return <Card key={index} recipe={recipe} />;
             return "";
           })
         ) : searchFilter ? (
           recipes.map((recipe, index) => {
-            if (recipe.name.includes(searchFilter))
+            if (recipe.name.toLowerCase().includes(searchFilter.toLowerCase()))
               return <Card key={index} recipe={recipe} />;
             return "";
           })

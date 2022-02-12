@@ -4,6 +4,7 @@ import reportWebVitals from "./reportWebVitals";
 import { App } from "./App";
 import "./styles/App.css";
 import "./styles/navbar.css";
+import "./styles/footer.css";
 import "./styles/home.css";
 import "./styles/login.css";
 import "./styles/lapopote/lapopote.css";
