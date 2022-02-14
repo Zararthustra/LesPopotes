@@ -163,6 +163,22 @@ router.get("/users/:username", (req, res) => {
   }).then((user) => res.json(user));
 });
 
+// Retrieve all with pagination
+router.get("/users/pagination/:offset", (req, res) => {
+  const offset = parseInt(req.params.offset);
+  const limit = parseInt(req.query.limit);
+
+  db.User.findAndCountAll({
+    offset,
+    limit,
+  })
+    .then((result) => res.send(result))
+    .catch((err) => {
+      console.log(customizedError(err, "GET Users pagination"));
+      res.json({ error: err.name });
+    });
+});
+
 //________________________________________ Recipes
 
 // Create
@@ -308,15 +324,16 @@ router.put("/:recipeID/recipeImage", upload.single("image"), (req, res) => {
 router.delete("/recipes/:recipeID", (req, res) => {
   db.Recipe.destroy({
     where: {
-      id: req.params.recipeID
+      id: req.params.recipeID,
     },
   })
     .then((deletedRecipe) => {
       if (deletedRecipe) {
         // Delete associated recipe image
-        if (req.query.image) unlink(`../client/src/Images/${req.query.image}`, (error) => {
-          if (error) console.log(error);
-        });
+        if (req.query.image)
+          unlink(`../client/src/Images/${req.query.image}`, (error) => {
+            if (error) console.log(error);
+          });
         console.log(deletedRecipe);
         //Decrement user's recipes
         axios
@@ -740,6 +757,76 @@ router.get("/notes/users/:userID", (req, res) => {
     .then((foundNote) => res.json(foundNote?.value))
     .catch((err) => {
       console.log(customizedError(err, "GET one Note"));
+      res.json({ error: err.name });
+    });
+});
+
+//________________________________________ Friendship
+
+// Create
+router.post("/friendships", (req, res) => {
+  const user_id = req.body.user_id;
+  const popote_id = req.body.popote_id;
+
+  db.Friendship.create({
+    user_id,
+    popote_id,
+  })
+    .then((createdFriendship) => res.json(createdFriendship))
+    .catch((err) => {
+      console.log(customizedError(err, "POST create Friendship"));
+      res.json({ error: err.name });
+    });
+});
+
+// Delete
+router.delete("/friendships/:userID", (req, res) => {
+  const user_id = req.params.userID;
+  const popote_id = req.query.popote_id;
+
+  db.Friendship.destroy({
+    where: {
+      user_id,
+      popote_id,
+    },
+  })
+    .then((deletedFriend) => {
+      if (deletedFriend) {
+        return res.json(deletedFriend);
+      }
+      return res.send("Could not delete friendship.");
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "DELETE Friendship"));
+      res.json({ error: err.name });
+    });
+});
+
+// Retrieve one
+router.get("/friendships/:userID", (req, res) => {
+  const user_id = req.params.userID;
+  const popote_id = req.query.popote_id;
+
+  db.Friendship.findOne({
+    where: { user_id, popote_id },
+  })
+    .then((foundFriendship) => res.json(foundFriendship))
+    .catch((err) => {
+      console.log(customizedError(err, "GET one Friendship"));
+      res.json({ error: err.name });
+    });
+});
+
+// Retrieve all by user_id
+router.get("/friendships", (req, res) => {
+  const user_id = req.query.user_id;
+
+  db.Friendship.findAll({
+    where: { user_id },
+  })
+    .then((foundFriendships) => res.json(foundFriendships))
+    .catch((err) => {
+      console.log(customizedError(err, "GET all User's Friendships"));
       res.json({ error: err.name });
     });
 });

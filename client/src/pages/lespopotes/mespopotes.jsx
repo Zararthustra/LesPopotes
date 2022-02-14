@@ -18,8 +18,22 @@ export const Mespopotes = () => {
 
     axios.get(`${Host}api/users`).then((res) => {
       if (isSubscribed && res.data) {
-        setLoading(false);
-        setUsers(res.data);
+        axios
+          .get(`${Host}api/friendships`, {
+            params: { user_id: localStorage.getItem("userid") },
+          })
+          .then((myrelations) => {
+            if (myrelations.data) {
+              let mypopotes = [];
+              console.log(myrelations);
+              mypopotes = res.data.filter((popote) => {
+                //console.log(myrelations.data[0].popote_id, popote.id);
+                return myrelations.data[0]?.popote_id === popote.id;
+              });
+              setUsers(mypopotes);
+              setLoading(false);
+            }
+          });
       }
     });
 

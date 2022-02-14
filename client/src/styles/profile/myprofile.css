@@ -7,8 +7,11 @@
   }
 }
 @media all and (max-width: 400px) {
+  .addPopote {
+    width: 2em !important;
+  }
   .mypopoteNames {
-    font-size: 1.3em !important;
+    font-size: 1.4em !important;
   }
   .popoteProfileHeader .avatar {
     width: 5em !important;
@@ -16,6 +19,9 @@
   }
 }
 @media all and (min-width: 500px) {
+  .popoteContainer {
+    height: 110vh !important;
+  }
   .popoteProfile {
     width: 25em !important;
   }
@@ -91,12 +97,20 @@
 .popoteProfileHeader {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   padding: 1em 1em;
   background-color: var(--popotes);
   gap: 0.5em;
 }
+
+.closePopote {
+  width: 1.5em;
+  position: relative;
+  top: -2.7em;
+  left: .7em;
+}
+
 .popoteProfileHeader .avatar {
   width: 6em;
   height: 6em;
@@ -109,6 +123,13 @@
   align-items: flex-start;
   font-family: "Oswald", sans-serif;
   line-height: 1.2em;
+  width: 55%;
+}
+
+.addPopote {
+  cursor: pointer;
+  align-self: flex-end;
+  width: 1.5em;
 }
 
 .tabs {

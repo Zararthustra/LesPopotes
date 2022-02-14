@@ -13,38 +13,48 @@ export const Lespopotes = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState();
+  const [offset, setOffset] = useState(0);
+  const limit = 10;
+  const [totalPage, setTotalPage] = useState();
   const [searchFilter, setSearchFilter] = useState("");
 
   // Load data when mounting
   useEffect(() => {
-    let isSubscribed = true;
     setLoading(true);
 
-    axios.get(`${Host}api/users`).then((res) => {
-      if (isSubscribed && res.data) {
+    const getUsers = async () => {
+      const res = await axios.get(`${Host}api/users`);
+      if (res.data) {
         setLoading(false);
-        setUsers(res.data);
+        setUsers(
+          res.data.filter(
+            (user) => user.id !== parseInt(localStorage.getItem("userid"))
+          )
+        );
       }
-    });
+    };
+    const getUsersPaginated = async () => {
+      const res = await axios.get(`${Host}api/users/pagination/${offset}`, {
+        params: { limit },
+      });
+      if (res.data) {
+        setTotalPage(res.data.count);
+        setLoading(false);
+        setUsers(
+          res.data.rows.filter(
+            (user) => user.id !== parseInt(localStorage.getItem("userid"))
+          )
+        );
+      }
+    };
 
-    return () => (isSubscribed = false);
-  }, []);
+    if (searchFilter || filter) getUsers();
+    else getUsersPaginated();
 
-  // const toggleActiveLink = (id) => {
-  //   let activeLink = document.getElementById(id).classList;
-  //   let activeLink1 = document.getElementById("1").classList;
-  //   let activeLink2 = document.getElementById("2").classList;
+    return () => setUsers([]);
+  }, [offset, filter, searchFilter]);
 
-  //   if (id === "1" && activeLink.length === 1) {
-  //     activeLink.add("activePopotes");
-  //     activeLink2.remove("activePopotes");
-  //   } else if (id === "2" && activeLink.length === 1) {
-  //     activeLink.add("activePopotes");
-  //     activeLink1.remove("activePopotes");
-  //   }
-  // };
-
-  // Popote page
+  // Popote profile
   if (location !== "/lespopotes") return <Outlet />;
 
   return (
@@ -59,6 +69,7 @@ export const Lespopotes = () => {
       </div>
       <main className="lesPopotesPage">
         <SearchFilterPopotes
+          searchFilter={searchFilter}
           setFilter={setFilter}
           setSearchFilter={setSearchFilter}
         />
@@ -73,12 +84,12 @@ export const Lespopotes = () => {
             />
           ) : filter ? (
             users.map((user, index) => {
-              const userTypeLower = user.type.toLowerCase()
+              const userTypeLower = user.type.toLowerCase();
               if (
                 userTypeLower.includes(filter.toLowerCase()) &&
                 user.name.toLowerCase().includes(searchFilter.toLowerCase())
               )
-                  return <Popotesitem key={index} user={user} />;
+                return <Popotesitem key={index} user={user} />;
               return "";
             })
           ) : searchFilter ? (
@@ -91,6 +102,28 @@ export const Lespopotes = () => {
             users.map((user, index) => {
               return <Popotesitem user={user} key={index} />;
             })
+          )}
+        </div>
+        <div className="prevNextButtons">
+          {!filter && !searchFilter && offset - limit >= 0 ? (
+            <div
+              className="prevButton"
+              onClick={() => setOffset(offset - limit)}
+            >
+              Précédents
+            </div>
+          ) : (
+            <div></div>
+          )}
+          {!filter && !searchFilter && offset + limit < totalPage ? (
+            <div
+              className="nextButton"
+              onClick={() => setOffset(offset + limit)}
+            >
+              Suivants
+            </div>
+          ) : (
+            <div></div>
           )}
         </div>
       </main>

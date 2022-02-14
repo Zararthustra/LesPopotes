@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 
-export const SearchFilterPopotes = ({ setFilter, setSearchFilter }) => {
+export const SearchFilterPopotes = ({ setFilter, setSearchFilter, searchFilter }) => {
   //___________________________________________________ Variables
 
   const [gourmand, setGourmand] = useState(false);
@@ -12,6 +12,7 @@ export const SearchFilterPopotes = ({ setFilter, setSearchFilter }) => {
   const [grignotteur, setGrignotteur] = useState(false);
   const [cultivateur, setCultivateur] = useState(false);
   const [herbivore, setHerbivore] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
 
   // Flemme de faire une fonction
   const allFiltersNotChecked =
@@ -111,178 +112,227 @@ export const SearchFilterPopotes = ({ setFilter, setSearchFilter }) => {
   });
 
   const handleSearch = (event) => {
-    const value = event.currentTarget.value;
+    const value = event.target.value;
     setSearchFilter(value);
   };
+  const handleClearInput = () => {
+    document.querySelector('.searchBar').value = ""
+    setSearchFilter("");
 
+  }
+
+  // Copy/pasted func to avoid multiple API calls on typing (waits {x}ms before call API)
+  function debounce(func, wait, immediate) {
+    var timeout;
+    return function () {
+      var context = this,
+        args = arguments;
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(function () {
+        timeout = null;
+        if (!immediate) {
+          func.apply(context, args);
+        }
+      }, wait);
+      if (callNow) func.apply(context, args);
+    };
+  }
   //___________________________________________________ Render
 
   return (
     <div className="popotesSubdivision">
       <div className="searchPopotes">
         <div className="searchIcon" />
-        <input type="text" className="searchBar" onChange={handleSearch} />
+        <input
+          type="text"
+          className="searchBar"
+          onChange={debounce(handleSearch, 500)}
+        />
+        {searchFilter && <div className="resetInput" onClick={handleClearInput}/>}
       </div>
-      <div className="filtersPopotes">
-      <label className="box">
-          <input
-            type="checkbox"
-            onChange={() => onlyCuistoChecked && setCuisto(!cuisto)}
-          />
-          <svg
-            className={`check-popotes ${cuisto ? "check-popotes--active" : ""}`}
-            aria-hidden="true"
-            viewBox="0 0 13 10"
-            fill="none"
-          >
-            <path
-              d="M1 4.5L5 9L14 1"
-              strokeWidth="2"
-              stroke={cuisto ? "#fff" : "none"}
-            />
-          </svg>
-          Cuistos du dimanche
-        </label>
-        <label className="box">
-          <input
-            type="checkbox"
-            onChange={() => onlyGourmandChecked && setGourmand(!gourmand)}
-          />
-          <svg
-            className={`check-popotes ${gourmand ? "check-popotes--active" : ""}`}
-            aria-hidden="true"
-            viewBox="0 0 13 10"
-            fill="none"
-          >
-            <path
-              d="M1 4.5L5 9L14 1"
-              strokeWidth="2"
-              stroke={gourmand ? "#fff" : "none"}
-            />
-          </svg>
-          Gourmands
-        </label>
-        <label className="box">
-          <input
-            type="checkbox"
-            onChange={() => onlyBonChecked && setBon(!bon)}
-          />
-          <svg
-            className={`check-popotes ${bon ? "check-popotes--active" : ""}`}
-            aria-hidden="true"
-            viewBox="0 0 13 10"
-            fill="none"
-          >
-            <path
-              d="M1 4.5L5 9L14 1"
-              strokeWidth="2"
-              stroke={bon ? "#fff" : "none"}
-            />
-          </svg>
-          Bons vivants
-        </label>
-        <label className="box">
-          <input
-            type="checkbox"
-            onChange={() => onlyCordonChecked && setCordon(!cordon)}
-          />
-          <svg
-            className={`check-popotes ${cordon ? "check-popotes--active" : ""}`}
-            aria-hidden="true"
-            viewBox="0 0 13 10"
-            fill="none"
-          >
-            <path
-              d="M1 4.5L5 9L14 1"
-              strokeWidth="2"
-              stroke={cordon ? "#fff" : "none"}
-            />
-          </svg>
-          Cordons bleus
-        </label>
-        <label className="box">
-          <input
-            type="checkbox"
-            onChange={() => onlyCarnivoreChecked && setCarnivore(!carnivore)}
-          />
-          <svg
-            className={`check-popotes ${
-              carnivore ? "check-popotes--active" : ""
-            }`}
-            aria-hidden="true"
-            viewBox="0 0 13 10"
-            fill="none"
-          >
-            <path
-              d="M1 4.5L5 9L14 1"
-              strokeWidth="2"
-              stroke={carnivore ? "#fff" : "none"}
-            />
-          </svg>
-          Carnivores
-        </label>
-        <label className="box">
-          <input
-            type="checkbox"
-            onChange={() =>
-              onlyGrignotteurChecked && setGrignotteur(!grignotteur)
-            }
-          />
-          <svg
-            className={`check-popotes ${grignotteur ? "check-popotes--active" : ""}`}
-            aria-hidden="true"
-            viewBox="0 0 13 10"
-            fill="none"
-          >
-            <path
-              d="M1 4.5L5 9L14 1"
-              strokeWidth="2"
-              stroke={grignotteur ? "#fff" : "none"}
-            />
-          </svg>
-          Grignotteurs
-        </label>
-        <label className="box">
-          <input
-            type="checkbox"
-            onChange={() =>
-              onlyCultivateurChecked && setCultivateur(!cultivateur)
-            }
-          />
-          <svg
-            className={`check-popotes ${cultivateur ? "check-popotes--active" : ""}`}
-            aria-hidden="true"
-            viewBox="0 0 13 10"
-            fill="none"
-          >
-            <path
-              d="M1 4.5L5 9L14 1"
-              strokeWidth="2"
-              stroke={cultivateur ? "#fff" : "none"}
-            />
-          </svg>
-          Cultivateurs
-        </label>
-        <label className="box">
-          <input
-            type="checkbox"
-            onChange={() => onlyHerbivoreChecked && setHerbivore(!herbivore)}
-          />
-          <svg
-            className={`check-popotes ${herbivore ? "check-popotes--active" : ""}`}
-            aria-hidden="true"
-            viewBox="0 0 13 10"
-            fill="none"
-          >
-            <path
-              d="M1 4.5L5 9L14 1"
-              strokeWidth="2"
-              stroke={herbivore ? "#fff" : "none"}
-            />
-          </svg>
-          Herbivores
-        </label>
+      <div
+        className="showPopotesFilters"
+        onClick={() => setShowFilters(!showFilters)}
+      >
+        {showFilters ? "- Filtres" : "+ Filtres"}
       </div>
+      {showFilters ? (
+        <div className="filtersPopotes">
+          <label className="box">
+            <input
+              type="checkbox"
+              onChange={() => onlyCuistoChecked && setCuisto(!cuisto)}
+            />
+            <svg
+              className={`check-popotes ${
+                cuisto ? "check-popotes--active" : ""
+              }`}
+              aria-hidden="true"
+              viewBox="0 0 13 10"
+              fill="none"
+            >
+              <path
+                d="M1 4.5L5 9L14 1"
+                strokeWidth="2"
+                stroke={cuisto ? "#fff" : "none"}
+              />
+            </svg>
+            Cuistos du dimanche
+          </label>
+          <label className="box">
+            <input
+              type="checkbox"
+              onChange={() => onlyGourmandChecked && setGourmand(!gourmand)}
+            />
+            <svg
+              className={`check-popotes ${
+                gourmand ? "check-popotes--active" : ""
+              }`}
+              aria-hidden="true"
+              viewBox="0 0 13 10"
+              fill="none"
+            >
+              <path
+                d="M1 4.5L5 9L14 1"
+                strokeWidth="2"
+                stroke={gourmand ? "#fff" : "none"}
+              />
+            </svg>
+            Gourmands
+          </label>
+          <label className="box">
+            <input
+              type="checkbox"
+              onChange={() => onlyBonChecked && setBon(!bon)}
+            />
+            <svg
+              className={`check-popotes ${bon ? "check-popotes--active" : ""}`}
+              aria-hidden="true"
+              viewBox="0 0 13 10"
+              fill="none"
+            >
+              <path
+                d="M1 4.5L5 9L14 1"
+                strokeWidth="2"
+                stroke={bon ? "#fff" : "none"}
+              />
+            </svg>
+            Bons vivants
+          </label>
+          <label className="box">
+            <input
+              type="checkbox"
+              onChange={() => onlyCordonChecked && setCordon(!cordon)}
+            />
+            <svg
+              className={`check-popotes ${
+                cordon ? "check-popotes--active" : ""
+              }`}
+              aria-hidden="true"
+              viewBox="0 0 13 10"
+              fill="none"
+            >
+              <path
+                d="M1 4.5L5 9L14 1"
+                strokeWidth="2"
+                stroke={cordon ? "#fff" : "none"}
+              />
+            </svg>
+            Cordons bleus
+          </label>
+          <label className="box">
+            <input
+              type="checkbox"
+              onChange={() => onlyCarnivoreChecked && setCarnivore(!carnivore)}
+            />
+            <svg
+              className={`check-popotes ${
+                carnivore ? "check-popotes--active" : ""
+              }`}
+              aria-hidden="true"
+              viewBox="0 0 13 10"
+              fill="none"
+            >
+              <path
+                d="M1 4.5L5 9L14 1"
+                strokeWidth="2"
+                stroke={carnivore ? "#fff" : "none"}
+              />
+            </svg>
+            Carnivores
+          </label>
+          <label className="box">
+            <input
+              type="checkbox"
+              onChange={() =>
+                onlyGrignotteurChecked && setGrignotteur(!grignotteur)
+              }
+            />
+            <svg
+              className={`check-popotes ${
+                grignotteur ? "check-popotes--active" : ""
+              }`}
+              aria-hidden="true"
+              viewBox="0 0 13 10"
+              fill="none"
+            >
+              <path
+                d="M1 4.5L5 9L14 1"
+                strokeWidth="2"
+                stroke={grignotteur ? "#fff" : "none"}
+              />
+            </svg>
+            Grignotteurs
+          </label>
+          <label className="box">
+            <input
+              type="checkbox"
+              onChange={() =>
+                onlyCultivateurChecked && setCultivateur(!cultivateur)
+              }
+            />
+            <svg
+              className={`check-popotes ${
+                cultivateur ? "check-popotes--active" : ""
+              }`}
+              aria-hidden="true"
+              viewBox="0 0 13 10"
+              fill="none"
+            >
+              <path
+                d="M1 4.5L5 9L14 1"
+                strokeWidth="2"
+                stroke={cultivateur ? "#fff" : "none"}
+              />
+            </svg>
+            Cultivateurs
+          </label>
+          <label className="box">
+            <input
+              type="checkbox"
+              onChange={() => onlyHerbivoreChecked && setHerbivore(!herbivore)}
+            />
+            <svg
+              className={`check-popotes ${
+                herbivore ? "check-popotes--active" : ""
+              }`}
+              aria-hidden="true"
+              viewBox="0 0 13 10"
+              fill="none"
+            >
+              <path
+                d="M1 4.5L5 9L14 1"
+                strokeWidth="2"
+                stroke={herbivore ? "#fff" : "none"}
+              />
+            </svg>
+            Herbivores
+          </label>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
