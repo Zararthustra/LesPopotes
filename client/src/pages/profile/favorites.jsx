@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import axios from "axios";
 import { Host } from "../../assets/utils/host";
+import { Outlet, useLocation } from "react-router-dom";
 
 export const Favorites = () => {
+  const location = useLocation().pathname;
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState();
@@ -45,6 +47,7 @@ export const Favorites = () => {
     }
   };
 
+  if (location !== "/profil/favorites") return <Outlet />;
   return (
     <main className="mapopotebody">
       <SearchFilterPopote

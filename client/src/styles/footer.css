@@ -63,11 +63,15 @@
   flex-direction: column;
 }
 
-.linkedin,.mail,
+.linkedin,
 .github,
 .recordit,
 .checklist {
   width: 3em;
+  height: 3em;
+}
+.mail {
+  width: 4em;
   height: 3em;
 }
 .contact {

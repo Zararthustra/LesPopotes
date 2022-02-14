@@ -136,6 +136,19 @@ router.put("/users/:userID/:field", (req, res) => {
     });
 });
 
+// Decrement user's field (recipes, comments, notes, popotes)
+router.put("/users/:userID/decrement/:field", (req, res) => {
+  db.User.decrement(req.params.field, {
+    by: 1,
+    where: { id: req.params.userID },
+  })
+    .then((resp) => res.json(resp))
+    .catch((err) => {
+      console.log(customizedError(err, "PUT decrement User's field"));
+      res.json({ error: err.name });
+    });
+});
+
 // Retrieve all
 router.get("/users", (req, res) => {
   db.User.findAll().then((users) => res.json(users));
@@ -213,17 +226,22 @@ router.post("/recipe", (req, res) => {
 });
 
 // Update
-// router.put("/recipes/:recipeID", (req, res) => {
-//   const payload = req.body.payload;
-//   db.Recipe.update(payload, {
-//     where: {
-//       id: req.params.recipeID,
-//     },
-//   }).catch((err) => {
-//     console.log(customizedError(err, "PUT update Recipe"));
-//     res.json({ error: err.name });
-//   });
-// });
+router.put("/recipes/:recipeID", (req, res) => {
+  const payload = req.body;
+  db.Recipe.update(payload, {
+    where: {
+      id: req.params.recipeID,
+    },
+  })
+    .then((resp) => {
+      if (resp[0] !== 1) console.log("Update recipe: \n", resp);
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "PUT update Recipe"));
+      res.json({ error: err.name });
+    });
+});
 
 // Update recipe's fields (average, notes)
 router.put("/recipes/average/:recipeID", (req, res) => {
@@ -261,10 +279,16 @@ router.put("/recipes/average/:recipeID", (req, res) => {
 });
 
 // Update image
-// /!\ Dirty /!\
+// Dirty
 // *Intermediate endpoint because of content-types conflict in Axios request (application/json vs multipart/data-form)*
 router.put("/:recipeID/recipeImage", upload.single("image"), (req, res) => {
   const image = req.file.path;
+  const isReplacing = req.query.oldImage;
+  if (isReplacing)
+    // Delete associated recipe image
+    unlink(`../client/src/Images/${req.query.oldImage}`, (error) => {
+      if (error) console.log(error);
+    });
   db.Recipe.update(
     {
       image,
@@ -284,15 +308,25 @@ router.put("/:recipeID/recipeImage", upload.single("image"), (req, res) => {
 router.delete("/recipes/:recipeID", (req, res) => {
   db.Recipe.destroy({
     where: {
-      id: req.params.recipeID,
+      id: req.params.recipeID
     },
   })
     .then((deletedRecipe) => {
       if (deletedRecipe) {
         // Delete associated recipe image
-        unlink(`../client/src/Images/${req.query.image}`, (error) => {
+        if (req.query.image) unlink(`../client/src/Images/${req.query.image}`, (error) => {
           if (error) console.log(error);
         });
+        console.log(deletedRecipe);
+        //Decrement user's recipes
+        axios
+          .put(
+            `http://localhost:3001/api/users/${req.query.user_id}/decrement/recipes`
+          )
+          .then((resp) => {
+            if (resp.status !== 200) console.log("Decrement recipes: \n", resp);
+          })
+          .catch((err) => console.log(err));
         return res.json(deletedRecipe);
       }
       return res.send("Could not delete recipe.");
@@ -442,6 +476,29 @@ router.post("/ingredients/:recipeId", (req, res) => {
     });
 });
 
+// Update
+router.put("/ingredients/:recipeID", (req, res) => {
+  const payload = req.body;
+
+  db.Ingredient.destroy({
+    where: {
+      recipe_id: req.params.recipeID,
+    },
+  }).catch((err) => {
+    console.log(customizedError(err, "DELETE destroy ingredients"));
+    res.json({ error: err.name });
+  });
+
+  db.Ingredient.bulkCreate(payload)
+    .then((resp) => {
+      if (resp) res.send(resp);
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "PUT update ingredients"));
+      res.json({ error: err.name });
+    });
+});
+
 // Retrieve all
 router.get("/ingredients", (req, res) => {
   db.Ingredient.findAll()
@@ -501,7 +558,7 @@ router.post("/comments", (req, res) => {
               console.log("Increment comments: \n", resp);
           })
           .catch((err) => console.log(err));
-        res.sendStatus(201);
+        res.send(createdComment);
       }
     })
     .catch((err) => {
@@ -546,6 +603,28 @@ router.post("/steps/:recipeId", (req, res) => {
     })
     .catch((err) => {
       console.log(customizedError(err, "POST create Steps"));
+      res.json({ error: err.name });
+    });
+});
+
+// Update
+router.put("/steps/:recipeID", (req, res) => {
+  const payload = req.body;
+  db.Step.destroy({
+    where: {
+      recipe_id: req.params.recipeID,
+    },
+  }).catch((err) => {
+    console.log(customizedError(err, "DELETE destroy steps"));
+    res.json({ error: err.name });
+  });
+
+  db.Step.bulkCreate(payload)
+    .then((resp) => {
+      if (resp) res.send(resp);
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "PUT update steps"));
       res.json({ error: err.name });
     });
 });
@@ -616,7 +695,7 @@ router.post("/notes", (req, res) => {
             if (resp.status !== 200) console.log("Increment notes: \n", resp);
           })
           .catch((err) => console.log(err));
-        res.sendStatus(200)
+        res.sendStatus(200);
       }
     })
     .catch((err) => {

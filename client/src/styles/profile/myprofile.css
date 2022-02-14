@@ -10,8 +10,16 @@
   .mypopoteNames {
     font-size: 1.3em !important;
   }
+  .popoteProfileHeader .avatar {
+    width: 5em !important;
+    height: 5em !important;
+  }
 }
-
+@media all and (min-width: 500px) {
+  .popoteProfile {
+    width: 25em !important;
+  }
+}
 /*
  * My Profile
  */
@@ -29,10 +37,16 @@
 .myprofileBody p {
   margin: 0;
 }
-.popoteProfile {
-  padding-top: 4em;
-}
 
+.mypopoteInfos {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 1em;
+  background-color: var(--popotes);
+  gap: 0.5em;
+}
 .myprofileContainer {
   display: flex;
   margin: 2em;
@@ -48,23 +62,44 @@
 }
 
 /*
- *_______________________________________________
+ * Popote profile
  */
-.mypopoteInfos {
+.popoteContainer {
   width: 100%;
-  margin: 0 0 1em;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1em 0;
+}
+.popoteContainer ::selection {
+  color: var(--white);
+  background-color: var(--dark-popotes);
+}
+
+.popoteProfile {
+  width: 90%;
+  display: flex;
+  border: 2px solid var(--dark-popotes);
+  border-radius: 30px;
+  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--white);
+  box-shadow: 0 0 10px grey;
+}
+
+.popoteProfileHeader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 1em;
   background-color: var(--popotes);
-  border-top: 3px solid var(--dark-popotes);
-  border-bottom: 3px solid var(--dark-popotes);
   gap: 0.5em;
 }
-.mypopoteInfos .avatar {
-  width: 6em !important;
-  height: 6em !important;
+.popoteProfileHeader .avatar {
+  width: 6em;
+  height: 6em;
 }
 .mypopoteNames {
   font-size: 2em;
@@ -76,25 +111,66 @@
   line-height: 1.2em;
 }
 
-/*
- *_______________________________________________
- */
-.level {
-  color: var(--dark-popotes);
-  font-weight: 600;
-  font-size: 2.5em;
+.tabs {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.infosTab,
+.messagesTab {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  font-family: "Oswald", sans-serif;
+  border: 1px solid var(--dark-popotes);
+  font-size: 1.2em;
+  background-color: #adaaaa44;
+  height: 2em;
+  color: var(--dark);
+}
+.infosTab:hover,
+.messagesTab:hover {
+  background-color: #67d1ac96;
+}
+.activeTab {
+  background-color: var(--dark-popotes);
+  color: var(--white);
 }
 
 /*
  *_______________________________________________
  */
+
+.popoteProfileInfosBody,
+.popoteProfileMessagesBody {
+  width: 100%;
+  height: 25em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.popoteProfileInfosBody {
+  justify-content: space-between;
+}
+
+.level {
+  color: var(--dark-popotes);
+  font-weight: 600;
+  font-size: 2.5em;
+  margin-top: 0.7em;
+}
+
 .levelInfos {
   color: var(--light-text);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 10em;
+  width: 80%;
   margin: 2em 0;
 }
 .levelInfos li {
@@ -105,30 +181,48 @@
 .levelInfos li p + p {
   color: var(--dark-popotes);
 }
-/*
- *_______________________________________________
- */
-.userInfos {
-  color: var(--light-text);
-  width: 20em;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin: 1em 0 1em;
-}
-.userInfos li {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-.userInfos li p + p {
-  color: var(--dark-popotes);
+.levelInfos p {
+  margin: 0;
+  font-size: 1.6em;
 }
 
 /*
  *_______________________________________________
  */
+
+.socialnetworks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 90%;
+  margin: 1em;
+}
+.socialnetworks .linkedin {
+  cursor: pointer;
+  width: 2em;
+  height: 2em;
+}
+.socialnetworks .mail {
+  cursor: pointer;
+  width: 2.5em;
+  height: 1.7em;
+}
+.instagram,
+.snapchat {
+  cursor: pointer;
+  width: 2em;
+  height: 2em;
+}
+.facebook {
+  cursor: pointer;
+  width: 1em;
+  height: 2em;
+}
+/*
+ *_______________________________________________
+ */
+
 .myprofileModifyButton {
   width: fit-content;
   margin: 1em 0 0;

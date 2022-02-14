@@ -16,5 +16,11 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
     },
   });
+  Ingredient.associate = (models) => {
+    Ingredient.belongsTo(models.Recipe, {
+      foreignKey: "recipe_id",
+      onDelete: 'cascade'
+    });
+  };
   return Ingredient;
 };

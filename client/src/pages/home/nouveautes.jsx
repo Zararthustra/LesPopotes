@@ -4,8 +4,10 @@ import { Host } from "../../assets/utils/host";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
+import { Outlet, useLocation } from "react-router-dom";
 
 export const Lastpubs = () => {
+  const location = useLocation().pathname;
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState();
@@ -28,7 +30,7 @@ export const Lastpubs = () => {
       setLoading(false);
     }
   };
-
+  if (location !== "/accueil/nouveautes") return <Outlet />;
   return (
     <main className="cardList">
       <SearchFilterPopote

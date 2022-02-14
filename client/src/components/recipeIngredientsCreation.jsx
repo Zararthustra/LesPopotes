@@ -26,7 +26,7 @@ export const RecipeIngredientsCreation = ({ sharedVars }) => {
         {ingredients.map((ingredient, index) => (
           <tr id={index} key={index}>
             <td>{ingredient.name}</td>
-            <td>{ingredient.quantity}</td>
+            <td>{ingredient.quantity === 0 ? "" : ingredient.quantity}</td>
             <td>{ingredient.unity}</td>
             <td className="removeButtonIngredient" onClick={() => removeIngredient(index)} />
           </tr>

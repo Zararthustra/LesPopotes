@@ -4,8 +4,10 @@ import { Host } from "../../assets/utils/host";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
+import { Outlet, useLocation } from "react-router-dom";
 
 export const Bestof = () => {
+  const location = useLocation().pathname;
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState();
@@ -29,6 +31,7 @@ export const Bestof = () => {
     }
   };
 
+  if (location !== "/accueil/bestof") return <Outlet />;
   return (
     <main className="cardList">
       <SearchFilterPopote

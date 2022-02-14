@@ -1,21 +1,25 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { capitalize } from "../../assets/utils/capitalize";
 import { Host } from "../../assets/utils/host";
 import { Comment } from "../../components/comment";
 import { RecipeInfos } from "../../components/recipeInfos";
 import { RecipeIngredients } from "../../components/recipeIngredients";
 import { icons } from "../../assets/utils/importIcons";
-import { refreshPage } from "../../assets/utils/refreshPage";
+import { images } from "../../assets/utils/importImages";
 import ClipLoader from "react-spinners/ClipLoader";
+import { Modification } from "../profile/modification";
 
 export const Recette = () => {
   //___________________________________________________ Variables
-
+  const location = useLocation().pathname;
   const navigate = useNavigate();
   const { recetteID } = useParams();
   const [recipe, setRecipe] = useState({});
+  const [isModifying, setIsModifying] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [steps, setSteps] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -109,11 +113,39 @@ export const Recette = () => {
 
   //___________________________________________________ Functions
 
-  const image = () => {
-    if (recipe.image === "no image yet" || !recipe.image)
-      return require("../../assets/icons/delete-512.png").default; //default image
-    return require(`../../Images/${recipe.image?.split("\\")[4]}`).default;
+  const removeLastUrlSegment = (url) => {
+    const lastSegment = url.split("/").pop();
+    return url.replace(`/${lastSegment}`, "");
   };
+
+  const copyRecipeUrl = () => {
+    try {
+      navigator.clipboard
+        .writeText(window.location.href)
+        .then(setIsCopied(true));
+    } catch {
+      alert(window.location.href);
+      setIsCopied(true);
+    }
+  };
+
+  const deleteRecipe = () => {
+    axios
+      .delete(`${Host}api/recipes/${recetteID}`, {
+        params: {
+          user_id: localStorage.getItem("userid"),
+          image: recipe.image.replace("..\\client\\src\\Images\\", ""),
+        },
+      })
+      .then((res) => {
+        if (res.data) navigate("/profil");
+      });
+  };
+
+  const image = () =>
+    recipe.image === "no image yet" || !recipe.image
+      ? images.default
+      : require(`../../Images/${recipe.image?.split("\\")[4]}`).default;
 
   //________________ Favorite
   const addToFavorites = () => {
@@ -197,7 +229,7 @@ export const Recette = () => {
           user_id: localStorage.getItem("userid"),
           value: note,
           average: parseFloat(recipe.average),
-          notes: recipe.notes
+          notes: recipe.notes,
         })
         .then((res) => {
           if (res.status === 200) {
@@ -212,6 +244,9 @@ export const Recette = () => {
   const handleComment = (event) => {
     setComment(event.currentTarget.value);
   };
+  const handlePressEnter = (event) => {
+    if (event.key === "Enter") addComment();
+  };
   const addComment = () => {
     if (comment)
       axios
@@ -225,13 +260,18 @@ export const Recette = () => {
           { params: { recipe_id: recetteID } }
         )
         .then((res) => {
-          if (res.status === 201) {
-            refreshPage();
+          if (res.status === 200) {
+            setComments([
+              { ...res.data, note: Object.keys(isNoted).length },
+              ...comments,
+            ]);
+            document.querySelector(".userCommentTextArea").value = "";
           }
         });
   };
 
   //___________________________________________________ Render
+
   if (loading)
     return (
       <main>
@@ -239,35 +279,82 @@ export const Recette = () => {
         <ClipLoader css={""} color={"#f5a76c"} loading={loading} size={100} />
       </main>
     );
+
+  if (isModifying)
+    return (
+      <Modification
+        recipe={recipe}
+        recipeIngredients={ingredients}
+        recipeSteps={steps.map((step) => step.content)}
+      />
+    );
+
   return (
     <main className="recipePage">
       <div className="recipeContainer">
         <div className="imgContainer">
           <img className="recipeImg" src={image()} alt={recipe.name} />
 
-          <div className="overlayImage">
-            {isFavorite ? (
+          {isDeleting ? (
+            <div className="overlayImage">
+              <div className="isDeletingRecipe">
+                Supprimer ?<button onClick={deleteRecipe}>Oui</button>
+                <button onClick={() => setIsDeleting(false)}>Non</button>
+              </div>
+            </div>
+          ) : (
+            <div className="overlayImage">
+              <div className="leftOverlay">
+                {isFavorite ? (
+                  <img
+                    src={require("../../assets/icons/star-checked.png").default}
+                    className="starChecked"
+                    onClick={removeFromFavorites}
+                    alt="retirer des recettes favorites"
+                  />
+                ) : (
+                  <img
+                    onClick={addToFavorites}
+                    src={require("../../assets/icons/star.png").default}
+                    className="star"
+                    alt="ajouter aux recettes favorites"
+                  />
+                )}
+                {isCopied ? (
+                  <div className="copiedRecipe">Lien copié</div>
+                ) : (
+                  <img
+                    src={require("../../assets/icons/copy.png").default}
+                    className="copyRecipe"
+                    onClick={() => copyRecipeUrl()}
+                    alt="copier le lien de la recette"
+                  />
+                )}
+                {location.split("/")[2] === "mesrecettes" && (
+                  <img
+                    src={require("../../assets/icons/edit.png").default}
+                    className="editRecipe"
+                    onClick={() => setIsModifying(true)}
+                    alt="modifier ma recette"
+                  />
+                )}
+                {location.split("/")[2] === "mesrecettes" && (
+                  <img
+                    src={require("../../assets/icons/delete.png").default}
+                    className="deleteRecipe"
+                    onClick={() => setIsDeleting(true)}
+                    alt="supprimer ma recette"
+                  />
+                )}
+              </div>
               <img
-                src={require("../../assets/icons/star-checked.png").default}
-                className="starChecked"
-                onClick={removeFromFavorites}
-                alt="retirer des recettes favorites"
+                src={require("../../assets/icons/close.png").default}
+                className="closeRecipe"
+                onClick={() => navigate(removeLastUrlSegment(location))}
+                alt="fermer"
               />
-            ) : (
-              <img
-                onClick={addToFavorites}
-                src={require("../../assets/icons/star.png").default}
-                className="star"
-                alt="ajouter aux recettes favorites"
-              />
-            )}
-            <img
-              src={require("../../assets/icons/close.png").default}
-              className="closeRecipe"
-              onClick={() => navigate(-1)}
-              alt="fermer"
-            />
-          </div>
+            </div>
+          )}
         </div>
 
         <div className="recipeTitle">
@@ -321,7 +408,7 @@ export const Recette = () => {
           localStorage.getItem("username") && (
             <div className="opinion">
               {capitalize(localStorage.getItem("username")) ===
-              (recipe.author && capitalize(recipe.author)) || hasVoted ? (
+                (recipe.author && capitalize(recipe.author)) || hasVoted ? (
                 ""
               ) : (
                 <div className="addNote">
@@ -363,7 +450,9 @@ export const Recette = () => {
                     />
                   </div>
                   <button
-                    className={hasVoted ? "doneButton" : "creationIngredientsButton"}
+                    className={
+                      hasVoted ? "doneButton" : "creationIngredientsButton"
+                    }
                     onClick={addNote}
                   >
                     {hasVoted ? "Noté" : "Noter"}
@@ -371,9 +460,11 @@ export const Recette = () => {
                 </div>
               )}
               <div className="addComment">
-                <textarea
+                <input
                   type="text"
+                  placeholder="Restez courtois :)"
                   onChange={handleComment}
+                  onKeyDown={handlePressEnter}
                   className="userCommentTextArea"
                 />
                 <button onClick={addComment} className="myprofileModifyButton">

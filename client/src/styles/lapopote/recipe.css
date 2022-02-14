@@ -28,6 +28,15 @@
   .ingredientsTH {
     font-size: 1em !important;
   }
+  .copyRecipe,
+  .copiedRecipe,
+  .editRecipe,
+  .deleteRecipe {
+    font-size: 0.7em !important;
+  }
+  .leftOverlay {
+    gap: 1em !important;
+  }
 }
 
 .recipePage {
@@ -73,6 +82,13 @@
   height: 4.5em;
 }
 
+.leftOverlay {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2em;
+}
+
 .star {
   cursor: pointer;
   margin-left: 1.5em;
@@ -90,6 +106,35 @@
 }
 .star:hover {
   filter: drop-shadow(0px 0px 5px var(--dark-popote));
+}
+
+.copyRecipe {
+  cursor: pointer;
+  width: 2em;
+  height: 2em;
+}
+.copiedRecipe {
+  color: var(--dark-popote);
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+.editRecipe {
+  cursor: pointer;
+  width: 2em;
+  height: 2em;
+}
+
+.deleteRecipe {
+  cursor: pointer;
+  width: 2em;
+  height: 2em;
+}
+.isDeletingRecipe {
+  color: var(--popote);
+  padding-left: 2em;
+  display: flex;
+  gap: 2em;
 }
 
 .closeRecipe {
@@ -259,20 +304,20 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: 90%;
-  padding: 1em 0;
+  align-items: flex-end;
+  width: 100%;
+  padding: 1em 5em 1em 0;
   gap: 1em;
 }
 
 .addNote {
-  width: 90%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .addComment {
-  width: 90%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -281,10 +326,14 @@
 .userCommentTextArea {
   font-size: 1.1em;
   width: 90%;
-  align-self: center;
-  height: 5em;
+  height: 2em;
   outline: none;
   border: 1px solid var(--dark-popotes);
+  border-radius: 20px;
+  padding-left: 1em;
+}
+.userCommentTextArea::placeholder {
+  font-style: italic;
 }
 
 .hearts {

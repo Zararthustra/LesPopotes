@@ -9,4 +9,8 @@ export const images = {
   github: require("../../assets/images/github.png").default,
   recordit: require("../../assets/images/recordit.png").default,
   checklist: require("../../assets/images/checklist.png").default,
+  default: require("../../assets/images/checklist.png").default,
+  instagram: require("../../assets/images/instagram.png").default,
+  facebook: require("../../assets/images/facebook.png").default,
+  snapchat: require("../../assets/images/snapchat.png").default,
 };

@@ -26,9 +26,11 @@
   margin: 2em 0;
   align-items: center;
   width: 90%;
+  border: 1px solid var(--dark-popotes);
   border-radius: 20px;
   padding: 1em 0.5em;
   gap: 1em;
+  box-shadow: 0 0 5px grey;
 }
 
 .commentsTitle {

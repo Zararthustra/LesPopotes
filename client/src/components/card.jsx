@@ -1,8 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { capitalize } from "../assets/utils/capitalize";
 import { icons } from "../assets/utils/importIcons";
+import { images } from "../assets/utils/importImages";
 
 export const Card = ({ recipe }) => {
+  const location = useLocation().pathname;
   const navigate = useNavigate();
 
   const noteIcon = () => {
@@ -26,11 +28,10 @@ export const Card = ({ recipe }) => {
       ? "Moyen"
       : "Facile";
 
-  const image = () => {
-    if (recipe.image === "no image yet" || !recipe.image)
-      return require("../assets/icons/delete-512.png").default; //default image
-    return require(`../Images/${recipe.image?.split("\\")[4]}`).default;
-  };
+  const image = () =>
+    recipe.image === "no image yet" || !recipe.image
+      ? images.default
+      : require(`../Images/${recipe.image?.split("\\")[4]}`).default;
 
   const diffIcon =
     recipe.difficulty === "3"
@@ -42,7 +43,7 @@ export const Card = ({ recipe }) => {
   return (
     <div
       onClick={() => {
-        navigate(`/lapopote/${recipe.id}`);
+        navigate(`${location}/${recipe.id}`);
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
       }}
@@ -52,7 +53,9 @@ export const Card = ({ recipe }) => {
       <div className="cardInfos">
         <h3 className="cardTitle">{recipe.name && capitalize(recipe.name)}</h3>
         <div className="separateLine"></div>
-        <h4 className="cardsDoneBy">{recipe.author && capitalize(recipe.author)}</h4>
+        <h4 className="cardsDoneBy">
+          {recipe.author && capitalize(recipe.author)}
+        </h4>
         <ul className="cardIcons">
           <li className="cardInfo">
             <img className="difficultyImg" src={diffIcon} alt="Difficulté" />

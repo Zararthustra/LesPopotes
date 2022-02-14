@@ -13,7 +13,7 @@ export const RecipeIngredients = ({ingredients}) => {
         {ingredients.map((ingredient, index) => (
           <tr key={index}>
             <td>{ingredient.name}</td>
-            <td>{ingredient.quantity}</td>
+            <td>{ingredient.quantity === 0 ? "" : ingredient.quantity}</td>
             <td>{ingredient.unity}</td>
           </tr>
         ))}

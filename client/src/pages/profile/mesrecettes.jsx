@@ -4,8 +4,10 @@ import { Host } from "../../assets/utils/host";
 import { Card } from "../../components/card";
 import { SearchFilterPopote } from "../../components/searchFilterPopote";
 import ClipLoader from "react-spinners/ClipLoader";
+import { Outlet, useLocation } from "react-router-dom";
 
 export const Mesrecettes = () => {
+  const location = useLocation().pathname;
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState();
@@ -34,6 +36,7 @@ export const Mesrecettes = () => {
     }
   };
 
+  if (location !== "/profil/mesrecettes") return <Outlet />;
   return (
     <main className="mapopotebody">
       <SearchFilterPopote

@@ -49,7 +49,7 @@ export const Creation = () => {
   const [fieldMissing, setFieldMissing] = useState(false);
   const [recipeTitle, setRecipeTitle] = useState("");
   const [recipeImage, setRecipeImage] = useState();
-  const [displayUserImage, setDisplayUserImage] = useState(images.friends);
+  const [displayUserImage, setDisplayUserImage] = useState(images.default);
   const formData = new FormData();
   const [nbPers, setNbPers] = useState("");
   const [diff, setDiff] = useState("");
@@ -130,7 +130,7 @@ export const Creation = () => {
   };
   const handleAddIngredientRow = () => {
     if (!addIngredient) return;
-    if (addQtt === 0) return;
+    if (addQtt < 0) return;
     // Avoid to add same ingredient
     if (ingredients.find(({ name }) => name === capitalize(addIngredient)))
       return;
@@ -375,7 +375,7 @@ export const Creation = () => {
           >
             Enregistrer
           </button>
-          <div className="cancel" onClick={() => navigate("/lapopote")}>
+          <div className="cancel" onClick={() => navigate(-1)}>
             Annuler
           </div>
         </div>

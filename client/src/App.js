@@ -35,8 +35,12 @@ export const App = () => {
         <Route path="/" element={<Homelanding />} />
         {/* Home */}
         <Route path="accueil" element={<Home />}>
-          <Route path="nouveautes" element={<Lastpubs />} />
-          <Route path="bestof" element={<Bestof />} />
+          <Route path="nouveautes" element={<Lastpubs />}>
+            <Route path=":recetteID" element={<Recette />} />
+          </Route>
+          <Route path="bestof" element={<Bestof />}>
+            <Route path=":recetteID" element={<Recette />} />
+          </Route>
         </Route>
 
         {/* La Popote */}
@@ -59,8 +63,12 @@ export const App = () => {
           <Route path="profil" element={<Profile />}>
             <Route path="monprofil" element={<Monprofil />} />
             <Route path="modifier" element={<Modifymyprofile />} />
-            <Route path="favorites" element={<Favorites />} />
-            <Route path="mesrecettes" element={<Mesrecettes />} />
+            <Route path="favorites" element={<Favorites />}>
+              <Route path=":recetteID" element={<Recette />} />
+            </Route>
+            <Route path="mesrecettes" element={<Mesrecettes />}>
+              <Route path=":recetteID" element={<Recette />} />
+            </Route>
             <Route path="mespopotes" element={<Mespopotes />} />
           </Route>
         </Route>

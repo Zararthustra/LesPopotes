@@ -45,6 +45,9 @@ module.exports = (sequelize, Sequelize) => {
     instagram: {
       type: Sequelize.STRING,
     },
+    mail: {
+      type: Sequelize.STRING,
+    },
     isAdmin: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,

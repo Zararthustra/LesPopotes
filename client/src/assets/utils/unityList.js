@@ -18,6 +18,7 @@ export const unityList = [
   { value: "poignée", label: "poignée" },
   { value: "bocal", label: "bocal" },
   { value: "boîte", label: "boîte" },
+  { value: "à volonté", label: "à volonté" },
   { value: "bol", label: "bol" },
   { value: "cube", label: "cube" },
   { value: "bloc", label: "bloc" },
