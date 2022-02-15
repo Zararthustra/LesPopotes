@@ -1,11 +1,12 @@
 @media all and (max-width: 810px) {
-  .searchPopote {
-    width: 15em !important;
-  }
   .filters {
     width: 87%;
   }
 }
+@media all and (max-width: 550px) {
+  .searchPopote {
+    width: 15em !important;
+  }}
 .lapopote {
   cursor: pointer;
   color: var(--popote);
@@ -95,6 +96,21 @@
 /*
  * Filters boxes
  */
+
+ .showPopoteFilters {
+  cursor: pointer;
+  font-family: "Oswald", sans-serif;
+  background-color: var(--popote);
+  padding: 0 1em;
+  margin-bottom: 0.5em;
+  border-radius: 5px;
+  color: var(--dark);
+  border: 1px solid var(--dark-popote);
+}
+.showPopoteFilters:hover {
+  background-color: #ffc251a4;
+}
+
 .filters {
   display: flex;
   justify-content: center;

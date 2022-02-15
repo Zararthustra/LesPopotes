@@ -11,11 +11,12 @@ import { Host } from "../../assets/utils/host";
 import { useRef } from "react";
 import { ingredientsList } from "../../assets/utils/ingredientsList";
 import { unityList } from "../../assets/utils/unityList";
-const FormData = require("form-data");
+import Compressor from "compressorjs";
 
 export const Creation = () => {
   //___________________________________________________ Variables
-
+  
+  const FormData = require("form-data");
   const navigate = useNavigate();
   const selectIngredientRef = useRef();
   const selectUnityRef = useRef();
@@ -50,7 +51,6 @@ export const Creation = () => {
   const [recipeTitle, setRecipeTitle] = useState("");
   const [recipeImage, setRecipeImage] = useState();
   const [displayUserImage, setDisplayUserImage] = useState(images.default);
-  const formData = new FormData();
   const [nbPers, setNbPers] = useState("");
   const [diff, setDiff] = useState("");
   const [type, setType] = useState("");
@@ -201,17 +201,29 @@ export const Creation = () => {
 
   const updateRecipeImage = (id) => {
     if (!recipeImage) return;
-    formData.append("image", recipeImage);
-    axios
-      .put(`${Host}api/${id}/recipeimage`, formData)
-      .then((res) => {
-        if (!res) return console.log("No response from server");
-        if (res.data.error) return console.log(res.data);
-        console.log("res from recipeImage: ", res.data);
-      })
-      .catch((err) => {
-        console.log("Error catched: ", err);
-      });
+
+    new Compressor(recipeImage, {
+      quality: 0.6,
+
+      success(result) {
+        const formData = new FormData();
+
+        formData.append("image", result, result.name);
+        axios
+          .put(`${Host}api/${id}/recipeimage`, formData)
+          .then((res) => {
+            if (!res) return console.log("No response from server");
+            if (res.data.error) return console.log(res.data);
+            console.log("res from recipeImage: ", res.data);
+          })
+          .catch((err) => {
+            console.log("Error catched: ", err);
+          });
+      },
+      error(err) {
+        console.log(err.message);
+      },
+    });
   };
 
   const createRecipeIngredients = async (recipeId) => {

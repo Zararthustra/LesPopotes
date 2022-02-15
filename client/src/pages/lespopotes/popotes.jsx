@@ -73,9 +73,6 @@ export const Popotes = () => {
       });
   };
 
-  // <button className="myprofileModifyButton" onClick={() => navigate(-1)}>
-  //   Retour
-  // </button>;
   return (
     <main className="popoteContainer">
       <div className="popoteProfile">

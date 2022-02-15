@@ -74,6 +74,28 @@ export const Lespopotes = () => {
           setSearchFilter={setSearchFilter}
         />
         <div className="separatePopotes"></div>
+        <div className="prevNextButtons">
+          {!filter && !searchFilter && offset - limit >= 0 ? (
+            <div
+              className="prevButton"
+              onClick={() => setOffset(offset - limit)}
+            >
+              Précédents
+            </div>
+          ) : (
+            <div></div>
+          )}
+          {!filter && !searchFilter && offset + limit < totalPage ? (
+            <div
+              className="nextButton"
+              onClick={() => setOffset(offset + limit)}
+            >
+              Suivants
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
         <div className="itemsContainer">
           {loading ? (
             <ClipLoader

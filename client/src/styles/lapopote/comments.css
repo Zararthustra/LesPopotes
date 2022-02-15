@@ -2,7 +2,8 @@
   /* Big screens */
   .comments {
     height: 100vh !important;
-    overflow: scroll !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden;
   }
 }
 @media all and (max-width: 350px) {
@@ -37,6 +38,30 @@
   color: var(--dark-popotes);
 }
 
+/*
+ * Scrollbar
+ */
+.comments::-webkit-scrollbar {
+  width: 10px;
+}
+.comments::-webkit-scrollbar-track {
+
+  margin: 2em;
+  background-color: var(--white);
+  border-radius: 25px;
+}
+.comments::-webkit-scrollbar-thumb {
+  border-radius: 25px;
+  background-color: var(--popotes);
+}
+.comments::-webkit-scrollbar-thumb:hover {
+  background-color: var(--dark-popotes);
+  cursor: pointer !important;
+}
+.comments ::selection {
+  color: var(--white);
+  background: var(--dark-popotes);
+}
 /*
  * Global
  */

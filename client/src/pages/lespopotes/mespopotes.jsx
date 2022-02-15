@@ -24,11 +24,12 @@ export const Mespopotes = () => {
           })
           .then((myrelations) => {
             if (myrelations.data) {
-              let mypopotes = [];
-              console.log(myrelations);
-              mypopotes = res.data.filter((popote) => {
-                //console.log(myrelations.data[0].popote_id, popote.id);
-                return myrelations.data[0]?.popote_id === popote.id;
+              const mypopotes = res.data.filter((user) => {
+                return (
+                  myrelations.data.filter(
+                    (relationrow) => relationrow.popote_id === user.id
+                  )[0] !== undefined
+                );
               });
               setUsers(mypopotes);
               setLoading(false);

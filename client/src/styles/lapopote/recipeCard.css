@@ -29,7 +29,7 @@
 }
 
 .cardList {
-  margin-bottom: 2em;
+  margin: 2em 0;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;

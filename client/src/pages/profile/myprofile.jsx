@@ -27,13 +27,14 @@ export const Monprofil = () => {
   useEffect(() => {
     let isSubscribed = true;
     setLoading(true);
-
-    axios.get(`${Host}api/users/${userName}`).then((res) => {
+    const getUserObject = async () => {
+      const res = await axios.get(`${Host}api/users/${userName}`);
       if (isSubscribed && res) {
         setUserObject(res.data);
         setLoading(false);
       }
-    });
+    };
+    getUserObject();
 
     return () => (isSubscribed = false);
   }, [userName]);
@@ -48,36 +49,36 @@ export const Monprofil = () => {
   return (
     <div className="myprofileBody">
       <div className="mypopoteInfos">
-        <img src={userObject.avatar} alt="avatar" className="avatar" />
+        <img src={userObject?.avatar} alt="avatar" className="avatar" />
         <div className="mypopoteNames">
-          <div className="pseudo">{capitalize(userObject.name)}</div>
-          <div className="type">{userObject.type}</div>
+          <div className="pseudo">{userObject?.name && capitalize(userObject.name)}</div>
+          <div className="type">{userObject?.type}</div>
         </div>
       </div>
       <div className="level">
         {getLevel(
-          userObject.recipes,
-          userObject.notes,
-          userObject.popotes,
-          userObject.comments
+          userObject?.recipes,
+          userObject?.notes,
+          userObject?.popotes,
+          userObject?.comments
         )}
       </div>
       <ul className="levelInfos">
         <li>
           <p>Recettes</p>
-          <p>{userObject.recipes}</p>
+          <p>{userObject?.recipes}</p>
         </li>
         <li>
           <p>Notes</p>
-          <p>{userObject.notes}</p>
+          <p>{userObject?.notes}</p>
         </li>
         <li>
           <p>Popotes</p>
-          <p>{userObject.popotes}</p>
+          <p>{userObject?.popotes}</p>
         </li>
         <li>
           <p>Commentaires</p>
-          <p>{userObject.comments}</p>
+          <p>{userObject?.comments}</p>
         </li>
       </ul>
       <div className="separatePopotes"></div>
@@ -85,29 +86,29 @@ export const Monprofil = () => {
       <ul className="userInfos">
         <li>
           <p>Mot de passe</p>
-          <p>{userObject.password}</p>
+          <p>{userObject?.password}</p>
         </li>
         <li>
           <p>Email</p>
-          <p>{userObject.mail}</p>
+          <p>{userObject?.mail}</p>
         </li>
       </ul>
       <ul className="userInfos socialnetworks">
         <li>
           <p>Linkedin</p>
-          <p>{userObject.linkedin}</p>
+          <p>{userObject?.linkedin}</p>
         </li>
         <li>
           <p>Facebook</p>
-          <p>{userObject.facebook}</p>
+          <p>{userObject?.facebook}</p>
         </li>
         <li>
           <p>Snapchat</p>
-          <p>{userObject.snapchat}</p>
+          <p>{userObject?.snapchat}</p>
         </li>
         <li>
           <p>Instagram</p>
-          <p>{userObject.instagram}</p>
+          <p>{userObject?.instagram}</p>
         </li>
       </ul>
       <button className="myprofileModifyButton" onClick={modify}>

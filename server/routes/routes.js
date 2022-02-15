@@ -378,6 +378,22 @@ router.get("/userrecipes/:userID", (req, res) => {
     });
 });
 
+// Retrieve all with pagination
+router.get("/recipes/pagination/:offset", (req, res) => {
+  const offset = parseInt(req.params.offset);
+  const limit = parseInt(req.query.limit);
+
+  db.Recipe.findAndCountAll({
+    offset,
+    limit,
+  })
+    .then((result) => res.send(result))
+    .catch((err) => {
+      console.log(customizedError(err, "GET Recipes pagination"));
+      res.json({ error: err.name });
+    });
+});
+
 // Retrieve one
 router.get("/recipes/:recipeID", (req, res) => {
   db.Recipe.findOne({

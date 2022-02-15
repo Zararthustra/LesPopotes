@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { useState } from "react";
 
-export const SearchFilterPopotes = ({ setFilter, setSearchFilter, searchFilter }) => {
+export const SearchFilterPopotes = ({
+  setFilter,
+  setSearchFilter,
+  searchFilter,
+}) => {
   //___________________________________________________ Variables
 
   const [gourmand, setGourmand] = useState(false);
@@ -116,12 +120,11 @@ export const SearchFilterPopotes = ({ setFilter, setSearchFilter, searchFilter }
     setSearchFilter(value);
   };
   const handleClearInput = () => {
-    document.querySelector('.searchBar').value = ""
+    document.querySelector(".searchBar").value = "";
     setSearchFilter("");
+  };
 
-  }
-
-  // Copy/pasted func to avoid multiple API calls on typing (waits {x}ms before call API)
+  // Copy/pasted func to avoid multiple API calls on typing (waits {x}ms before set input)
   function debounce(func, wait, immediate) {
     var timeout;
     return function () {
@@ -138,6 +141,7 @@ export const SearchFilterPopotes = ({ setFilter, setSearchFilter, searchFilter }
       if (callNow) func.apply(context, args);
     };
   }
+
   //___________________________________________________ Render
 
   return (
@@ -149,13 +153,15 @@ export const SearchFilterPopotes = ({ setFilter, setSearchFilter, searchFilter }
           className="searchBar"
           onChange={debounce(handleSearch, 500)}
         />
-        {searchFilter && <div className="resetInput" onClick={handleClearInput}/>}
+        {searchFilter && (
+          <div className="resetInput" onClick={handleClearInput} />
+        )}
       </div>
       <div
         className="showPopotesFilters"
         onClick={() => setShowFilters(!showFilters)}
       >
-        {showFilters ? "- Filtres" : "+ Filtres"}
+        {showFilters ? "- Types" : "+ Types"}
       </div>
       {showFilters ? (
         <div className="filtersPopotes">

@@ -105,6 +105,7 @@
 }
 
 .closePopote {
+  cursor: pointer;
   width: 1.5em;
   position: relative;
   top: -2.7em;
