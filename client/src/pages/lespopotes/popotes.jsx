@@ -7,6 +7,8 @@ import { getLevel } from "../../assets/utils/getLevel";
 import { Host } from "../../assets/utils/host";
 import { images } from "../../assets/utils/importImages";
 import { icons } from "../../assets/utils/importIcons";
+import { Messages } from "../../components/messages";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export const Popotes = () => {
   const { popote } = useParams();
@@ -15,9 +17,12 @@ export const Popotes = () => {
   const [userObject, setUserObject] = useState({});
   const [isInfos, setIsInfos] = useState(true);
   const [isMyPopote, setIsMyPopote] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Load data when mounting
   useEffect(() => {
+    setLoading(true);
+
     axios.get(`${Host}api/users/${popote}`).then((res) => {
       if (res.data) {
         setUserObject(res.data);
@@ -27,9 +32,9 @@ export const Popotes = () => {
           })
           .then((res) => {
             if (res.data) {
-              console.log(res.data);
               setIsMyPopote(true);
-            }
+              setLoading(false);
+            } else setLoading(false);
           });
       }
     });
@@ -54,7 +59,6 @@ export const Popotes = () => {
       })
       .then((res) => {
         if (res.data) {
-          console.log(res.data);
           setIsMyPopote(true);
         }
       });
@@ -67,22 +71,26 @@ export const Popotes = () => {
       })
       .then((res) => {
         if (res.data) {
-          console.log(res.data);
           setIsMyPopote(false);
         }
       });
   };
-
+  if (loading)
+    return (
+      <main className="popoteContainer">
+        <ClipLoader css={""} color={"#78f5ca"} loading={loading} size={100} />
+      </main>
+    );
   return (
     <main className="popoteContainer">
       <div className="popoteProfile">
         <div className="popoteProfileHeader">
-        <img
-                src={icons.cross}
-                alt="fermer"
-                onClick={() => navigate(-1)}
-                className="closePopote"
-              />
+          <img
+            src={icons.cross}
+            alt="fermer"
+            onClick={() => navigate(-1)}
+            className="closePopote"
+          />
           <img src={userObject.avatar} alt="avatar" className="avatar" />
           <div className="mypopoteNames">
             <div className="pseudo">
@@ -91,14 +99,14 @@ export const Popotes = () => {
             <div className="type">{userObject.type}</div>
             {isMyPopote ? (
               <img
-                src={icons.moins}
+                src={icons.removefriend}
                 alt="retirer de mes popotes"
                 onClick={deletePopote}
                 className="addPopote"
               />
             ) : (
               <img
-                src={icons.plus}
+                src={icons.addfriend}
                 alt="ajouter à mes popotes"
                 onClick={addPopote}
                 className="addPopote"
@@ -143,16 +151,14 @@ export const Popotes = () => {
               </li>
             </ul>
             <ul className="socialnetworks">
-              {
-                //userObject.mail &&
+              {userObject.mail && (
                 <li>
                   <a href={`mailto:${userObject.mail}`}>
                     <img className="mail" src={images.mail} alt="mail" />
                   </a>
                 </li>
-              }
-              {
-                //userObject.linkedin &&
+              )}
+              {userObject.linkedin && (
                 <li>
                   <a href={userObject.linkedin}>
                     <img
@@ -162,9 +168,8 @@ export const Popotes = () => {
                     />
                   </a>
                 </li>
-              }
-              {
-                //userObject.instagram &&
+              )}
+              {userObject.instagram && (
                 <li>
                   <a href={userObject.instagram}>
                     <img
@@ -174,9 +179,8 @@ export const Popotes = () => {
                     />
                   </a>
                 </li>
-              }
-              {
-                //userObject.facebook &&
+              )}
+              {userObject.facebook && (
                 <li>
                   <a href={userObject.facebook}>
                     <img
@@ -186,9 +190,8 @@ export const Popotes = () => {
                     />
                   </a>
                 </li>
-              }
-              {
-                //userObject.snapchat &&
+              )}
+              {userObject.snapchat && (
                 <li>
                   <a href={userObject.snapchat}>
                     <img
@@ -198,11 +201,40 @@ export const Popotes = () => {
                     />
                   </a>
                 </li>
-              }
+              )}
+              {userObject.twitter && (
+                <li>
+                  <a href={userObject.twitter}>
+                    <img
+                      className="twitter"
+                      src={images.twitter}
+                      alt="twitter"
+                    />
+                  </a>
+                </li>
+              )}
+              {userObject.tiktok && (
+                <li>
+                  <a href={userObject.tiktok}>
+                    <img className="tiktok" src={images.tiktok} alt="tiktok" />
+                  </a>
+                </li>
+              )}
+              {userObject.whatsapp && (
+                <li>
+                  <a href={userObject.whatsapp}>
+                    <img
+                      className="whatsapp"
+                      src={images.whatsapp}
+                      alt="whatsapp"
+                    />
+                  </a>
+                </li>
+              )}
             </ul>
           </div>
         ) : (
-          <div className="popoteProfileMessagesBody">messages</div>
+          <Messages popote={userObject} />
         )}
       </div>
     </main>

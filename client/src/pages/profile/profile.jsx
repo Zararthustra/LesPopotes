@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Modifymyprofile } from "./modifymyprofile";
 import { Monprofil } from "./myprofile";
 
 export const Profile = () => {
@@ -26,8 +25,6 @@ export const Profile = () => {
       favorites.remove("activePopote");
     }
   }, [location]);
-
-  if (location === "/profil/modifier") return <Modifymyprofile />;
 
   return (
     <div className="headerContainer">

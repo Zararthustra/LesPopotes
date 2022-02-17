@@ -5,18 +5,15 @@ import { capitalize } from "../../assets/utils/capitalize";
 import { getLevel } from "../../assets/utils/getLevel";
 import { Host } from "../../assets/utils/host";
 import ClipLoader from "react-spinners/ClipLoader";
+import { images } from "../../assets/utils/importImages";
+import { Modifymyprofile } from "./modifymyprofile";
 
 export const Monprofil = () => {
   const navigate = useNavigate();
   const userName = localStorage.getItem("username");
-  const [userObject, setUserObject] = useState({ name: "" });
+  const [userObject, setUserObject] = useState({});
   const [loading, setLoading] = useState(false);
-
-  const modify = () => {
-    navigate("modifier");
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-  };
+  const [isInfos, setIsInfos] = useState(true);
 
   const logout = (event) => {
     localStorage.clear();
@@ -39,6 +36,17 @@ export const Monprofil = () => {
     return () => (isSubscribed = false);
   }, [userName]);
 
+  const toggleTabInfos = () => {
+    document.querySelector(".infosTab").classList = "infosTab activeTab";
+    document.querySelector(".messagesTab").classList = "messagesTab";
+    setIsInfos(true);
+  };
+  const toggleTabMessages = () => {
+    document.querySelector(".messagesTab").classList = "messagesTab activeTab";
+    document.querySelector(".infosTab").classList = "infosTab";
+    setIsInfos(false);
+  };
+
   if (loading)
     return (
       <div className="myprofileBody">
@@ -47,76 +55,143 @@ export const Monprofil = () => {
       </div>
     );
   return (
-    <div className="myprofileBody">
-      <div className="mypopoteInfos">
-        <img src={userObject?.avatar} alt="avatar" className="avatar" />
-        <div className="mypopoteNames">
-          <div className="pseudo">{userObject?.name && capitalize(userObject.name)}</div>
-          <div className="type">{userObject?.type}</div>
+    <main className="profileContainer">
+      <div className="popoteProfile">
+        <div className="myprofileHeader">
+          <img src={userObject.avatar} alt="avatar" className="avatar" />
+          <div className="profileNames">
+            <div className="pseudo">
+              {userObject.name && capitalize(userObject.name)}
+            </div>
+            <div className="type">{userObject.type}</div>
+          </div>
+        </div>
+        <div className="tabs">
+          <div onClick={toggleTabInfos} className="infosTab activeTab">
+            Infos
+          </div>
+          <div onClick={toggleTabMessages} className="messagesTab">
+            Modifier
+          </div>
+        </div>
+        {isInfos ? (
+          <div className="popoteProfileInfosBody">
+            <div className="level">
+              {getLevel(
+                userObject.recipes,
+                userObject.notes,
+                userObject.popotes,
+                userObject.comments
+              )}
+            </div>
+            <ul className="levelInfos">
+              <li>
+                <p>Recettes</p>
+                <p>{userObject.recipes}</p>
+              </li>
+              <li>
+                <p>Notes</p>
+                <p>{userObject.notes}</p>
+              </li>
+              <li>
+                <p>Popotes</p>
+                <p>{userObject.popotes}</p>
+              </li>
+              <li>
+                <p>Commentaires</p>
+                <p>{userObject.comments}</p>
+              </li>
+            </ul>
+            <ul className="socialnetworks">
+              {userObject.mail && (
+                <li>
+                  <a href={`mailto:${userObject.mail}`}>
+                    <img className="mail" src={images.mail} alt="mail" />
+                  </a>
+                </li>
+              )}
+              {userObject.linkedin && (
+                <li>
+                  <a href={userObject.linkedin}>
+                    <img
+                      className="linkedin"
+                      src={images.linkedin}
+                      alt="linkedin"
+                    />
+                  </a>
+                </li>
+              )}
+              {userObject.instagram && (
+                <li>
+                  <a href={userObject.instagram}>
+                    <img
+                      className="instagram"
+                      src={images.instagram}
+                      alt="instagram"
+                    />
+                  </a>
+                </li>
+              )}
+              {userObject.facebook && (
+                <li>
+                  <a href={userObject.facebook}>
+                    <img
+                      className="facebook"
+                      src={images.facebook}
+                      alt="facebook"
+                    />
+                  </a>
+                </li>
+              )}
+              {userObject.snapchat && (
+                <li>
+                  <a href={userObject.snapchat}>
+                    <img
+                      className="snapchat"
+                      src={images.snapchat}
+                      alt="snapchat"
+                    />
+                  </a>
+                </li>
+              )}
+              {userObject.twitter && (
+                <li>
+                  <a href={userObject.twitter}>
+                    <img
+                      className="twitter"
+                      src={images.twitter}
+                      alt="twitter"
+                    />
+                  </a>
+                </li>
+              )}
+              {userObject.tiktok && (
+                <li>
+                  <a href={userObject.tiktok}>
+                    <img className="tiktok" src={images.tiktok} alt="tiktok" />
+                  </a>
+                </li>
+              )}
+              {userObject.whatsapp && (
+                <li>
+                  <a href={userObject.whatsapp}>
+                    <img
+                      className="whatsapp"
+                      src={images.whatsapp}
+                      alt="whatsapp"
+                    />
+                  </a>
+                </li>
+              )}
+            </ul>
+          </div>
+        ) : (
+          <Modifymyprofile userObject={userObject} />
+        )}
+        <div className="disconnectButton" onClick={logout}>
+          Se déconnecter
         </div>
       </div>
-      <div className="level">
-        {getLevel(
-          userObject?.recipes,
-          userObject?.notes,
-          userObject?.popotes,
-          userObject?.comments
-        )}
-      </div>
-      <ul className="levelInfos">
-        <li>
-          <p>Recettes</p>
-          <p>{userObject?.recipes}</p>
-        </li>
-        <li>
-          <p>Notes</p>
-          <p>{userObject?.notes}</p>
-        </li>
-        <li>
-          <p>Popotes</p>
-          <p>{userObject?.popotes}</p>
-        </li>
-        <li>
-          <p>Commentaires</p>
-          <p>{userObject?.comments}</p>
-        </li>
-      </ul>
-      <div className="separatePopotes"></div>
-
-      <ul className="userInfos">
-        <li>
-          <p>Mot de passe</p>
-          <p>{userObject?.password}</p>
-        </li>
-        <li>
-          <p>Email</p>
-          <p>{userObject?.mail}</p>
-        </li>
-      </ul>
-      <ul className="userInfos socialnetworks">
-        <li>
-          <p>Linkedin</p>
-          <p>{userObject?.linkedin}</p>
-        </li>
-        <li>
-          <p>Facebook</p>
-          <p>{userObject?.facebook}</p>
-        </li>
-        <li>
-          <p>Snapchat</p>
-          <p>{userObject?.snapchat}</p>
-        </li>
-        <li>
-          <p>Instagram</p>
-          <p>{userObject?.instagram}</p>
-        </li>
-      </ul>
-      <button className="myprofileModifyButton" onClick={modify}>
-        Modifier
-      </button>
-      <button className="disconnectButton" onClick={logout}>
-        Déconnexion
-      </button>
-    </div>
+    </main>
   );
 };

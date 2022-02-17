@@ -77,7 +77,9 @@ a {
 h1 {
   margin: 0;
 }
-
+input[type=text]:focus-within {
+  box-shadow: none;
+}
 .avatar {
   cursor: pointer;
   position: relative;
@@ -143,6 +145,7 @@ h1 {
     background-color: #ffffff0a;
   }
 }
+
 /*
 * Separate lines
 */

@@ -54,9 +54,6 @@ export const Lespopotes = () => {
     return () => setUsers([]);
   }, [offset, filter, searchFilter]);
 
-  // Popote profile
-  if (location !== "/lespopotes") return <Outlet />;
-
   return (
     <div>
       <div className="headerContainer">
@@ -67,88 +64,94 @@ export const Lespopotes = () => {
           Les Popotes
         </h1>
       </div>
-      <main className="lesPopotesPage">
-        <SearchFilterPopotes
-          searchFilter={searchFilter}
-          setFilter={setFilter}
-          setSearchFilter={setSearchFilter}
-        />
-        <div className="separatePopotes"></div>
-        <div className="prevNextButtons">
-          {!filter && !searchFilter && offset - limit >= 0 ? (
-            <div
-              className="prevButton"
-              onClick={() => setOffset(offset - limit)}
-            >
-              Précédents
-            </div>
-          ) : (
-            <div></div>
-          )}
-          {!filter && !searchFilter && offset + limit < totalPage ? (
-            <div
-              className="nextButton"
-              onClick={() => setOffset(offset + limit)}
-            >
-              Suivants
-            </div>
-          ) : (
-            <div></div>
-          )}
-        </div>
-        <div className="itemsContainer">
-          {loading ? (
-            <ClipLoader
-              css={""}
-              color={"#78f5ca"}
-              loading={loading}
-              size={100}
-            />
-          ) : filter ? (
-            users.map((user, index) => {
-              const userTypeLower = user.type.toLowerCase();
-              if (
-                userTypeLower.includes(filter.toLowerCase()) &&
-                user.name.toLowerCase().includes(searchFilter.toLowerCase())
-              )
-                return <Popotesitem key={index} user={user} />;
-              return "";
-            })
-          ) : searchFilter ? (
-            users.map((user, index) => {
-              if (user.name.toLowerCase().includes(searchFilter.toLowerCase()))
+      {location !== "/lespopotes" ? (
+        <Outlet />
+      ) : (
+        <main className="lesPopotesPage">
+          <SearchFilterPopotes
+            searchFilter={searchFilter}
+            setFilter={setFilter}
+            setSearchFilter={setSearchFilter}
+          />
+          <div className="separatePopotes"></div>
+          <div className="prevNextButtons">
+            {!filter && !searchFilter && offset - limit >= 0 ? (
+              <div
+                className="prevButton"
+                onClick={() => setOffset(offset - limit)}
+              >
+                Précédents
+              </div>
+            ) : (
+              <div></div>
+            )}
+            {!filter && !searchFilter && offset + limit < totalPage ? (
+              <div
+                className="nextButton"
+                onClick={() => setOffset(offset + limit)}
+              >
+                Suivants
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </div>
+          <div className="itemsContainer">
+            {loading ? (
+              <ClipLoader
+                css={""}
+                color={"#78f5ca"}
+                loading={loading}
+                size={100}
+              />
+            ) : filter ? (
+              users.map((user, index) => {
+                const userTypeLower = user.type.toLowerCase();
+                if (
+                  userTypeLower.includes(filter.toLowerCase()) &&
+                  user.name.toLowerCase().includes(searchFilter.toLowerCase())
+                )
+                  return <Popotesitem key={index} user={user} />;
+                return "";
+              })
+            ) : searchFilter ? (
+              users.map((user, index) => {
+                if (
+                  user.name.toLowerCase().includes(searchFilter.toLowerCase())
+                )
+                  return <Popotesitem user={user} key={index} />;
+                return "";
+              })
+            ) : (
+              users.map((user, index) => {
                 return <Popotesitem user={user} key={index} />;
-              return "";
-            })
-          ) : (
-            users.map((user, index) => {
-              return <Popotesitem user={user} key={index} />;
-            })
-          )}
-        </div>
-        <div className="prevNextButtons">
-          {!filter && !searchFilter && offset - limit >= 0 ? (
-            <div
-              className="prevButton"
-              onClick={() => setOffset(offset - limit)}
-            >
-              Précédents
-            </div>
-          ) : (
-            <div></div>
-          )}
-          {!filter && !searchFilter && offset + limit < totalPage ? (
-            <div
-              className="nextButton"
-              onClick={() => setOffset(offset + limit)}
-            >
-              Suivants
-            </div>
-          ) : (
-            <div></div>
-          )}
-        </div>
-      </main>
+              })
+            )}
+          </div>
+          <div className="prevNextButtons">
+            {!filter && !searchFilter && offset - limit >= 0 ? (
+              <div
+                className="prevButton"
+                onClick={() => setOffset(offset - limit)}
+              >
+                Précédents
+              </div>
+            ) : (
+              <div></div>
+            )}
+            {!filter && !searchFilter && offset + limit < totalPage ? (
+              <div
+                className="nextButton"
+                onClick={() => setOffset(offset + limit)}
+              >
+                Suivants
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </div>
+        </main>
+      )}
     </div>
   );
 };

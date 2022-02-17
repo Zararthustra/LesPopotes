@@ -48,12 +48,13 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
   const [fieldMissing, setFieldMissing] = useState(false);
   const [recipeTitle, setRecipeTitle] = useState(recipe.name);
   const [recipeImage, setRecipeImage] = useState();
-  const [displayUserImage, setDisplayUserImage] = useState( recipe.image === "no image yet" ?
-images.default
-  :  require(`../../Images/${recipe.image.replace(
-      "..\\client\\src\\Images\\",
-      ""
-    )}`).default
+  const [displayUserImage, setDisplayUserImage] = useState(
+    recipe.image === "no image yet"
+      ? images.default
+      : require(`../../Images/${recipe.image.replace(
+          "..\\client\\src\\Images\\",
+          ""
+        )}`).default
   );
   const formData = new FormData();
   const [nbPers, setNbPers] = useState(recipe.nbPers);
@@ -193,7 +194,7 @@ images.default
     )
       return setFieldMissing(true);
     updateRecipe();
-    navigate(-1)
+    navigate(-1);
   };
 
   const updateRecipe = () => {
@@ -202,7 +203,6 @@ images.default
       .then((res) => {
         if (!res) return console.log("No response from server");
         if (res.data.error) return console.log(res.data);
-        console.log(res.data);
         updateRecipeImage(recipe.id);
         updateRecipeIngredients(recipe.id);
       })
@@ -248,7 +248,7 @@ images.default
       return {
         nbStep: index + 1,
         content: step,
-        recipe_id: recipeId
+        recipe_id: recipeId,
       };
     });
 
@@ -278,7 +278,7 @@ images.default
             <img
               src={require("../../assets/icons/close.png").default}
               className="closeRecipe"
-              onClick={() => navigate("/lapopote")}
+              onClick={() => navigate(-1)}
               alt="fermer"
             />
           </div>

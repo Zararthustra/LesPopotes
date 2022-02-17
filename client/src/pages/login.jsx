@@ -10,16 +10,17 @@ export const Login = () => {
   const navigate = useNavigate();
   const location = useLocation().pathname;
   const [creation, setCreation] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   const selectStyle = {
     control: (base, state) => ({
       ...base,
       fontSize: "0.8em",
       cursor: "pointer",
-      border: state.isFocused ? "2px var(--popotes) solid" : "1px black solid",
+      border: state.isFocused ? "1px var(--popotes) solid" : "1px black solid",
       boxShadow: "none",
       "&:hover": {
-        border: "2px var(--popotes) solid",
+        border: "1px var(--popotes) solid",
       },
     }),
     option: (base, state) => ({
@@ -34,14 +35,14 @@ export const Login = () => {
   };
 
   const popoteTypes = [
-    { value: "gourmand", label: "Gourmand" }, //sucré
-    { value: "bon vivant", label: "Bon vivant" }, //mange tout
-    { value: "cordon bleu", label: "Cordon bleu" }, //bon cuisinier
-    { value: "carnivore", label: "Carnivore" }, //adore la viande
-    { value: "cuisto du dimanche", label: "Cuisto du dimanche" }, //comme son nom l'indique
-    { value: "grignotteur", label: "Grignotteur" }, //mange peu
-    { value: "cultivateur", label: "Cultivateur" }, //cultive ses propres produits
-    { value: "herbivore", label: "Herbivore" }, //la viande c'est pour les sauvages
+    { value: "gourmand", label: "Gourmand" },
+    { value: "bon vivant", label: "Bon vivant" },
+    { value: "cordon bleu", label: "Cordon bleu" },
+    { value: "carnivore", label: "Carnivore" },
+    { value: "cuisto du dimanche", label: "Cuisto du dimanche" },
+    { value: "grignotteur", label: "Grignotteur" },
+    { value: "cultivateur", label: "Cultivateur" },
+    { value: "herbivore", label: "Herbivore" },
   ];
 
   //___________________________________________________ Input variables
@@ -57,13 +58,11 @@ export const Login = () => {
   const [type, setType] = useState("");
   const [mail, setMail] = useState("");
   const [diet, setDiet] = useState("");
-  const [avatar, setAvatar] = useState(
-    "https://avatars.dicebear.com/api/big-smile/randooom.svg?translateY=10"
-  );
   const [linkedin, setLinkedin] = useState("");
   const [snapchat, setSnapchat] = useState("");
   const [facebook, setFacebook] = useState("");
   const [instagram, setInstagram] = useState("");
+  const [avatar, setAvatar] = useState("");
 
   //___________________________________________________ Functions
 
@@ -90,7 +89,10 @@ export const Login = () => {
         name: userName,
         password,
         type,
-        avatar,
+        // Get default random avatar (calculated in avatar component) if user did not clicked
+        avatar: avatar
+          ? avatar
+          : document.querySelector(".avatar")?.getAttribute("src"),
         mail,
         diet,
         snapchat,
@@ -164,6 +166,13 @@ export const Login = () => {
         <div className="loginField">
           <form className="logform">
             <div className="inputs">
+            <div className="creationAvatar">
+                <div>
+                  <div>Mon Avatar:</div>
+                  <div className="clickToChange">(cliquer pour changer)</div>
+                </div>
+                <Avatar chosenAvatar={setAvatar} />
+              </div>
               <div className="mandatory">
                 <input
                   maxLength="12"
@@ -181,66 +190,60 @@ export const Login = () => {
                   value={password}
                   onChange={handleInputChange}
                 />
-                <Select
-                  isSearchable={false}
-                  styles={selectStyle}
-                  placeholder="Type de popote *"
-                  className="inputType"
-                  onChange={handleSelectChange}
-                  options={popoteTypes}
-                />
-              </div>
-              <div className="creationAvatar">
-                <div>
-                  <div>Mon Avatar:</div>
-                  <div className="clickToChange">(cliquer pour changer)</div>
+                <div className="selectModifyTypes">
+                  <Select
+                    isSearchable={false}
+                    styles={selectStyle}
+                    placeholder="Type de popote *"
+                    className="inputType"
+                    onChange={handleSelectChange}
+                    options={popoteTypes}
+                  />
+                  <div
+                    className="popoteTypeDetailsButton"
+                    onClick={() => setShowDetails(!showDetails)}
+                  >
+                    {showDetails ? "-" : "+"} Détails
+                  </div>
                 </div>
-                <Avatar chosenAvatar={setAvatar} />
+                {showDetails ? (
+                  <div className="popoteTypeDetails">
+                    <div className="detailTitle">Gourmand</div>
+                    <div className="detailDescription">
+                      Encore une petite lichette...
+                    </div>
+                    <div className="detailTitle">Bon vivant</div>
+                    <div className="detailDescription">
+                      Le gras, c'est la vie
+                    </div>
+                    <div className="detailTitle">Cordon bleu</div>
+                    <div className="detailDescription">
+                      C'est pas de la cuisine, c'est de la magie
+                    </div>
+                    <div className="detailTitle">Carnivore</div>
+                    <div className="detailDescription">Le viandard</div>
+                    <div className="detailTitle">Cuisto du dimanche</div>
+                    <div className="detailDescription">
+                      Comme son nom l'indique
+                    </div>
+                    <div className="detailTitle">Grignotteur</div>
+                    <div className="detailDescription">
+                      Mange peu mais suffisamment
+                    </div>
+                    <div className="detailTitle">Cultivateur</div>
+                    <div className="detailDescription">
+                      Cultive ses propres produits
+                    </div>
+                    <div className="detailTitle">Herbivore</div>
+                    <div className="detailDescription">
+                      La viande c'est pour les sauvages
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
-              <input
-                maxLength="50"
-                placeholder="Email"
-                className="inputEmail"
-                type="text"
-                value={mail}
-                onChange={handleInputChange}
-              />
-              <input
-                maxLength="20"
-                placeholder="Régime"
-                className="inputDiet"
-                type="text"
-                value={diet}
-                onChange={handleInputChange}
-              />
-              <input
-                placeholder="Linkedin"
-                className="inputLinkedin"
-                type="text"
-                value={linkedin}
-                onChange={handleInputChange}
-              />
-              <input
-                placeholder="Snapchat"
-                className="inputSnapchat"
-                type="text"
-                value={snapchat}
-                onChange={handleInputChange}
-              />
-              <input
-                placeholder="Facebook"
-                className="inputFacebook"
-                type="text"
-                value={facebook}
-                onChange={handleInputChange}
-              />
-              <input
-                placeholder="Instagram"
-                className="inputInstagram"
-                type="text"
-                value={instagram}
-                onChange={handleInputChange}
-              />
+              
             </div>
             <div className="loginDiv">
               <button onClick={addUser} className="login">
@@ -251,6 +254,7 @@ export const Login = () => {
               </button>
             </div>
           </form>
+            <div>* champs obligatoires</div>
         </div>
       </div>
     );

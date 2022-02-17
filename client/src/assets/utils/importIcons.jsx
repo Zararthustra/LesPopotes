@@ -23,4 +23,7 @@ export const icons = {
   starChecked: require("../../assets/icons/star-checked.png").default,
   emptyHeart: require("../../assets/icons/empty-heart.png").default,
   fullHeart: require("../../assets/icons/full-heart.png").default,
+  send: require("../../assets/icons/send.png").default,
+  addfriend: require("../../assets/icons/addfriend.png").default,
+  removefriend: require("../../assets/icons/removefriend.png").default,
 };

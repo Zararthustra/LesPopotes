@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 
-export const Avatar = ({ chosenAvatar }) => {
+export const Avatar = ({ chosenAvatar, defaultAvatar }) => {
   //________________________________________ Variables
   const [loading, setLoading] = useState(false);
 
@@ -72,14 +72,15 @@ export const Avatar = ({ chosenAvatar }) => {
     "variant08",
   ];
   const [avatar, setAvatar] = useState(
-    "https://avatars.dicebear.com/api/big-smile/randoooommmmm.svg?translateY=10"
+    defaultAvatar
+      ? defaultAvatar
+      : `https://avatars.dicebear.com/api/big-smile/${Math.floor(Math.random() * 999)}.svg?translateY=10`
   );
 
   const getAvatar = () => {
     setLoading(true);
     setTimeout(() => {
-    setLoading(false);
-      
+      setLoading(false);
     }, 200);
     const basePath = "avatars.dicebear.com/api/big-smile/seed.svg";
     const h = hair[Math.floor(Math.random() * hair.length)];

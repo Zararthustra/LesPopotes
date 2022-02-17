@@ -61,18 +61,21 @@ router.post("/user", (req, res) => {
   const name = req.body.name;
   const password = req.body.password;
   const type = req.body.type;
-  const mail = req.body.mail ? req.body.mail : null;
-  const diet = req.body.diet ? req.body.diet : null;
-  const avatar = req.body.avatar ? req.body.avatar : null;
-  const recipes = req.body.recipes ? req.body.recipes : 0;
-  const popotes = req.body.popotes ? req.body.popotes : 0;
-  const comments = req.body.comments ? req.body.comments : 0;
-  const notes = req.body.notes ? req.body.notes : 0;
-  const linkedin = req.body.linkedin ? req.body.linkedin : null;
-  const snapchat = req.body.snapchat ? req.body.snapchat : null;
-  const facebook = req.body.facebook ? req.body.facebook : null;
-  const instagram = req.body.instagram ? req.body.instagram : null;
-  const isAdmin = req.body.isAdmin ? req.body.isAdmin : false;
+  const mail = req.body.mail || "";
+  const diet = req.body.diet || "";
+  const avatar = req.body.avatar || "";
+  const recipes = req.body.recipes || 0;
+  const popotes = req.body.popotes || 0;
+  const comments = req.body.comments || 0;
+  const notes = req.body.notes || 0;
+  const linkedin = req.body.linkedin || "";
+  const snapchat = req.body.snapchat || "";
+  const facebook = req.body.facebook || "";
+  const instagram = req.body.instagram || "";
+  const twitter = req.body.twitter || "";
+  const tiktok = req.body.tiktok || "";
+  const whatsapp = req.body.whatsapp || "";
+  const isAdmin = req.body.isAdmin || false;
 
   db.User.findOne({
     where: {
@@ -96,6 +99,9 @@ router.post("/user", (req, res) => {
         snapchat,
         facebook,
         instagram,
+        twitter,
+        tiktok,
+        whatsapp,
         isAdmin,
       }).then((createdUser) => res.json(createdUser));
   });
@@ -121,6 +127,24 @@ router.post("/user/login", (req, res) => {
       });
     }
   });
+});
+
+// Update
+router.put("/users/:userID", (req, res) => {
+  const payload = req.body;
+  db.User.update(payload, {
+    where: {
+      id: req.params.userID,
+    },
+  })
+    .then((resp) => {
+      if (resp[0] !== 1) console.log("Update recipe: \n", resp);
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "PUT update User"));
+      res.json({ error: err.name });
+    });
 });
 
 // Increment user's field (recipes, comments, notes, popotes)
@@ -843,6 +867,83 @@ router.get("/friendships", (req, res) => {
     .then((foundFriendships) => res.json(foundFriendships))
     .catch((err) => {
       console.log(customizedError(err, "GET all User's Friendships"));
+      res.json({ error: err.name });
+    });
+});
+
+//________________________________________ Messages
+
+// Create
+router.post("/messages", (req, res) => {
+  const user_id = req.body.user_id;
+  const popote_id = req.body.popote_id;
+  const content = req.body.content;
+
+  db.Message.create({
+    user_id,
+    popote_id,
+    content,
+  })
+    .then((createdMessage) => res.json(createdMessage))
+    .catch((err) => {
+      console.log(customizedError(err, "POST create Message"));
+      res.json({ error: err.name });
+    });
+});
+
+// Delete
+router.delete("/messages", (req, res) => {
+  const user_id = req.query.user_id;
+  const popote_id = req.query.popote_id;
+  const lastMessageID = req.query.lastMessageID;
+
+  db.Message.destroy({
+    where: {
+      id: { [Op.lt]: lastMessageID },
+      [Op.or]: [
+        { user_id, popote_id },
+        { user_id: popote_id, popote_id: user_id },
+      ],
+    },
+  })
+    .then((deletedFriend) => {
+      if (deletedFriend) {
+        return res.json(deletedFriend);
+      }
+      return res.send("Could not delete friendship.");
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "DELETE Messages"));
+      res.json({ error: err.name });
+    });
+});
+
+// Retrieve a conversation
+router.get("/messages", (req, res) => {
+  const user_id = req.query.user_id;
+  const popote_id = req.query.popote_id;
+
+  db.Message.findAll({
+    where: {
+      [Op.or]: [
+        { user_id, popote_id },
+        { user_id: popote_id, popote_id: user_id },
+      ],
+    },
+  })
+    .then((foundMessages) => {
+      if (foundMessages.length > 50)
+        axios.delete("http://localhost:3001/api/messages", {
+          params: {
+            popote_id,
+            user_id,
+            lastMessageID: foundMessages[foundMessages.length - 50].id,
+          },
+        });
+      res.json(foundMessages);
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "GET all Messages"));
       res.json({ error: err.name });
     });
 });

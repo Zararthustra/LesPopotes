@@ -7,41 +7,61 @@
   }
 }
 @media all and (max-width: 400px) {
+  .modifyProfileContainer input {
+    width: 10em !important;
+  }
   .addPopote {
     width: 2em !important;
   }
   .mypopoteNames {
     font-size: 1.4em !important;
   }
-  .popoteProfileHeader .avatar {
+  .popoteProfileHeader .avatar,
+  .myprofileHeader .avatar {
     width: 5em !important;
     height: 5em !important;
   }
 }
 @media all and (min-width: 500px) {
-  .popoteContainer {
-    height: 110vh !important;
+  .popoteProfileHeader .avatar,
+  .myprofileHeader .avatar {
+    width: 8em !important;
+    height: 8em !important;
+  }
+  .myprofileHeader {
+    gap: 2em !important;
   }
   .popoteProfile {
     width: 25em !important;
   }
 }
+
 /*
  * My Profile
  */
-.modify {
-  margin-top: 4em !important;
+.profileContainer {
+  width: 100%;
+  padding: 2em 0;
+  display: flex;
+  justify-content: center;
 }
-.myprofileBody {
+.profileContainer ::selection {
+  color: var(--white);
+  background-color: var(--dark-popotes);
+}
+
+.profileNames {
+  font-size: 2em;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
-  background-color: var(--white);
+  justify-content: flex-end;
+  align-items: flex-start;
+  font-family: "Oswald", sans-serif;
+  line-height: 1.2em;
 }
-.myprofileBody p {
-  margin: 0;
+
+.modify {
+  margin-top: 4em !important;
 }
 
 .mypopoteInfos {
@@ -53,18 +73,102 @@
   background-color: var(--popotes);
   gap: 0.5em;
 }
-.myprofileContainer {
-  display: flex;
-  margin: 2em;
-  padding: 0.5em;
-  width: 70%;
-  height: fit-content;
-  font-size: 1.2em;
-}
 
 .myprofileHeader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 1em;
+  background-color: var(--popotes);
+  gap: 0.5em;
+}
+
+/*
+ * Modify profile
+ */
+.modifyProfileContainer input:focus-within {
+  border: none;
+  outline: 1px solid var(--dark-popotes);
+}
+.modifyProfileContainer input {
+  width: 15em;
+  border: 1px solid var(--popotes);
+  border-radius: 5px;
+}
+.modifyProfileContainer p {
+  margin: 0;
+  text-align: left;
+  color: var(--dark-popotes);
+  font-weight: 600;
+}
+.modifyProfileContainer {
+  padding: 2em 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.1em;
+  gap: 0.5em;
+}
+.modifyProfileContainer .mail {
+  width: 2em;
+  height: 1.5em;
+}
+.modifyProfileContainer .linkedin {
+  width: 2em;
+  height: 2em;
+}
+.modifyProfileContainer .center {
+  width: 70%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.cautionMessage {
+  color: red;
+  font-size: 0.7em;
+}
+
+.selectModifyTypes {
+  display: flex;
+  gap: 0.5em;
+}
+
+.popoteTypeDetailsButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.7em;
+  cursor: pointer;
+  background-color: var(--popotes);
+  border: 1px solid var(--dark-popotes);
+  border-radius: 5px;
+  padding: 0.5em 1em;
+}
+.popoteTypeDetailsButton:hover {
+  background-color: #78f5c9a4;
+}
+.popoteTypeDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: rgba(138, 255, 230, 0.466);
+padding: 0 2em;
+  border-radius: 10px;
+}
+.detailTitle {
+  font-size: 0.9em;
+  font-family: 'Oswald', sans-serif;
+  color: var(--dark-popotes);
+}
+.detailDescription {
+  color: var(--dark);
+margin-bottom: 1em;
+font-size: 0.6em;
 }
 
 /*
@@ -72,11 +176,11 @@
  */
 .popoteContainer {
   width: 100%;
-  height: 100vh;
+  padding: 2em 0;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
+
 .popoteContainer ::selection {
   color: var(--white);
   background-color: var(--dark-popotes);
@@ -109,7 +213,7 @@
   width: 1.5em;
   position: relative;
   top: -2.7em;
-  left: .7em;
+  left: 0.7em;
 }
 
 .popoteProfileHeader .avatar {
@@ -170,7 +274,7 @@
 .popoteProfileInfosBody,
 .popoteProfileMessagesBody {
   width: 100%;
-  height: 25em;
+  height: 27.5em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -231,7 +335,10 @@
   height: 1.7em;
 }
 .instagram,
-.snapchat {
+.snapchat,
+.twitter,
+.tiktok,
+.whatsapp {
   cursor: pointer;
   width: 2em;
   height: 2em;
@@ -259,10 +366,14 @@
   box-shadow: 1px 1px 8px 1px #dcdcdc;
 }
 .disconnectButton {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   cursor: pointer;
-  background-color: var(--white);
+  background-color: red;
   border: none;
-  margin: 1em 0;
-  color: red;
+  width: 100%;
+  height: 2em;
+  color: var(--white);
   font-weight: bolder;
 }

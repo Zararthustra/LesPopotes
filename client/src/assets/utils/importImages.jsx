@@ -13,4 +13,7 @@ export const images = {
   instagram: require("../../assets/images/instagram.png").default,
   facebook: require("../../assets/images/facebook.png").default,
   snapchat: require("../../assets/images/snapchat.png").default,
+  tiktok: require("../../assets/images/tiktok.png").default,
+  twitter: require("../../assets/images/twitter.png").default,
+  whatsapp: require("../../assets/images/whatsapp.png").default,
 };

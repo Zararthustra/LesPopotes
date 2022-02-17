@@ -1,5 +1,4 @@
 import { Card } from "../../components/card";
-import { SearchFilterPopote } from "../../components/searchFilterPopote";
 import { Host } from "../../assets/utils/host";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -10,8 +9,6 @@ export const Lastpubs = () => {
   const location = useLocation().pathname;
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState();
-  const [searchFilter, setSearchFilter] = useState("");
 
   // Load data when mounting
   useEffect(() => {
@@ -20,45 +17,36 @@ export const Lastpubs = () => {
   }, []);
 
   const getRecipes = async () => {
-    setLoading(true);
     try {
-      const res = await axios.get(`${Host}api/recipes`);
-      if (res.data) setRecipes(res.data);
-      setLoading(false);
+      const res = await axios.get(`${Host}api/recipes/pagination/0`, {
+        params: { limit: 10 },
+      });
+      if (res.data) {
+        setRecipes(res.data.rows);
+        setLoading(false);
+      }
     } catch (error) {
-      console.log("An error occured while requesting recipes:\n", error);
+      console.log(
+        "An error occured while requesting recipes pagination:\n",
+        error
+      );
       setLoading(false);
     }
   };
+
   if (location !== "/accueil/nouveautes") return <Outlet />;
   return (
-    <main className="cardList">
-      <SearchFilterPopote
-        setFilter={setFilter}
-        setSearchFilter={setSearchFilter}
-      />
-      {loading ? (
-        <ClipLoader css={""} color={"#f5a76c"} loading={loading} size={100} />
-      ) : filter ? (
-        recipes.map((recipe, index) => {
-          if (
-            recipe.type.toLowerCase().includes(filter.toLowerCase()) &&
-            recipe.name.toLowerCase().includes(searchFilter.toLowerCase())
-          )
+    <>
+      <h1>Dernières publications</h1>
+      <main className="cardList">
+        {loading ? (
+          <ClipLoader css={""} color={"#f5a76c"} loading={loading} size={100} />
+        ) : (
+          recipes.map((recipe, index) => {
             return <Card key={index} recipe={recipe} />;
-          return "";
-        })
-      ) : searchFilter ? (
-        recipes.map((recipe, index) => {
-          if (recipe.name.toLowerCase().includes(searchFilter.toLowerCase()))
-            return <Card key={index} recipe={recipe} />;
-          return "";
-        })
-      ) : (
-        recipes.map((recipe, index) => {
-          return <Card key={index} recipe={recipe} />;
-        })
-      )}
-    </main>
+          })
+        )}
+      </main>
+    </>
   );
 };

@@ -277,7 +277,7 @@ export const Creation = () => {
             <img
               src={require("../../assets/icons/close.png").default}
               className="closeRecipe"
-              onClick={() => navigate("/lapopote")}
+              onClick={() => navigate(-1)}
               alt="fermer"
             />
           </div>

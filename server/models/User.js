@@ -45,6 +45,15 @@ module.exports = (sequelize, Sequelize) => {
     instagram: {
       type: Sequelize.STRING,
     },
+    twitter: {
+      type: Sequelize.STRING,
+    },
+    tiktok: {
+      type: Sequelize.STRING,
+    },
+    whatsapp: {
+      type: Sequelize.STRING,
+    },
     mail: {
       type: Sequelize.STRING,
     },

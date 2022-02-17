@@ -15,7 +15,6 @@ import { Profile } from "./pages/profile/profile";
 import { Favorites } from "./pages/profile/favorites";
 import { Mesrecettes } from "./pages/profile/mesrecettes";
 import { Monprofil } from "./pages/profile/myprofile";
-import { Modifymyprofile } from "./pages/profile/modifymyprofile";
 import { Homelanding } from "./pages/home/homelanding";
 
 export const App = () => {
@@ -62,7 +61,6 @@ export const App = () => {
         <Route element={<ProtectedRoutes />}>
           <Route path="profil" element={<Profile />}>
             <Route path="monprofil" element={<Monprofil />} />
-            <Route path="modifier" element={<Modifymyprofile />} />
             <Route path="favorites" element={<Favorites />}>
               <Route path=":recetteID" element={<Recette />} />
             </Route>
