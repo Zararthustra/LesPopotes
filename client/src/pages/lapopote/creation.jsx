@@ -177,8 +177,8 @@ export const Creation = () => {
       !diff ||
       !type ||
       !prepTime ||
-      !ingredients ||
-      !steps
+      ingredients.length === 0 ||
+      steps.length === 0
     )
       return setFieldMissing(true);
     createRecipe();
@@ -316,6 +316,7 @@ export const Creation = () => {
             <input
               type="text"
               pattern="[0-9]*"
+              maxLength={3}
               placeholder="Qté"
               className="selectQuantity"
               onChange={handleQuantity}

@@ -168,6 +168,7 @@ export const RecipeInfosCreation = ({ sharedVars }) => {
             <input
               type="text"
               pattern="[0-9]*"
+              maxLength={3}
               className="minutesInput prepTime"
               placeholder="0"
               min="0"
@@ -182,6 +183,7 @@ export const RecipeInfosCreation = ({ sharedVars }) => {
             <input
               type="text"
               pattern="[0-9]*"
+              maxLength={3}
               className="minutesInput bakeTime"
               placeholder="0"
               min="0"

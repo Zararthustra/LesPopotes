@@ -62,14 +62,14 @@ export const Recettes = () => {
       />
       <div className="prevNextButtons">
         {!filter && !searchFilter && offset - limit >= 0 ? (
-          <div className="prevButton" onClick={() => setOffset(offset - limit)}>
+          <div className="prevButtonPopote" onClick={() => setOffset(offset - limit)}>
             Précédents
           </div>
         ) : (
           <div></div>
         )}
         {!filter && !searchFilter && offset + limit < totalPage ? (
-          <div className="nextButton" onClick={() => setOffset(offset + limit)}>
+          <div className="nextButtonPopote" onClick={() => setOffset(offset + limit)}>
             Suivants
           </div>
         ) : (
@@ -102,14 +102,14 @@ export const Recettes = () => {
       </div>
       <div className="prevNextButtons">
         {!filter && !searchFilter && offset - limit >= 0 ? (
-          <div className="prevButton" onClick={() => setOffset(offset - limit)}>
+          <div className="prevButtonPopote" onClick={() => setOffset(offset - limit)}>
             Précédents
           </div>
         ) : (
           <div></div>
         )}
         {!filter && !searchFilter && offset + limit < totalPage ? (
-          <div className="nextButton" onClick={() => setOffset(offset + limit)}>
+          <div className="nextButtonPopote" onClick={() => setOffset(offset + limit)}>
             Suivants
           </div>
         ) : (

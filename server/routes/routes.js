@@ -812,7 +812,19 @@ router.post("/friendships", (req, res) => {
     user_id,
     popote_id,
   })
-    .then((createdFriendship) => res.json(createdFriendship))
+    .then((createdFriendship) => {
+      if (createdFriendship) {
+        //Increment user's popotes
+        axios
+          .put(`http://localhost:3001/api/users/${user_id}/popotes`)
+          .then((resp) => {
+            if (resp.status !== 200)
+              console.log("Increment user's Popotes: \n", resp);
+          })
+          .catch((err) => console.log(err));
+        res.json(createdFriendship);
+      }
+    })
     .catch((err) => {
       console.log(customizedError(err, "POST create Friendship"));
       res.json({ error: err.name });
@@ -832,6 +844,15 @@ router.delete("/friendships/:userID", (req, res) => {
   })
     .then((deletedFriend) => {
       if (deletedFriend) {
+        //Decrement user's popotes
+        axios
+          .put(
+            `http://localhost:3001/api/users/${user_id}/decrement/popotes`
+          )
+          .then((resp) => {
+            if (resp.status !== 200) console.log("Decrement popotes: \n", resp);
+          })
+          .catch((err) => console.log(err));
         return res.json(deletedFriend);
       }
       return res.send("Could not delete friendship.");
@@ -1020,3 +1041,40 @@ router.post("/user/notification", (req, res) => {
     user_id,
   }).then((createdUserNotif) => res.json(createdUserNotif));
 });
+
+//________________________________________ Web Sockets (issue: works on browsers but not on mobile)
+// // Sockets manager
+// const io = require("socket.io")(3002);
+// const socketUsers = {};
+
+// io.on("connection", (client) => {
+//   console.log("CONNECTION");
+//   client.emit("connected", client.id);
+//   client.on("userObject", (userObject) => {
+//     const user = { ...userObject, socketID: client.id };
+//     socketUsers[client.id] = user;
+//     client.emit("usersConnected", socketUsers);
+//   });
+
+//   client.on("send-message", (messageObj) => {
+//     console.log(messageObj);
+//     io.emit("broadcastmessage", messageObj);
+//   })
+
+//   // When client leave chat room (on unmount component)
+//   client.on("disconnection", () => {
+//     console.log("socketUsers:", socketUsers);
+//     console.log("DISCONNECTION OF", client.id);
+//     delete socketUsers[client.id];
+//     console.log("socketUsers:", socketUsers);
+//     client.emit("disconnected", client.id);
+//   });
+//   // When client close tab or window
+//   client.on("disconnect", () => {
+//     console.log("socketUsers:", socketUsers);
+//     console.log("CLOSED TAB", client.id);
+//     delete socketUsers[client.id];
+//     console.log("socketUsers:", socketUsers);
+//     client.emit("disconnected", client.id);
+//   });
+// });

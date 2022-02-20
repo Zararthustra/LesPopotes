@@ -1,8 +1,5 @@
 export const images = {
   nbpers: require("../../assets/images/nbpers.png").default,
-  risotto: require("../../assets/images/risotto.png").default,
-  tarte: require("../../assets/images/tarte.png").default,
-  muesli: require("../../assets/images/muesli.png").default,
   friends: require("../../assets/images/friends.jpg").default,
   linkedin: require("../../assets/images/linkedin.png").default,
   mail: require("../../assets/images/mail.png").default,
@@ -16,4 +13,5 @@ export const images = {
   tiktok: require("../../assets/images/tiktok.png").default,
   twitter: require("../../assets/images/twitter.png").default,
   whatsapp: require("../../assets/images/whatsapp.png").default,
+  logo: require("../../assets/images/lespopotes-logo.png").default,
 };

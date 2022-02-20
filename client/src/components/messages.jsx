@@ -104,3 +104,49 @@ export const Messages = ({ popote }) => {
     </>
   );
 };
+
+// Web Sockets (issue: works on browsers but not on mobile)
+
+//import io from "socket.io-client";
+// // Sockets handler
+// const socket = io("http://localhost:3002", {
+//   transports: ["websocket", "polling"],
+// });
+// const [socketUsers, setSocketUsers] = useState({});
+
+// // Receive connection infos from server when connection
+// socket.on("connected", (connectionID) => {
+//   if (socket.connected) setUseSocket(true)
+//   console.log(connectionID, "is connected");
+// });
+// // Send infos to server if connected
+// socket.on("connect", () => {
+//   socket.emit("userObject", {
+//     name: localStorage.getItem("username"),
+//     id: user_id,
+//   });
+// });
+// // Retrieve connected users
+// socket.on("usersConnected", (users) => {
+//   setSocketUsers(users);
+//   console.log(users, "are connected");
+// });
+
+// socketConnection.emit("send-message", { user_id, message });
+// socket.on("broadcastmessage", (messageObj) => {
+//   console.log(messageObj);
+//   setMessages((messages) => [
+//     ...messages,
+//     { user_id: parseInt(messageObj.user_id), content: messageObj.message },
+//   ]);
+// });
+
+// socket.on("disconnected", (id) => {
+//   console.log(id, "has disconnected");
+// });
+// // If close browser's tab/window
+// socket.on("disconnect", () => {
+//   socket.emit("disconnection");
+// });
+// // If leave chat room
+// return () => socket.emit("disconnection");

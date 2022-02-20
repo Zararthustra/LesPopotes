@@ -28,10 +28,16 @@ export const Card = ({ recipe }) => {
       ? "Moyen"
       : "Facile";
 
-  const image = () =>
-    recipe.image === "no image yet" || !recipe.image
-      ? images.default
-      : require(`../Images/${recipe.image?.split("\\")[4]}`).default;
+  const image = () => {
+    try {
+      return recipe.image === "no image yet" || !recipe.image
+        ? images.default
+        : require(`../Images/${recipe.image?.split("\\")[4]}`).default;
+    } catch (error) {
+      console.log(error);
+      return images.default;
+    }
+  };
 
   const diffIcon =
     recipe.difficulty === "3"

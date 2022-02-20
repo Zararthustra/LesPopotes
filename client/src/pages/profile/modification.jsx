@@ -189,8 +189,8 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
       !diff ||
       !type ||
       !prepTime ||
-      !ingredients ||
-      !steps
+      ingredients.length === 0 ||
+      steps.length === 0
     )
       return setFieldMissing(true);
     updateRecipe();
@@ -316,6 +316,7 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
             />
             <input
               type="text"
+              maxLength={3}
               pattern="[0-9]*"
               placeholder="Qté"
               className="selectQuantity"

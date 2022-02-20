@@ -183,7 +183,7 @@ export const SearchFilterPopote = ({
         className="popoteButton"
         onClick={() => navigate("/lapopote/creation")}
       >
-        Créer une recette
+        Proposer une recette
       </button>
       <div className="separatePopote"></div>
     </div>

@@ -173,10 +173,10 @@ export const RecipeInfosModification = ({ sharedVars }) => {
           ]}
         />
         <Select
-        defaultValue={{
-          value: sharedVars.bakeMode,
-          label: capitalize(sharedVars.bakeMode),
-        }}
+          defaultValue={{
+            value: sharedVars.bakeMode,
+            label: capitalize(sharedVars.bakeMode),
+          }}
           isSearchable={false}
           placeholder="Mode de cuisson"
           styles={selectStyle}
@@ -195,8 +195,9 @@ export const RecipeInfosModification = ({ sharedVars }) => {
           <div className="lighttext">Préparation</div>
           <div>
             <input
-            value={sharedVars.prepTime}
+              value={sharedVars.prepTime}
               type="text"
+              maxLength={3}
               pattern="[0-9]*"
               className="minutesInput prepTime"
               placeholder="0"
@@ -210,8 +211,9 @@ export const RecipeInfosModification = ({ sharedVars }) => {
           <div className="lighttext">Cuisson</div>
           <div>
             <input
-            value={sharedVars.bakeTime}
-            type="text"
+              value={sharedVars.bakeTime}
+              type="text"
+              maxLength={3}
               pattern="[0-9]*"
               className="minutesInput bakeTime"
               placeholder="0"
