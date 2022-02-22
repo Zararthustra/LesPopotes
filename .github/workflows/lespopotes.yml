@@ -1,4 +1,4 @@
-name: lespopotes.js CI
+name: lespopotes CI
 
 on:
   push:
