@@ -142,10 +142,12 @@ export const Recette = () => {
       });
   };
 
-  const image = () =>
-    recipe.image === "no image yet" || !recipe.image
+  const image = () => {
+    console.log("recipe object:", recipe);
+    return recipe.image === "no image yet" || !recipe.image
       ? images.default
       : require(`../../Images/${recipe.image?.split("\\")[4]}`).default;
+  };
 
   //________________ Favorite
   const addToFavorites = () => {
