@@ -14,14 +14,13 @@
 }
 
 .itemContainer {
-  width: 20ch;
+  width: 20.5ch;
   cursor: pointer;
   display: flex;
   flex-wrap: wrap;
   font-size: 1.1em;
   color: var(--dark);
   justify-content: space-between;
-  padding: 0.3em;
   align-items: center;
   border-radius: 20px;
   background-color: var(--popotes);

@@ -74,7 +74,9 @@ export const Avatar = ({ chosenAvatar, defaultAvatar }) => {
   const [avatar, setAvatar] = useState(
     defaultAvatar
       ? defaultAvatar
-      : `https://avatars.dicebear.com/api/big-smile/${Math.floor(Math.random() * 999)}.svg?translateY=10`
+      : `https://avatars.dicebear.com/api/big-smile/${Math.floor(
+          Math.random() * 999
+        )}.svg?translateY=10`
   );
 
   const getAvatar = () => {
@@ -83,6 +85,9 @@ export const Avatar = ({ chosenAvatar, defaultAvatar }) => {
       setLoading(false);
     }, 200);
     const basePath = "avatars.dicebear.com/api/big-smile/seed.svg";
+    const randomPath = `avatars.dicebear.com/api/big-smile/${
+      Math.random() * 99999
+    }.svg?translateY=10`;
     const h = hair[Math.floor(Math.random() * hair.length)];
     const m = mouth[Math.floor(Math.random() * mouth.length)];
     const e = eyes[Math.floor(Math.random() * eyes.length)];
@@ -91,10 +96,12 @@ export const Avatar = ({ chosenAvatar, defaultAvatar }) => {
     const hc = hairColor[Math.floor(Math.random() * hairColor.length)];
 
     setAvatar(
-      `https://${basePath}?hair=${h}&mouth=${m}&eyes=${e}&accessories=${a}&skinColor=${s}&hairColor=${hc}&translateY=10`
+      `https://${randomPath}`
+      //`https://${basePath}?hair=${h}&mouth=${m}&eyes=${e}&accessories=${a}&skinColor=${s}&hairColor=${hc}&translateY=10`
     );
     chosenAvatar(
-      `https://${basePath}?hair=${h}&mouth=${m}&eyes=${e}&accessories=${a}&skinColor=${s}&hairColor=${hc}&translateY=10`
+      `https://${randomPath}`
+      //`https://${basePath}?hair=${h}&mouth=${m}&eyes=${e}&accessories=${a}&skinColor=${s}&hairColor=${hc}&translateY=10`
     );
   };
 

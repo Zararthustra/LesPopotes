@@ -11,15 +11,15 @@ export const Modifymyprofile = ({ userObject }) => {
   const [name, setName] = useState(userObject.name);
   const [password, setPassword] = useState(userObject.password);
   const [showDetails, setShowDetails] = useState(false);
-  const [type, setType] = useState("");
-  const [mail, setMail] = useState("");
-  const [linkedin, setLinkedin] = useState("");
-  const [facebook, setFacebook] = useState("");
-  const [snapchat, setSnapchat] = useState("");
-  const [instagram, setInstagram] = useState("");
-  const [twitter, setTwitter] = useState("");
-  const [tiktok, setTiktok] = useState("");
-  const [whatsapp, setWhatsapp] = useState("");
+  const [type, setType] = useState(userObject.type || "");
+  const [mail, setMail] = useState(userObject.mail || "");
+  const [linkedin, setLinkedin] = useState(userObject.linkedin || "");
+  const [facebook, setFacebook] = useState(userObject.facebook || "");
+  const [snapchat, setSnapchat] = useState(userObject.snapchat || "");
+  const [instagram, setInstagram] = useState(userObject.instagram || "");
+  const [twitter, setTwitter] = useState(userObject.twitter || "");
+  const [tiktok, setTiktok] = useState(userObject.tiktok || "");
+  const [whatsapp, setWhatsapp] = useState(userObject.whatsapp || "");
 
   const selectStyle = {
     control: (base, state) => ({
@@ -194,7 +194,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <input
           id="mail"
           type="text"
-          value={userObject.mail}
+          value={mail}
           onChange={handleInputChange}
         />
       </div>
@@ -203,7 +203,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <input
           id="linkedin"
           type="text"
-          value={userObject.linkedin}
+          value={linkedin}
           onChange={handleInputChange}
         />
       </div>
@@ -212,7 +212,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <input
           id="facebook"
           type="text"
-          value={userObject.facebook}
+          value={facebook}
           onChange={handleInputChange}
         />
       </div>
@@ -221,7 +221,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <input
           id="snapchat"
           type="text"
-          value={userObject.snapchat}
+          value={snapchat}
           onChange={handleInputChange}
         />
       </div>
@@ -230,7 +230,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <input
           id="instagram"
           type="text"
-          value={userObject.instagram}
+          value={instagram}
           onChange={handleInputChange}
         />
       </div>
@@ -239,7 +239,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <input
           id="twitter"
           type="text"
-          value={userObject.twitter}
+          value={twitter}
           onChange={handleInputChange}
         />
       </div>
@@ -248,7 +248,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <input
           id="tiktok"
           type="text"
-          value={userObject.tiktok}
+          value={tiktok}
           onChange={handleInputChange}
         />
       </div>
@@ -257,7 +257,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <input
           id="whatsapp"
           type="text"
-          value={userObject.whatsapp}
+          value={whatsapp}
           onChange={handleInputChange}
         />
       </div>

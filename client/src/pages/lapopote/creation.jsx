@@ -161,6 +161,9 @@ export const Creation = () => {
     // Reset input
     document.getElementsByClassName("stepText")[0].value = "";
   };
+  const handlePressEnter = (event) => {
+    if (event.key === "Enter") handleAddStep();
+  };
 
   // Comment
   const handleComment = (event) => {
@@ -362,9 +365,10 @@ export const Creation = () => {
               <div className="stepTitle">Ajouter une étape</div>
               <div className="addButtonStep" onClick={handleAddStep} />
             </div>
-            <textarea
+            <input
               type="text"
               className="stepText"
+              onKeyDown={handlePressEnter}
               onChange={handleStep}
               placeholder="Décrire avec précision. Une étape = une action."
             />
