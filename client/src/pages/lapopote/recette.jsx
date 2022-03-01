@@ -146,7 +146,8 @@ export const Recette = () => {
     console.log("recipe object:", recipe);
     return recipe.image === "no image yet" || !recipe.image
       ? images.default
-      : require(`../../Images/${recipe.image?.split("\\")[4]}`).default;
+      : require(`../../Images/${recipe.image?.split("/")[4]}`).default; //linux
+      //: require(`../../Images/${recipe.image?.split("\\")[4]}`).default; //windows
   };
 
   //________________ Favorite
