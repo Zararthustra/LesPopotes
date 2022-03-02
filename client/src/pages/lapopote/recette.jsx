@@ -143,13 +143,15 @@ export const Recette = () => {
   };
 
   const image = () => {
-    console.log("recipe object:", recipe);
-    return recipe.image === "no image yet" || !recipe.image
-      ? images.default
-      : require(`../../Images/${recipe.image?.split("\\")[4]}`).default ===
-        undefined
-      ? require(`../../Images/${recipe.image?.split("/")[4]}`).default //linux
-      : require(`../../Images/${recipe.image?.split("\\")[4]}`).default; //windows
+    if (recipe.image === "no image yet" || !recipe.image) return images.default;
+    if (recipe.image?.split("\\")[4]) {
+      console.log("====> \\");
+      return require(`../../Images/${recipe.image?.split("\\")[4]}`).default; //windows
+    }
+    if (recipe.image?.split("/")[4]) {
+      console.log("====> /");
+      return require(`../../Images/${recipe.image?.split("/")[4]}`).default; //linux
+    }
   };
 
   //________________ Favorite
