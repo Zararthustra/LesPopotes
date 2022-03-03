@@ -12,7 +12,7 @@ app.listen(3001, () => {
 })
 
 app.use("/api", routes);
-app.use('../client/src/Images', express.static('../client/src/Images'))
+app.use('../client/public/Images', express.static('../client/public/Images'))
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -28,7 +28,7 @@ const customizedError = (error, from) => {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "../client/src/Images"); //or server/Images
+    cb(null, "../client/public/Images");
   },
   filename: (req, file, cb) => {
     cb(
@@ -326,7 +326,7 @@ router.put("/:recipeID/recipeImage", upload.single("image"), (req, res) => {
   const isReplacing = req.query.oldImage;
   if (isReplacing)
     // Delete associated recipe image
-    unlink(`../client/src/Images/${req.query.oldImage}`, (error) => {
+    unlink(`../client/public/Images/${req.query.oldImage}`, (error) => {
       if (error) console.log(error);
     });
   db.Recipe.update(

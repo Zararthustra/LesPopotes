@@ -33,12 +33,10 @@ export const Card = ({ recipe }) => {
       if (recipe.image === "no image yet" || !recipe.image)
         return images.default;
       if (recipe.image?.split("\\")[4]) {
-        console.log("====> \\");
-        return require(`../Images/${recipe.image?.split("\\")[4]}`).default; //windows
+        return `/Images/${recipe.image?.split("\\")[4]}`; //windows
       }
       if (recipe.image?.split("/")[4]) {
-        console.log("====> /");
-        return require(`../Images/${recipe.image?.split("/")[4]}`).default; //linux
+        return `/Images/${recipe.image?.split("/")[4]}`; //linux
       }
     } catch (error) {
       console.log(error);
