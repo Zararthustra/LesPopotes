@@ -15,17 +15,32 @@ export const Popotes = () => {
   const navigate = useNavigate();
 
   const [userObject, setUserObject] = useState({});
-  const [isInfos, setIsInfos] = useState(true);
+  const [activeTab, setActiveTab] = useState("infosTab");
+  const [recipes, setRecipes] = useState([]);
   const [isMyPopote, setIsMyPopote] = useState(false);
   const [loading, setLoading] = useState(false);
 
   // Load data when mounting
   useEffect(() => {
+    //get popote
     setLoading(true);
-
     axios.get(`${Host}api/users/${popote}`).then((res) => {
       if (res.data) {
         setUserObject(res.data);
+
+        // get popote's recipes
+        axios
+          .get(`${Host}api/userrecipes/${res.data.id}`)
+          .then((res) => {
+            if (res.data) {
+              setRecipes(res.data);
+            }
+          })
+          .catch((error) => {
+            console.log("An error occured while requesting recipes:\n", error);
+          });
+
+        // get friendship status
         axios
           .get(`${Host}api/friendships/${localStorage.getItem("userid")}`, {
             params: { popote_id: res.data.id },
@@ -43,12 +58,20 @@ export const Popotes = () => {
   const toggleTabInfos = () => {
     document.querySelector(".infosTab").classList = "infosTab activeTab";
     document.querySelector(".messagesTab").classList = "messagesTab";
-    setIsInfos(true);
+    document.querySelector(".recettesTab").classList = "recettesTab";
+    setActiveTab("infosTab");
   };
   const toggleTabMessages = () => {
     document.querySelector(".messagesTab").classList = "messagesTab activeTab";
     document.querySelector(".infosTab").classList = "infosTab";
-    setIsInfos(false);
+    document.querySelector(".recettesTab").classList = "recettesTab";
+    setActiveTab("messagesTab");
+  };
+  const toggleTabRecettes = () => {
+    document.querySelector(".recettesTab").classList = "recettesTab activeTab";
+    document.querySelector(".messagesTab").classList = "messagesTab";
+    document.querySelector(".infosTab").classList = "infosTab";
+    setActiveTab("recettesTab");
   };
 
   const addPopote = () => {
@@ -75,6 +98,16 @@ export const Popotes = () => {
         }
       });
   };
+
+  const recipeTypeIcon = (recipe) => {
+    if (recipe.type === "apero") return icons.apero;
+    if (recipe.type === "entree") return icons.entree;
+    if (recipe.type === "plat") return icons.plat;
+    if (recipe.type === "dessert") return icons.dessert;
+    if (recipe.type === "boisson") return icons.boisson;
+    return icons.autre;
+  };
+
   if (loading)
     return (
       <main className="popoteContainer">
@@ -121,8 +154,11 @@ export const Popotes = () => {
           <div onClick={toggleTabMessages} className="messagesTab">
             Messages
           </div>
+          <div onClick={toggleTabRecettes} className="recettesTab">
+            Recettes
+          </div>
         </div>
-        {isInfos ? (
+        {activeTab === "infosTab" && (
           <div className="popoteProfileInfosBody">
             <div className="level">
               {getLevel(
@@ -233,8 +269,31 @@ export const Popotes = () => {
               )}
             </ul>
           </div>
-        ) : (
-          <Messages popote={userObject} />
+        )}
+        {activeTab === "messagesTab" && <Messages popote={userObject} />}
+        {activeTab === "recettesTab" && (
+          <div className="popoteRecipes">
+            {recipes.length > 0 ? (
+              recipes.map((recipe, index) => {
+                return (
+                  <div
+                    className="popoteRecipe"
+                    key={index}
+                    onClick={() => navigate(`/lapopote/${recipe.id}`)}
+                  >
+                    <img
+                      className="recipeType"
+                      src={recipeTypeIcon(recipe)}
+                      alt={recipe.type}
+                    />
+                    <div>{recipe.name && capitalize(recipe.name)}</div>
+                  </div>
+                );
+              })
+            ) : (
+              <div>Pas de recette</div>
+            )}
+          </div>
         )}
       </div>
     </main>

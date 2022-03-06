@@ -140,7 +140,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
   font-size: 0.7em;
   cursor: pointer;
   background-color: var(--popotes);
@@ -157,18 +157,18 @@
   justify-content: center;
   align-items: flex-start;
   background-color: rgba(138, 255, 230, 0.466);
-padding: 0 2em;
+  padding: 0 2em;
   border-radius: 10px;
 }
 .detailTitle {
   font-size: 0.9em;
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
   color: var(--dark-popotes);
 }
 .detailDescription {
   color: var(--dark);
-margin-bottom: 1em;
-font-size: 0.6em;
+  margin-bottom: 1em;
+  font-size: 0.6em;
 }
 
 /*
@@ -176,6 +176,7 @@ font-size: 0.6em;
  */
 .popoteContainer {
   width: 100%;
+  min-height: 40em;
   padding: 2em 0;
   display: flex;
   justify-content: center;
@@ -245,7 +246,8 @@ font-size: 0.6em;
 }
 
 .infosTab,
-.messagesTab {
+.messagesTab,
+.recettesTab {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -348,6 +350,34 @@ font-size: 0.6em;
   width: 1em;
   height: 2em;
 }
+
+/*
+ *_______________________________________________
+ */
+.popoteRecipe {
+  width: 90%;
+  padding: .5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  font-weight: 600;
+}
+.popoteRecipe:hover {
+  cursor: pointer;
+  color: var(--white);
+  background-color: #e76400;
+}
+.popoteRecipes {
+  padding: 3em 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  width: 100%;
+}
+
 /*
  *_______________________________________________
  */

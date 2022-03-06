@@ -259,6 +259,7 @@ export const Recette = () => {
               ...comments,
             ]);
             document.querySelector(".userCommentTextArea").value = "";
+            setComment("");
           }
         });
   };

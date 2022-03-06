@@ -67,14 +67,17 @@
 }
 
 .cardTitle {
-  font-size: 1.5em;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 1.8em;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 2.5em;
   margin: 0.5em 0 0.8em;
   padding: 0.5em 0;
-  color: var(--dark);
+  color: var(--dark-popote);
+  filter: drop-shadow(0 0 5px white);
 }
 
 .separateLine {
