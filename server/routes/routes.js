@@ -24,36 +24,6 @@ const customizedError = (error, from) => {
   };
 };
 
-//________________________________________ Image storage
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "../client/public/Images");
-  },
-  filename: (req, file, cb) => {
-    cb(
-      null,
-      file.originalname.split(".")[0] +
-        "_" +
-        Date.now() +
-        path.extname(file.originalname)
-    );
-  },
-});
-
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: "1000000" }, //1mb
-  fileFilter: (req, file, cb) => {
-    const fileTypes = /jpeg|jpg|png/;
-    const mimeType = fileTypes.test(file.mimetype);
-    const extname = fileTypes.test(path.extname(file.originalname));
-
-    if (mimeType && extname) return cb(null, true);
-    cb("Wrong image format.");
-  },
-});
-
 //________________________________________ Users
 
 // Register (if not exist)
@@ -208,7 +178,7 @@ router.get("/users/pagination/:offset", (req, res) => {
 // Create
 router.post("/recipe", (req, res) => {
   const name = req.body.name;
-  const image = "no image yet";
+  const image = "";
   const tags = req.body.tags;
   const nbPers = req.body.nbPers;
   const isNbVariable = req.body.isNbVariable;
@@ -318,30 +288,30 @@ router.put("/recipes/average/:recipeID", (req, res) => {
     });
 });
 
-// Update image
-// Dirty
-// *Intermediate endpoint because of content-types conflict in Axios request (application/json vs multipart/data-form)*
-router.put("/:recipeID/recipeImage", upload.single("image"), (req, res) => {
-  const image = req.file.path;
-  const isReplacing = req.query.oldImage;
-  if (isReplacing)
-    // Delete associated recipe image
-    unlink(`../client/public/Images/${req.query.oldImage}`, (error) => {
-      if (error) console.log(error);
+// Increment recipe's comments
+router.put("/recipes/:recipeID/inccomments", (req, res) => {
+  db.Recipe.increment("comments", {
+    by: 1,
+    where: { id: req.params.recipeID },
+  })
+    .then((resp) => res.json(resp))
+    .catch((err) => {
+      console.log(customizedError(err, "PUT increment Recipe's comments"));
+      res.json({ error: err.name });
     });
-  db.Recipe.update(
-    {
-      image,
-    },
-    {
-      where: {
-        id: req.params.recipeID,
-      },
-    }
-  ).catch((err) => {
-    console.log(customizedError(err, "PUT update Recipe Image"));
-    res.json({ error: err.name });
-  });
+});
+
+// Decrement recipe's comments
+router.put("/recipes/:recipeID/deccomments", (req, res) => {
+  db.Recipe.decrement("comments", {
+    by: 1,
+    where: { id: req.params.recipeID },
+  })
+    .then((resp) => res.json(resp))
+    .catch((err) => {
+      console.log(customizedError(err, "PUT decrement Recipe's comments"));
+      res.json({ error: err.name });
+    });
 });
 
 // Delete
@@ -353,11 +323,6 @@ router.delete("/recipes/:recipeID", (req, res) => {
   })
     .then((deletedRecipe) => {
       if (deletedRecipe) {
-        // Delete associated recipe image
-        if (req.query.image)
-          unlink(`../client/src/Images/${req.query.image}`, (error) => {
-            if (error) console.log(error);
-          });
         console.log(deletedRecipe);
         //Decrement user's recipes
         axios
@@ -612,7 +577,17 @@ router.post("/comments", (req, res) => {
           )
           .then((resp) => {
             if (resp.status !== 200)
-              console.log("Increment comments: \n", resp);
+              console.log("Increment user's comments: \n", resp);
+          })
+          .catch((err) => console.log(err));
+        //Increment recipe's comments
+        axios
+          .put(
+            `http://localhost:3001/api/recipes/${recipe_id}/inccomments`
+          )
+          .then((resp) => {
+            if (resp.status !== 200)
+              console.log("Increment recipe's comments: \n", resp);
           })
           .catch((err) => console.log(err));
         res.send(createdComment);
@@ -846,9 +821,7 @@ router.delete("/friendships/:userID", (req, res) => {
       if (deletedFriend) {
         //Decrement user's popotes
         axios
-          .put(
-            `http://localhost:3001/api/users/${user_id}/decrement/popotes`
-          )
+          .put(`http://localhost:3001/api/users/${user_id}/decrement/popotes`)
           .then((resp) => {
             if (resp.status !== 200) console.log("Decrement popotes: \n", resp);
           })
