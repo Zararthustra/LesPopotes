@@ -2,7 +2,6 @@ import { useState } from "react";
 import { capitalize } from "../../assets/utils/capitalize";
 import Select from "react-select";
 import { icons } from "../../assets/utils/importIcons";
-import { images } from "../../assets/utils/importImages";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Host } from "../../assets/utils/host";
@@ -11,7 +10,6 @@ import { ingredientsList } from "../../assets/utils/ingredientsList";
 import { unityList } from "../../assets/utils/unityList";
 import { RecipeInfosModification } from "../../components/recipeInfosModification";
 import { RecipeIngredientsModification } from "../../components/recipeIngredientsModification";
-const FormData = require("form-data");
 
 export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
   //___________________________________________________ Variables
@@ -47,15 +45,6 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
   };
   const [fieldMissing, setFieldMissing] = useState(false);
   const [recipeTitle, setRecipeTitle] = useState(recipe.name);
-  const [recipeImage, setRecipeImage] = useState();
-  const [displayUserImage, setDisplayUserImage] = useState(
-    recipe.image === "no image yet"
-      ? images.default
-      : require(`../../Images/${recipe.image.replace(
-          "..\\client\\src\\Images\\",
-          ""
-        )}`).default
-  );
   const formData = new FormData();
   const [nbPers, setNbPers] = useState(recipe.nbPers);
   const [diff, setDiff] = useState(recipe.difficulty);
@@ -110,10 +99,6 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
   //___________________________________________________ Functions
 
   // Infos
-  const handleUserFile = (event) => {
-    setRecipeImage(event.target.files[0]);
-    setDisplayUserImage(URL.createObjectURL(event.target.files[0]));
-  };
 
   const handleTitleChange = (event) => {
     setRecipeTitle(event.currentTarget.value);
@@ -203,27 +188,7 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
       .then((res) => {
         if (!res) return console.log("No response from server");
         if (res.data.error) return console.log(res.data);
-        updateRecipeImage(recipe.id);
         updateRecipeIngredients(recipe.id);
-      })
-      .catch((err) => {
-        console.log("Error catched: ", err);
-      });
-  };
-
-  const updateRecipeImage = (id) => {
-    if (!recipeImage) return;
-    formData.append("image", recipeImage);
-    axios
-      .put(`${Host}api/${id}/recipeimage`, formData, {
-        params: {
-          oldImage: recipe.image.replace("..\\client\\src\\Images\\", ""),
-        },
-      })
-      .then((res) => {
-        if (!res) return console.log("No response from server");
-        if (res.data.error) return console.log(res.data);
-        console.log("res from recipeImage: ", res.data);
       })
       .catch((err) => {
         console.log("Error catched: ", err);
@@ -269,11 +234,6 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
     <main className="recipePage">
       <div className="recipeContainer">
         <div className="imgCreationContainer">
-          <img
-            className="recipeImg"
-            src={displayUserImage}
-            alt="illustration recette"
-          />
           <div className="overlayCreationImage">
             <img
               src={require("../../assets/icons/close.png").default}
@@ -283,16 +243,6 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
             />
           </div>
         </div>
-        <label className="imgButton">
-          <img src={icons.imageBlank} alt="importer" className="imageBlank" />
-          <input
-            type="file"
-            accept=".jpg, .jpeg, .png"
-            name="image"
-            onChange={handleUserFile}
-          />
-          Prendre ou importer une photo
-        </label>
         <input
           className="recipeTitleCreation"
           placeholder="Titre"

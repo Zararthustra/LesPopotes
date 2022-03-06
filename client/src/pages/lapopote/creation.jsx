@@ -4,19 +4,16 @@ import { capitalize } from "../../assets/utils/capitalize";
 import { RecipeInfosCreation } from "../../components/recipeInfosCreation";
 import Select from "react-select";
 import { icons } from "../../assets/utils/importIcons";
-import { images } from "../../assets/utils/importImages";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Host } from "../../assets/utils/host";
 import { useRef } from "react";
 import { ingredientsList } from "../../assets/utils/ingredientsList";
 import { unityList } from "../../assets/utils/unityList";
-import Compressor from "compressorjs";
 
 export const Creation = () => {
   //___________________________________________________ Variables
-  
-  const FormData = require("form-data");
+
   const navigate = useNavigate();
   const selectIngredientRef = useRef();
   const selectUnityRef = useRef();
@@ -49,8 +46,6 @@ export const Creation = () => {
 
   const [fieldMissing, setFieldMissing] = useState(false);
   const [recipeTitle, setRecipeTitle] = useState("");
-  const [recipeImage, setRecipeImage] = useState();
-  const [displayUserImage, setDisplayUserImage] = useState(images.default);
   const [nbPers, setNbPers] = useState("");
   const [diff, setDiff] = useState("");
   const [type, setType] = useState("");
@@ -103,10 +98,6 @@ export const Creation = () => {
   //___________________________________________________ Functions
 
   // Infos
-  const handleUserFile = (event) => {
-    setRecipeImage(event.target.files[0]);
-    setDisplayUserImage(URL.createObjectURL(event.target.files[0]));
-  };
 
   const handleTitleChange = (event) => {
     setRecipeTitle(event.currentTarget.value);
@@ -194,39 +185,11 @@ export const Creation = () => {
       .then((res) => {
         if (!res) return console.log("No response from server");
         if (res.data.error) return console.log(res.data);
-        updateRecipeImage(res.data.id);
         createRecipeIngredients(res.data.id);
       })
       .catch((err) => {
         console.log("Error catched: ", err);
       });
-  };
-
-  const updateRecipeImage = (id) => {
-    if (!recipeImage) return;
-
-    new Compressor(recipeImage, {
-      quality: 0.6,
-
-      success(result) {
-        const formData = new FormData();
-
-        formData.append("image", result, result.name);
-        axios
-          .put(`${Host}api/${id}/recipeimage`, formData)
-          .then((res) => {
-            if (!res) return console.log("No response from server");
-            if (res.data.error) return console.log(res.data);
-            console.log("res from recipeImage: ", res.data);
-          })
-          .catch((err) => {
-            console.log("Error catched: ", err);
-          });
-      },
-      error(err) {
-        console.log(err.message);
-      },
-    });
   };
 
   const createRecipeIngredients = async (recipeId) => {
@@ -270,12 +233,6 @@ export const Creation = () => {
   return (
     <main className="recipePage">
       <div className="recipeContainer">
-        <div className="imgCreationContainer">
-          <img
-            className="recipeImg"
-            src={displayUserImage}
-            alt="illustration recette"
-          />
           <div className="overlayCreationImage">
             <img
               src={require("../../assets/icons/close.png").default}
@@ -284,17 +241,6 @@ export const Creation = () => {
               alt="fermer"
             />
           </div>
-        </div>
-        <label className="imgButton">
-          <img src={icons.imageBlank} alt="importer" className="imageBlank" />
-          <input
-            type="file"
-            accept=".jpg, .jpeg, .png"
-            name="image"
-            onChange={handleUserFile}
-          />
-          Prendre ou importer une photo
-        </label>
         <input
           className="recipeTitleCreation"
           placeholder="Titre"

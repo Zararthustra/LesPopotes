@@ -111,6 +111,7 @@ export const RecipeInfosCreation = ({ sharedVars }) => {
             { value: "entree", label: "Entrée" },
             { value: "plat", label: "Plat" },
             { value: "dessert", label: "Dessert" },
+            { value: "boisson", label: "Boisson" },
             { value: "autre", label: "Autre" },
           ]}
         />
@@ -154,10 +155,16 @@ export const RecipeInfosCreation = ({ sharedVars }) => {
           className="bakeMode"
           onChange={handleBakeMode}
           options={[
-            { value: "four", label: "Four" },
+            { value: "barbecue", label: "Barbecue" },
             { value: "cookeo", label: "Cookeo" },
-            { value: "thermomix", label: "Thermomix" },
+            { value: "eau", label: "Eau" },
+            { value: "four", label: "Four" },
+            { value: "huile", label: "Huile" },
+            { value: "micro-ondes", label: "Micro-ondes" },
             { value: "poele", label: "Poele" },
+            { value: "thermomix", label: "Thermomix" },
+            { value: "vapeur", label: "Vapeur" },
+            { value: "wok", label: "Wok" },
           ]}
         />
       </div>

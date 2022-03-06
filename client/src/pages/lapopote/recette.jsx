@@ -7,7 +7,6 @@ import { Comment } from "../../components/comment";
 import { RecipeInfos } from "../../components/recipeInfos";
 import { RecipeIngredients } from "../../components/recipeIngredients";
 import { icons } from "../../assets/utils/importIcons";
-import { images } from "../../assets/utils/importImages";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Modification } from "../profile/modification";
 
@@ -134,22 +133,11 @@ export const Recette = () => {
       .delete(`${Host}api/recipes/${recetteID}`, {
         params: {
           user_id: localStorage.getItem("userid"),
-          image: recipe.image.replace("..\\client\\src\\Images\\", ""),
         },
       })
       .then((res) => {
         if (res.data) navigate("/profil");
       });
-  };
-
-  const image = () => {
-    if (recipe.image === "no image yet" || !recipe.image) return images.default;
-    if (recipe.image?.split("\\")[4]) {
-      return `/Images/${recipe.image?.split("\\")[4]}`; //windows
-    }
-    if (recipe.image?.split("/")[4]) {
-      return `/Images/${recipe.image?.split("/")[4]}`; //linux
-    }
   };
 
   //________________ Favorite
@@ -297,70 +285,66 @@ export const Recette = () => {
   return (
     <main className="recipePage">
       <div className="recipeContainer">
-        <div className="imgContainer">
-          <img className="recipeImg" src={image()} alt={recipe.name} />
-
-          {isDeleting ? (
-            <div className="overlayImage">
-              <div className="isDeletingRecipe">
-                Supprimer ?<button onClick={deleteRecipe}>Oui</button>
-                <button onClick={() => setIsDeleting(false)}>Non</button>
-              </div>
+        {isDeleting ? (
+          <div className="overlayImage">
+            <div className="isDeletingRecipe">
+              Supprimer ?<button onClick={deleteRecipe}>Oui</button>
+              <button onClick={() => setIsDeleting(false)}>Non</button>
             </div>
-          ) : (
-            <div className="overlayImage">
-              <div className="leftOverlay">
-                {isFavorite ? (
-                  <img
-                    src={require("../../assets/icons/star-checked.png").default}
-                    className="starChecked"
-                    onClick={removeFromFavorites}
-                    alt="retirer des recettes favorites"
-                  />
-                ) : (
-                  <img
-                    onClick={addToFavorites}
-                    src={require("../../assets/icons/star.png").default}
-                    className="star"
-                    alt="ajouter aux recettes favorites"
-                  />
-                )}
-                {isCopied ? (
-                  <div className="copiedRecipe">Lien copié</div>
-                ) : (
-                  <img
-                    src={require("../../assets/icons/copy.png").default}
-                    className="copyRecipe"
-                    onClick={() => copyRecipeUrl()}
-                    alt="copier le lien de la recette"
-                  />
-                )}
-                {location.split("/")[2] === "mesrecettes" && (
-                  <img
-                    src={require("../../assets/icons/edit.png").default}
-                    className="editRecipe"
-                    onClick={() => setIsModifying(true)}
-                    alt="modifier ma recette"
-                  />
-                )}
-                {location.split("/")[2] === "mesrecettes" && (
-                  <img
-                    src={require("../../assets/icons/delete.png").default}
-                    className="deleteRecipe"
-                    onClick={() => setIsDeleting(true)}
-                    alt="supprimer ma recette"
-                  />
-                )}
-              </div>
-              <img
-                src={require("../../assets/icons/close.png").default}
-                className="closeRecipe"
-                onClick={() => navigate(removeLastUrlSegment(location))}
-                alt="fermer"
-              />
+          </div>
+        ) : (
+          <div className="overlayImage">
+            <div className="leftOverlay">
+              {isFavorite ? (
+                <img
+                  src={require("../../assets/icons/star-checked.png").default}
+                  className="starChecked"
+                  onClick={removeFromFavorites}
+                  alt="retirer des recettes favorites"
+                />
+              ) : (
+                <img
+                  onClick={addToFavorites}
+                  src={require("../../assets/icons/star.png").default}
+                  className="star"
+                  alt="ajouter aux recettes favorites"
+                />
+              )}
+              {isCopied ? (
+                <div className="copiedRecipe">Lien copié</div>
+              ) : (
+                <img
+                  src={require("../../assets/icons/copy.png").default}
+                  className="copyRecipe"
+                  onClick={() => copyRecipeUrl()}
+                  alt="copier le lien de la recette"
+                />
+              )}
+              {location.split("/")[2] === "mesrecettes" && (
+                <img
+                  src={require("../../assets/icons/edit.png").default}
+                  className="editRecipe"
+                  onClick={() => setIsModifying(true)}
+                  alt="modifier ma recette"
+                />
+              )}
+              {location.split("/")[2] === "mesrecettes" && (
+                <img
+                  src={require("../../assets/icons/delete.png").default}
+                  className="deleteRecipe"
+                  onClick={() => setIsDeleting(true)}
+                  alt="supprimer ma recette"
+                />
+              )}
             </div>
-          )}
-        </div>
+            <img
+              src={require("../../assets/icons/close.png").default}
+              className="closeRecipe"
+              onClick={() => navigate(removeLastUrlSegment(location))}
+              alt="fermer"
+            />
+          </div>
+        )}
 
         <div className="recipeTitle">
           {recipe.name && capitalize(recipe.name)}

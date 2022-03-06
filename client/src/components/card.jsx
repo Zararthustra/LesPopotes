@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { capitalize } from "../assets/utils/capitalize";
 import { icons } from "../assets/utils/importIcons";
-import { images } from "../assets/utils/importImages";
 
 export const Card = ({ recipe }) => {
   const location = useLocation().pathname;
@@ -28,28 +27,21 @@ export const Card = ({ recipe }) => {
       ? "Moyen"
       : "Facile";
 
-  const image = () => {
-    try {
-      if (recipe.image === "no image yet" || !recipe.image)
-        return images.default;
-      if (recipe.image?.split("\\")[4]) {
-        return `/Images/${recipe.image?.split("\\")[4]}`; //windows
-      }
-      if (recipe.image?.split("/")[4]) {
-        return `/Images/${recipe.image?.split("/")[4]}`; //linux
-      }
-    } catch (error) {
-      console.log(error);
-      return images.default;
-    }
-  };
-
   const diffIcon =
     recipe.difficulty === "3"
       ? icons.diff3
       : recipe.difficulty === "2"
       ? icons.diff2
       : icons.diff1;
+
+const recipeTypeIcon = () => {
+  if (recipe.type === "apero") return icons.apero
+  if (recipe.type === "entree") return icons.entree
+  if (recipe.type === "plat") return icons.plat
+  if (recipe.type === "dessert") return icons.dessert
+  if (recipe.type === "boisson") return icons.boisson
+  return icons.autre
+}
 
   return (
     <div
@@ -60,23 +52,14 @@ export const Card = ({ recipe }) => {
       }}
       className="card"
     >
-      <img className="cardImg" src={image()} alt={recipe.name} />
+      <h3 className="cardTitle">{recipe.name && capitalize(recipe.name)}</h3>
+      <div className="separateLine"></div>
       <div className="cardInfos">
-        <h3 className="cardTitle">{recipe.name && capitalize(recipe.name)}</h3>
-        <div className="separateLine"></div>
         <h4 className="cardsDoneBy">
           {recipe.author && capitalize(recipe.author)}
         </h4>
         <ul className="cardIcons">
-          <li className="cardInfo">
-            <img className="difficultyImg" src={diffIcon} alt="Difficulté" />
-            {diff}
-          </li>
-          <li className="cardInfo">
-            <img className="likeImg" src={noteIcon()} alt="Moyenne des avis" />
-            {recipe.notes} avis
-          </li>
-          <li className="cardInfo">
+        <li className="cardInfo">
             <img
               className="timeImg"
               src={icons.time}
@@ -84,7 +67,25 @@ export const Card = ({ recipe }) => {
             />
             {recipe.prepTime + recipe.bakeTime} min
           </li>
+          <li className="cardInfo">
+            <img className="difficultyImg" src={diffIcon} alt="Difficulté" />
+            {diff}
+          </li>
+          
+          <li className="cardInfo">
+            <img className="likeImg" src={noteIcon()} alt="Moyenne des avis" />
+            {recipe.notes} notes
+          </li>
+          <li className="cardInfo">
+            <img className="timeImg" src={icons.comments} alt="Commentaires" />
+            {recipe.comments} avis
+          </li>
         </ul>
+      </div>
+      <div className="separateLine"></div>
+      <div className="typeIcons">
+        <img className="recipeType" src={recipeTypeIcon()} alt={recipe.type} />
+        <div className="bakeType">{recipe.bakeType && capitalize(recipe.bakeType)}</div>
       </div>
     </div>
   );

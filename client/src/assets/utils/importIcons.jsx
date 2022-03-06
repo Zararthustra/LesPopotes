@@ -26,4 +26,11 @@ export const icons = {
   send: require("../../assets/icons/send.png").default,
   addfriend: require("../../assets/icons/addfriend.png").default,
   removefriend: require("../../assets/icons/removefriend.png").default,
+  comments: require("../../assets/icons/comments.png").default,
+  apero: require("../../assets/icons/apero.png").default,
+  entree: require("../../assets/icons/entree.png").default,
+  plat: require("../../assets/icons/plat.png").default,
+  dessert: require("../../assets/icons/dessert.png").default,
+  boisson: require("../../assets/icons/boisson.png").default,
+  autre: require("../../assets/icons/autre.png").default,
 };
