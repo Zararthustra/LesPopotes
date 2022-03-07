@@ -78,15 +78,35 @@ export const Navbar = () => {
     <div className="navbar">
       <label className="switch">
         <input type="checkbox" />
-        <span className="slider round" onClick={onSwitch}></span>
+        <span
+          className="slider round"
+          onClick={onSwitch}
+          title="La popote / Les popotes"
+        ></span>
       </label>
-      <div id="home" className="homeNav" onClick={() => activeIcon("home")} />
-      <div id="back" className="backNav" onClick={() => navigate(-1)} />
-      <div id="refresh" className="refreshNav" onClick={() => refreshPage()} />
+      <div
+        id="home"
+        className="homeNav"
+        onClick={() => activeIcon("home")}
+        title="Accueil"
+      />
+      <div
+        id="back"
+        className="backNav"
+        onClick={() => navigate(-1)}
+        title="Page précédente"
+      />
+      <div
+        id="refresh"
+        className="refreshNav"
+        onClick={() => refreshPage()}
+        title="Actualiser la page"
+      />
       <div
         id="profile"
         className="profileNav"
         onClick={() => activeIcon("profile")}
+        title="Profil"
       />
     </div>
   );

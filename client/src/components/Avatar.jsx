@@ -108,6 +108,6 @@ export const Avatar = ({ chosenAvatar, defaultAvatar }) => {
   return loading ? (
     <ClipLoader css={""} color={"#00be7c"} loading={loading} size={50} />
   ) : (
-    <img onClick={getAvatar} src={avatar} alt="avatar" className="avatar" />
+    <img onClick={getAvatar} src={avatar} title="Changer d'avatar" alt="avatar" className="avatar" />
   );
 };

@@ -99,6 +99,7 @@ export const Messages = ({ popote }) => {
           onClick={sendMessage}
           className="sendButton"
           alt="envoyer"
+          title="Envoyer"
         />
       </div>
     </>

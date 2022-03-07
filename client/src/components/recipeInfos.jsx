@@ -65,7 +65,7 @@ export const RecipeInfos = ({ infos }) => {
           </li>
           <li className="cardInfo">
             <img className="likeImg" src={noteIcon()} alt="note moyenne avis" />
-            {infos.notes} avis
+            {infos.notes} {infos.notes > 1 ? "notes" : "note"}
           </li>
         </ul>
         <div className="times">

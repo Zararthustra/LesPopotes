@@ -64,6 +64,7 @@ export const Footer = () => {
             </div>
             <div>Privacy Policy</div>
             <div>Terms & Conditions</div>
+            <div>Plan du site</div>
           </div>
         </div>
       </div>

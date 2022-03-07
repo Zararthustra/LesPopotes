@@ -152,10 +152,10 @@
 
 .recipeTitle {
   font-size: 2em;
-  width: 12ch;
+  font-family: 'Oswald', sans-serif;
   font-weight: 600;
+  color: var(--dark-popote);
   padding: 0.5em 0;
-  color: var(--dark);
 }
 .doneBy:hover {
   text-decoration: underline;

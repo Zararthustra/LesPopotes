@@ -134,6 +134,7 @@ export const Popotes = () => {
               <img
                 src={icons.removefriend}
                 alt="retirer de mes popotes"
+                title="Retirer de mes popotes"
                 onClick={deletePopote}
                 className="addPopote"
               />
@@ -141,6 +142,7 @@ export const Popotes = () => {
               <img
                 src={icons.addfriend}
                 alt="ajouter à mes popotes"
+                title="Ajouter à mes popotes"
                 onClick={addPopote}
                 className="addPopote"
               />

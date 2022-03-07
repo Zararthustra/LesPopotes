@@ -1,6 +1,6 @@
 @media all and (max-width: 400px) {
   .card {
-    font-size: 0.7em !important;
+    font-size: 0.6em !important;
   }
 }
 @media all and (min-width: 810px) {

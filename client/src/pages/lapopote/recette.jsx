@@ -302,6 +302,7 @@ export const Recette = () => {
                   className="starChecked"
                   onClick={removeFromFavorites}
                   alt="retirer des recettes favorites"
+                  title="Retirer des recettes favorites"
                 />
               ) : (
                 <img
@@ -309,6 +310,7 @@ export const Recette = () => {
                   src={require("../../assets/icons/star.png").default}
                   className="star"
                   alt="ajouter aux recettes favorites"
+                  title="Ajouter aux recettes favorites"
                 />
               )}
               {isCopied ? (
@@ -319,6 +321,7 @@ export const Recette = () => {
                   className="copyRecipe"
                   onClick={() => copyRecipeUrl()}
                   alt="copier le lien de la recette"
+                  title="Copier le lien de la recette"
                 />
               )}
               {location.split("/")[2] === "mesrecettes" && (
@@ -327,6 +330,7 @@ export const Recette = () => {
                   className="editRecipe"
                   onClick={() => setIsModifying(true)}
                   alt="modifier ma recette"
+                  title="Modifier ma recette"
                 />
               )}
               {location.split("/")[2] === "mesrecettes" && (
@@ -335,6 +339,7 @@ export const Recette = () => {
                   className="deleteRecipe"
                   onClick={() => setIsDeleting(true)}
                   alt="supprimer ma recette"
+                  title="Supprimer ma recette"
                 />
               )}
             </div>
@@ -343,6 +348,7 @@ export const Recette = () => {
               className="closeRecipe"
               onClick={() => navigate(removeLastUrlSegment(location))}
               alt="fermer"
+              title="Fermer"
             />
           </div>
         )}

@@ -52,10 +52,10 @@ const recipeTypeIcon = () => {
       }}
       className="card"
     >
-      <h3 className="cardTitle">{recipe.name && capitalize(recipe.name)}</h3>
+      <h3 className="cardTitle" title="Titre de la recette">{recipe.name && capitalize(recipe.name)}</h3>
       <div className="separateLine"></div>
       <div className="cardInfos">
-        <h4 className="cardsDoneBy">
+        <h4 className="cardsDoneBy" title={"Recette proposée par " + recipe.author}>
           {recipe.author && capitalize(recipe.author)}
         </h4>
         <ul className="cardIcons">
@@ -64,28 +64,29 @@ const recipeTypeIcon = () => {
               className="timeImg"
               src={icons.time}
               alt="Temps total de préparation"
+              title="Temps total de préparation"
             />
             {recipe.prepTime + recipe.bakeTime} min
           </li>
           <li className="cardInfo">
-            <img className="difficultyImg" src={diffIcon} alt="Difficulté" />
+            <img className="difficultyImg" src={diffIcon} alt="Difficulté" title="Difficulté" />
             {diff}
           </li>
           
           <li className="cardInfo">
-            <img className="likeImg" src={noteIcon()} alt="Moyenne des avis" />
-            {recipe.notes} notes
+            <img className="likeImg" src={noteIcon()} alt="Moyenne des notes" title="Moyenne des notes" />
+            {recipe.notes} {recipe.notes > 1 ? "notes" : "note"}
           </li>
           <li className="cardInfo">
-            <img className="timeImg" src={icons.comments} alt="Commentaires" />
+            <img className="timeImg" src={icons.comments} alt="Commentaires" title="Commentaires" />
             {recipe.comments} avis
           </li>
         </ul>
       </div>
       <div className="separateLine"></div>
       <div className="typeIcons">
-        <img className="recipeType" src={recipeTypeIcon()} alt={recipe.type} />
-        <div className="bakeType">{recipe.bakeType && capitalize(recipe.bakeType)}</div>
+        <img className="recipeType" src={recipeTypeIcon()} alt={"Type " + recipe.type} title={"Type " + recipe.type} />
+        <div className="bakeType" title={"Cuisson " + recipe.bakeType}>{recipe.bakeType && capitalize(recipe.bakeType)}</div>
       </div>
     </div>
   );

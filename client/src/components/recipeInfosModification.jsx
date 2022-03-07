@@ -62,7 +62,7 @@ export const RecipeInfosModification = ({ sharedVars }) => {
     setTags(newArr);
   };
   const getTags = () => {
-    return tags.map((tag) => {
+    if (tags[0]) return tags.map((tag) => {
       return { label: "#" + tag, value: tag };
     });
   };
@@ -184,7 +184,10 @@ export const RecipeInfosModification = ({ sharedVars }) => {
           className="bakeMode"
           onChange={handleBakeMode}
           options={[
+            { value: "", label: "Pas de cuisson" },
+            { value: "autre", label: "Autre" },
             { value: "barbecue", label: "Barbecue" },
+            { value: "casserole", label: "Casserole" },
             { value: "cookeo", label: "Cookeo" },
             { value: "eau", label: "Eau" },
             { value: "four", label: "Four" },

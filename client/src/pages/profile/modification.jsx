@@ -233,15 +233,14 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
   return (
     <main className="recipePage">
       <div className="recipeContainer">
-        <div className="imgCreationContainer">
-          <div className="overlayCreationImage">
-            <img
-              src={require("../../assets/icons/close.png").default}
-              className="closeRecipe"
-              onClick={() => navigate(-1)}
-              alt="fermer"
-            />
-          </div>
+        <div className="overlayCreationImage">
+          <img
+            src={require("../../assets/icons/close.png").default}
+            className="closeRecipe"
+            onClick={() => navigate(-1)}
+            alt="fermer"
+            title="Fermer"
+          />
         </div>
         <input
           className="recipeTitleCreation"

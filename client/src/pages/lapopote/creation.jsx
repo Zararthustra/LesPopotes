@@ -233,14 +233,15 @@ export const Creation = () => {
   return (
     <main className="recipePage">
       <div className="recipeContainer">
-          <div className="overlayCreationImage">
-            <img
-              src={require("../../assets/icons/close.png").default}
-              className="closeRecipe"
-              onClick={() => navigate(-1)}
-              alt="fermer"
-            />
-          </div>
+        <div className="overlayCreationImage">
+          <img
+            src={require("../../assets/icons/close.png").default}
+            className="closeRecipe"
+            onClick={() => navigate(-1)}
+            alt="fermer"
+            title="Fermer"
+          />
+        </div>
         <input
           className="recipeTitleCreation"
           placeholder="Titre"
@@ -284,6 +285,7 @@ export const Creation = () => {
               className="addIngredient"
               onClick={handleAddIngredientRow}
               alt="ajouter un ingrédient"
+              title="Ajouter un ingrédient"
             />
           </div>
 
@@ -299,6 +301,7 @@ export const Creation = () => {
                   <div className="stepTitle">Etape {index + 1}</div>
                   <div
                     className="removeButtonStep"
+                    title="Supprimer l'étape"
                     onClick={() => handleDeleteStep(index)}
                   />
                 </div>
@@ -309,7 +312,11 @@ export const Creation = () => {
           <li>
             <div className="addStep">
               <div className="stepTitle">Ajouter une étape</div>
-              <div className="addButtonStep" onClick={handleAddStep} />
+              <div
+                className="addButtonStep"
+                title="Ajouter l'étape"
+                onClick={handleAddStep}
+              />
             </div>
             <input
               type="text"

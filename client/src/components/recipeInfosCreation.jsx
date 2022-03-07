@@ -155,7 +155,10 @@ export const RecipeInfosCreation = ({ sharedVars }) => {
           className="bakeMode"
           onChange={handleBakeMode}
           options={[
+            { value: "", label: "Pas de cuisson" },
+            { value: "autre", label: "Autre" },
             { value: "barbecue", label: "Barbecue" },
+            { value: "casserole", label: "Casserole" },
             { value: "cookeo", label: "Cookeo" },
             { value: "eau", label: "Eau" },
             { value: "four", label: "Four" },
