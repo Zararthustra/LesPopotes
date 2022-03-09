@@ -51,11 +51,11 @@ export const Home = () => {
           <div className="homeTitle">
             <h1>
               Le
-              <h1 className="popotesTitle">Réseau Social</h1>
+              <div className="popotesTitle">Réseau Social</div>
             </h1>
             <h1>
               des
-              <h1 className="popoteTitle">Recettes</h1>
+              <div className="popoteTitle">Recettes</div>
             </h1>
           </div>
           <div className="presentation1">
@@ -90,7 +90,9 @@ export const Home = () => {
             onClick={() => navigate("/lespopotes")}
             className="presentation2 joinPopotes"
           />
-          <h1 className="joinPopotesH1">Rejoignez les Popotes !</h1>
+          <h1 className="joinPopotesH1" onClick={() => navigate("/lespopotes")}>
+            Rejoignez les Popotes !
+          </h1>
         </main>
       )}
     </>

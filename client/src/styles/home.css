@@ -106,10 +106,12 @@
   padding: 3em 0 5em;
 }
 .popoteTitle {
+  font-size: 2em;
   color: var(--popote);
   font-family: "Oswald", sans-serif;
 }
 .popotesTitle {
+  font-size: 2em;
   color: var(--popotes);
   font-family: "Oswald", sans-serif;
 }
@@ -125,6 +127,7 @@
 }
 
 .presentation2 {
+  cursor: pointer;
   font-family: "Oswald", sans-serif;
   display: flex;
   flex-wrap: wrap;
@@ -143,6 +146,7 @@
   -webkit-filter: blur(2px);
 }
 .joinPopotesH1 {
+  cursor: pointer;
   color: var(--dark-popotes);
   position: relative;
   bottom: 4em;

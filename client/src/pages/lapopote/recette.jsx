@@ -289,8 +289,16 @@ export const Recette = () => {
         {isDeleting ? (
           <div className="overlayImage">
             <div className="isDeletingRecipe">
-              Supprimer ?<button onClick={deleteRecipe}>Oui</button>
-              <button onClick={() => setIsDeleting(false)}>Non</button>
+              Supprimer ?
+              <button className="confirmDel green" onClick={deleteRecipe}>
+                Oui
+              </button>
+              <button
+                className="confirmDel red"
+                onClick={() => setIsDeleting(false)}
+              >
+                Non
+              </button>
             </div>
           </div>
         ) : (

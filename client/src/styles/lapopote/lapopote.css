@@ -6,17 +6,33 @@
 @media all and (max-width: 550px) {
   .searchPopote {
     width: 15em !important;
-  }}
+  }
+}
+
 .lapopote {
   cursor: pointer;
   color: var(--popote);
 }
+.lapopote::selection {
+  background-color: var(--dark-popote);
+  color: var(--white);
+}
 
 .activePopote {
-  background-color: var(--popote);
+  background-color: #e28e4e;
+  color: white;
 }
-.activePopote:hover {
-  background-color: #f5a76cb2;
+
+.laPopotePage ::selection {
+  background-color: var(--dark-popote);
+  color: var(--white);
+}
+  .laPopotePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 80vh;
+  width: 100%;
 }
 
 .popoteSubdivision {
@@ -46,7 +62,7 @@
 .searchPopote {
   display: flex;
   align-items: center;
-  padding: 0 .5em 0 0;
+  padding: 0 0.5em 0 0;
   width: 25em;
   height: 2em;
   border: 3px solid var(--popote);
@@ -97,7 +113,7 @@
  * Filters boxes
  */
 
- .showPopoteFilters {
+.showPopoteFilters {
   cursor: pointer;
   font-family: "Oswald", sans-serif;
   background-color: var(--popote);
@@ -173,12 +189,11 @@ input[type="checkbox"] {
   box-shadow: 1px 1px 7px 1px #858282;
 }
 
-
 .prevButtonPopote,
 .nextButtonPopote {
   cursor: pointer;
   background-color: var(--dark-popote);
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
   padding: 0 1em 0.2em;
   border-radius: 3px;
   color: var(--white);
