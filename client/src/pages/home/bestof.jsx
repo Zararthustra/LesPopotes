@@ -37,7 +37,7 @@ export const Bestof = () => {
   if (location !== "/accueil/bestof") return <Outlet />;
   return (
     <>
-      <h1>Top 10</h1>
+      <h4>Les mieux notées (bientôt disponible)</h4>
       <main className="cardList">
         {loading ? (
           <ClipLoader css={""} color={"#f5a76c"} loading={loading} size={100} />

@@ -54,7 +54,7 @@ export const Recettes = () => {
   }, [offset, filter, searchFilter]);
 
   return (
-    <main className="lesPopotesPage">
+    <main className="laPopotePage">
       <SearchFilterPopote
         setFilter={setFilter}
         searchFilter={searchFilter}

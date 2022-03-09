@@ -5,11 +5,13 @@ export const Lapopote = () => {
   const location = useLocation().pathname;
   const navigate = useNavigate();
   return (
-    <div className="headerContainer">
-      <h1 className="title lapopote" onClick={() => navigate("/lapopote")}>
-        La Popote
-      </h1>
+    <>
+      <div className="headerContainer">
+        <h1 className="title lapopote" onClick={() => navigate("/lapopote")}>
+          La Popote
+        </h1>
+      </div>
       {location !== "/lapopote" ? <Outlet /> : <Recettes />}
-    </div>
+    </>
   );
 };
