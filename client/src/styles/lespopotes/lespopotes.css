@@ -19,6 +19,8 @@
 .activePopotes {
   background-color: #67d1ac;
   color: white;
+  box-shadow: 0 0 10px black;
+  z-index: 1;
 }
 
 .lesPopotesPage {
@@ -135,4 +137,13 @@
 .check-popotes:hover {
   box-shadow: 1px 1px 8px 1px #dcdcdc;
   cursor: pointer;
+}
+
+/* 
+ * Chat
+ */
+.chat {
+  display: flex;
+  justify-content: center;
+  min-height: 80vh;
 }

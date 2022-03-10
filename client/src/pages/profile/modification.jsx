@@ -45,7 +45,6 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
   };
   const [fieldMissing, setFieldMissing] = useState(false);
   const [recipeTitle, setRecipeTitle] = useState(recipe.name);
-  const formData = new FormData();
   const [nbPers, setNbPers] = useState(recipe.nbPers);
   const [diff, setDiff] = useState(recipe.difficulty);
   const [type, setType] = useState(recipe.type);
@@ -59,7 +58,7 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
   const [addUnity, setAddUnity] = useState("");
   const [steps, setSteps] = useState(recipeSteps);
   const [addStep, setAddStep] = useState("");
-  const [addComment, setAddComment] = useState("");
+  const [addComment, setAddComment] = useState(recipe.authorComment);
 
   // An object shared with child components
   const sharedVars = {
@@ -246,7 +245,7 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
           className="recipeTitleCreation"
           placeholder="Titre"
           type="text"
-          maxLength="25"
+          maxLength="40"
           value={recipeTitle}
           onChange={handleTitleChange}
         />

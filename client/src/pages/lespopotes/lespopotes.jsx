@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Host } from "../../assets/utils/host";
 import { Popotesitem } from "../../components/popotesitem";
 import { SearchFilterPopotes } from "../../components/searchFilterPopotes";
@@ -20,6 +20,20 @@ export const Lespopotes = () => {
 
   // Load data when mounting
   useEffect(() => {
+
+    // Active Tab
+    let lespopotes = document.getElementById("mypopotes").classList;
+    let chat = document.getElementById("chat").classList;
+
+    if (location === "/lespopotes") {
+      lespopotes.add("activePopotes");
+      chat.remove("activePopotes");
+    } else if (location === "/lespopotes/chat") {
+      chat.add("activePopotes");
+      lespopotes.remove("activePopotes");
+    }
+    
+    // API calls
     setLoading(true);
 
     const getUsers = async () => {
@@ -52,7 +66,7 @@ export const Lespopotes = () => {
     else getUsersPaginated();
 
     return () => setUsers([]);
-  }, [offset, filter, searchFilter]);
+  }, [offset, filter, searchFilter, location]);
 
   return (
     <div>
@@ -63,8 +77,20 @@ export const Lespopotes = () => {
         >
           Les Popotes
         </h1>
+        <div className="links">
+          <Link id="mypopotes" className="navlink" to="/lespopotes">
+            Les Popotes
+          </Link>
+          <Link id="chat" className="navlink" to="chat">
+            Chat
+          </Link>
+        </div>
       </div>
-      {location !== "/lespopotes" ? (
+      {location === "/lespopotes/chat" ? (
+       <main className="chat">Chat des Popotes (bientôt disponible)</main>
+      ) :
+      
+      location !== "/lespopotes" ? (
         <Outlet />
       ) : (
         <main className="lesPopotesPage">

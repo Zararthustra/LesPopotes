@@ -176,7 +176,7 @@ export const Creation = () => {
     )
       return setFieldMissing(true);
     createRecipe();
-    navigate("/accueil");
+    navigate(-1);
   };
 
   const createRecipe = () => {
@@ -246,7 +246,7 @@ export const Creation = () => {
           className="recipeTitleCreation"
           placeholder="Titre"
           type="text"
-          maxLength="25"
+          maxLength="40"
           value={recipeTitle}
           onChange={handleTitleChange}
         />

@@ -21,6 +21,8 @@
 .activePopote {
   background-color: #e28e4e;
   color: white;
+  box-shadow: 0 0 10px black;
+  z-index: 1;
 }
 
 .laPopotePage ::selection {

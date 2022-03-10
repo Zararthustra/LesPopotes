@@ -8,12 +8,19 @@ export const Home = () => {
   useEffect(() => {
     let bestof = document.getElementById("bestof").classList;
     let lastpubs = document.getElementById("lastpubs").classList;
+    let accueil = document.getElementById("accueil").classList;
 
     if (location === "/accueil/bestof") {
       bestof.add("activePopote");
       lastpubs.remove("activePopote");
+      accueil.remove("activePopote");
     } else if (location === "/accueil/nouveautes") {
       lastpubs.add("activePopote");
+      bestof.remove("activePopote");
+      accueil.remove("activePopote");
+    } else if (location === "/accueil") {
+      accueil.add("activePopote");
+      lastpubs.remove("activePopote");
       bestof.remove("activePopote");
     }
   }, [location]);
@@ -36,6 +43,9 @@ export const Home = () => {
           Accueil
         </h1>
         <div className="links">
+          <Link id="accueil" className="navlink" to="/accueil">
+            Accueil
+          </Link>
           <Link id="bestof" className="navlink" to="bestof">
             Best Of
           </Link>

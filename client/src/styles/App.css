@@ -7,15 +7,6 @@
     font-size: 0.9em !important;
   }
 }
-@media all and (max-width: 1000px) {
-  #myprofile:hover,
-  #mypopotes:hover,
-  #favorites:hover,
-  #mesrecettes:hover {
-    -webkit-filter: none !important;
-    filter: none !important;
-  }
-}
 
 :root {
   padding: 0;
@@ -161,6 +152,7 @@ input[type="text"]:focus-within {
   box-shadow: 0 -10px 20px #222;
 }
 #favorites:hover,
+#accueil:hover,
 #mesrecettes:hover,
 #lastpubs:hover,
 #bestof:hover {
@@ -168,14 +160,6 @@ input[type="text"]:focus-within {
   box-shadow: 0 -10px 20px #222;
 }
 
-@keyframes popTab {
-  from {
-    height: fit-content;
-  }
-  to {
-    height: 3em;
-  }
-}
 /*
 * Separate lines
 */
