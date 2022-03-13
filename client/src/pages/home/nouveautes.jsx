@@ -37,7 +37,6 @@ export const Lastpubs = () => {
   if (location !== "/accueil/nouveautes") return <Outlet />;
   return (
     <>
-      <h4>Dernières publications (bientôt disponible)</h4>
       <main className="cardList">
         {loading ? (
           <ClipLoader css={""} color={"#f5a76c"} loading={loading} size={100} />

@@ -10,6 +10,7 @@ import { ingredientsList } from "../../assets/utils/ingredientsList";
 import { unityList } from "../../assets/utils/unityList";
 import { RecipeInfosModification } from "../../components/recipeInfosModification";
 import { RecipeIngredientsModification } from "../../components/recipeIngredientsModification";
+import { refreshPage } from "../../assets/utils/refreshPage";
 
 export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
   //___________________________________________________ Variables
@@ -152,7 +153,7 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
   };
   const handleAddStep = () => {
     let value = document.getElementsByClassName("stepText")[0].value;
-    if (!addStep) return;
+    if (!addStep || addStep.trim() === "") return;
     setSteps([...steps, capitalize(value)]);
     // Reset input
     document.getElementsByClassName("stepText")[0].value = "";
@@ -178,7 +179,9 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
     )
       return setFieldMissing(true);
     updateRecipe();
+    alert("Recette modifiée avec succès 😊");
     navigate(-1);
+    refreshPage();
   };
 
   const updateRecipe = () => {

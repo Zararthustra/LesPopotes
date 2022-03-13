@@ -20,6 +20,8 @@ export const icons = {
   ok: require("../../assets/icons/ok-512.png").default,
   moins: require("../../assets/icons/moins-512.png").default,
   star: require("../../assets/icons/star.png").default,
+  editComm: require("../../assets/icons/editComm.png").default,
+  removeComm: require("../../assets/icons/removeComm.png").default,
   starChecked: require("../../assets/icons/star-checked.png").default,
   emptyHeart: require("../../assets/icons/empty-heart.png").default,
   fullHeart: require("../../assets/icons/full-heart.png").default,

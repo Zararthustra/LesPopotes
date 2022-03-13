@@ -136,7 +136,10 @@ export const Recette = () => {
         },
       })
       .then((res) => {
-        if (res.data) navigate("/profil");
+        if (res.data) {
+          alert("Recette supprimée avec succès 😊");
+          navigate("/profil/mesrecettes");
+        }
       });
   };
 
@@ -268,7 +271,7 @@ export const Recette = () => {
 
   if (loading)
     return (
-      <main>
+      <main className="recipePage">
         <div className="loaderSpacer" />
         <ClipLoader css={""} color={"#f5a76c"} loading={loading} size={100} />
       </main>
@@ -332,7 +335,7 @@ export const Recette = () => {
                   title="Copier le lien de la recette"
                 />
               )}
-              {location.split("/")[2] === "mesrecettes" && (
+              {capitalize(localStorage.getItem('username')) === capitalize(recipe.author) && (
                 <img
                   src={require("../../assets/icons/edit.png").default}
                   className="editRecipe"
@@ -341,7 +344,7 @@ export const Recette = () => {
                   title="Modifier ma recette"
                 />
               )}
-              {location.split("/")[2] === "mesrecettes" && (
+              {capitalize(localStorage.getItem('username')) === capitalize(recipe.author) && (
                 <img
                   src={require("../../assets/icons/delete.png").default}
                   className="deleteRecipe"
@@ -478,7 +481,11 @@ export const Recette = () => {
             </div>
           )
         }
-        <div className="comments">
+        <div
+          className={`${
+            comments.length > 6 ? "comments" : "commentsWithoutContainer"
+          }`}
+        >
           {comments.map((comment, index) => {
             return (
               <Comment

@@ -46,6 +46,7 @@
   align-items: center;
   width: 100%;
   overflow-x: hidden;
+  min-height: 80vh;
 }
 .recipeContainer {
   background-color: var(--white);

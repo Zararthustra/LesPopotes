@@ -1,8 +1,10 @@
 import { capitalize } from "../assets/utils/capitalize";
+import { useNavigate } from "react-router-dom";
 import { icons } from "../assets/utils/importIcons";
 
 export const Comment = ({ comment, recipeAuthor }) => {
-  const checkedAuthor = capitalize(comment.author) === capitalize(recipeAuthor)
+  const navigate = useNavigate();
+  const checkedAuthor = capitalize(comment.author) === capitalize(recipeAuthor);
   const userNote = comment.note;
 
   const date =
@@ -21,13 +23,16 @@ export const Comment = ({ comment, recipeAuthor }) => {
     else return icons.like0;
   };
 
-  if (checkedAuthor)
+  if (checkedAuthor && comment.content.trim() !== "")
     return (
       <div className="comment authorComment">
         <div className="commentHeader">
           <div className="commentTop">
             <div className="commentDate">{date}</div>
-            <div className="pseudoAuthorComment">
+            <div
+              className="pseudoAuthorComment"
+              onClick={() => navigate(`/lespopotes/${comment.author}`)}
+            >
               {comment.author && capitalize(comment.author)}
             </div>
           </div>
@@ -38,12 +43,16 @@ export const Comment = ({ comment, recipeAuthor }) => {
         </div>
       </div>
     );
-  if (comment.content !== "")
+
+  if (comment.content.trim() !== "")
     return (
       <div className="comment notAuthorComment">
         <div className="commentHeader">
           <div className="commentTop">
-            <div className="pseudoComment">
+            <div
+              className="pseudoComment"
+              onClick={() => navigate(`/lespopotes/${comment.author}`)}
+            >
               {comment.author && capitalize(comment.author)}
             </div>
             <div className="commentDate">{date}</div>

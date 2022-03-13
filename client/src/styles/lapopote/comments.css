@@ -1,7 +1,8 @@
 @media all and (min-width: 910px) {
   /* Big screens */
   .comments {
-    height: 100vh !important;
+  background-color: #eafaf5;
+  height: 100vh !important;
     overflow-y: scroll !important;
     overflow-x: hidden;
   }
@@ -18,20 +19,26 @@
 /*
  * Container
  */
- 
+
 .comments {
-  background-color: #eafaf5;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   margin: 2em 0;
   align-items: center;
   width: 90%;
-  border: 1px solid var(--dark-popotes);
-  border-radius: 20px;
+  border-radius: 5px;
   padding: 1em 0.5em;
   gap: 1em;
-  box-shadow: 0 0 5px grey;
+}
+.commentsWithoutContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 2em 0;
+  align-items: center;
+  width: 90%;
+  padding: 1em 0.5em;
+  gap: 1em;
 }
 
 .commentsTitle {
@@ -45,7 +52,6 @@
   width: 10px;
 }
 .comments::-webkit-scrollbar-track {
-
   margin: 2em;
   background-color: var(--white);
   border-radius: 25px;
@@ -104,17 +110,22 @@
 }
 
 .pseudoComment {
+  cursor: pointer;
   font-weight: bolder;
   color: var(--dark-popotes);
   font-size: 1.4em;
 }
 .pseudoAuthorComment {
+  cursor: pointer;
   font-weight: bolder;
   color: var(--popotes);
   filter: drop-shadow(1px 0px 1px var(--dark-popotes));
   font-size: 1.4em;
 }
-
+.pseudoComment:hover,
+.pseudoAuthorComment:hover {
+text-decoration: underline;
+}
 .commentInfos {
   display: flex;
   justify-content: space-between;
@@ -125,20 +136,6 @@
 .likeCommentImg {
   height: 100%;
   width: 7em;
-}
-
-.thumbs {
-  display: flex;
-  height: 100%;
-  gap: 0.7em;
-  justify-content: center;
-  align-items: center;
-  margin: 0 0.5em;
-}
-.thumbImg {
-  cursor: pointer;
-  filter: drop-shadow(0px 0px 3px black);
-  width: 1.5em;
 }
 
 .commentDate {

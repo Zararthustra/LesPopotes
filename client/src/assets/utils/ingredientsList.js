@@ -531,7 +531,7 @@ export const ingredientsList = [
   { label: "Mousse de foie", value: "Mousse de foie" },
   { label: "Moutarde", value: "Moutarde" },
   { label: "Mouton", value: "Mouton" },
-  { label: "Mozarella", value: "Mozarella" },
+  { label: "Mozzarella", value: "Mozzarella" },
   { label: "Mozzarella di buffala", value: "Mozzarella di buffala" },
   { label: "Muesli", value: "Muesli" },
   { label: "Muffin", value: "Muffin" },

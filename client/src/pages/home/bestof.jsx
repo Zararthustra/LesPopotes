@@ -18,11 +18,9 @@ export const Bestof = () => {
 
   const getRecipes = async () => {
     try {
-      const res = await axios.get(`${Host}api/recipes/pagination/0`, {
-        params: { limit: 10 },
-      });
+      const res = await axios.get(`${Host}api/recipes`);
       if (res.data) {
-        setRecipes(res.data.rows);
+        setRecipes(res.data);
         setLoading(false);
       }
     } catch (error) {
@@ -37,13 +35,14 @@ export const Bestof = () => {
   if (location !== "/accueil/bestof") return <Outlet />;
   return (
     <>
-      <h4>Les mieux notées (bientôt disponible)</h4>
       <main className="cardList">
         {loading ? (
           <ClipLoader css={""} color={"#f5a76c"} loading={loading} size={100} />
         ) : (
           recipes.map((recipe, index) => {
-            return <Card key={index} recipe={recipe} />;
+            console.log(recipe);
+            if (recipe.average >= 3.5) return <Card key={index} recipe={recipe} />;
+            return ""
           })
         )}
       </main>

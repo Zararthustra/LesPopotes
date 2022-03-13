@@ -47,7 +47,7 @@ export const Home = () => {
             Accueil
           </Link>
           <Link id="bestof" className="navlink" to="bestof">
-            Best Of
+            Les mieux notées
           </Link>
           <Link id="lastpubs" className="navlink" to="nouveautes">
             Nouveautés

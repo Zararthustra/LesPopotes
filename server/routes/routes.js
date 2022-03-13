@@ -375,7 +375,9 @@ router.get("/recipes/pagination/:offset", (req, res) => {
   db.Recipe.findAndCountAll({
     offset,
     limit,
-  })
+    order: [["createdAt", "DESC"]],
+  },
+  )
     .then((result) => res.send(result))
     .catch((err) => {
       console.log(customizedError(err, "GET Recipes pagination"));

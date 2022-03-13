@@ -147,7 +147,7 @@ export const Creation = () => {
   };
   const handleAddStep = () => {
     let value = document.getElementsByClassName("stepText")[0].value;
-    if (!addStep) return;
+    if (!addStep || addStep.trim() === "") return;
     setSteps([...steps, capitalize(value)]);
     // Reset input
     document.getElementsByClassName("stepText")[0].value = "";
@@ -176,6 +176,7 @@ export const Creation = () => {
     )
       return setFieldMissing(true);
     createRecipe();
+    alert("Recette enregistrée, les popotes vous remercient pour votre participation 😊")
     navigate(-1);
   };
 
