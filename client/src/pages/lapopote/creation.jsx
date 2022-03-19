@@ -59,6 +59,7 @@ export const Creation = () => {
   const [addUnity, setAddUnity] = useState("");
   const [steps, setSteps] = useState([]);
   const [addStep, setAddStep] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
   const [addComment, setAddComment] = useState("");
 
   // An object shared with child components
@@ -143,6 +144,13 @@ export const Creation = () => {
   const handleDeleteStep = (index) => {
     let tmpSteps = [...steps];
     tmpSteps.splice(index, 1);
+    setSteps(tmpSteps);
+  };
+  const handleEditStep = (index) => {
+    if (!addStep) return
+    let tmpSteps = [...steps];
+    tmpSteps[index] = addStep;
+    setIsEditing(false);
     setSteps(tmpSteps);
   };
   const handleAddStep = () => {
@@ -300,13 +308,34 @@ export const Creation = () => {
               <li key={index} className="step">
                 <div className="addStep">
                   <div className="stepTitle">Etape {index + 1}</div>
-                  <div
-                    className="removeButtonStep"
-                    title="Supprimer l'étape"
-                    onClick={() => handleDeleteStep(index)}
-                  />
+                  {isEditing === index ? (
+                    <div
+                      className="confirmEditButtonStep"
+                      onClick={() => handleEditStep(index)}
+                    />
+                  ) : (
+                    <div className="groupButtons">
+                      <div
+                        className="editButtonStep"
+                        onClick={() => setIsEditing(index)}
+                      />
+                      <div
+                        className="removeButtonStep"
+                        onClick={() => handleDeleteStep(index)}
+                      />
+                    </div>
+                  )}
                 </div>
-                <p>{step}</p>
+                {isEditing === index ? (
+                  <input
+                    type="text"
+                    className="stepText"
+                    defaultValue={step}
+                    onChange={handleStep}
+                  />
+                ) : (
+                  <p>{step}</p>
+                )}
               </li>
             );
           })}

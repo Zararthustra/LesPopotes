@@ -59,6 +59,7 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
   const [addUnity, setAddUnity] = useState("");
   const [steps, setSteps] = useState(recipeSteps);
   const [addStep, setAddStep] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
   const [addComment, setAddComment] = useState(recipe.authorComment);
 
   // An object shared with child components
@@ -151,6 +152,13 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
     tmpSteps.splice(index, 1);
     setSteps(tmpSteps);
   };
+  const handleEditStep = (index) => {
+    if (!addStep) return
+    let tmpSteps = [...steps];
+    tmpSteps[index] = addStep;
+    setIsEditing(false);
+    setSteps(tmpSteps);
+  };
   const handleAddStep = () => {
     let value = document.getElementsByClassName("stepText")[0].value;
     if (!addStep || addStep.trim() === "") return;
@@ -180,7 +188,6 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
       return setFieldMissing(true);
     updateRecipe();
     alert("Recette modifiée avec succès 😊");
-    navigate(-1);
     refreshPage();
   };
 
@@ -190,27 +197,28 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
       .then((res) => {
         if (!res) return console.log("No response from server");
         if (res.data.error) return console.log(res.data);
-        updateRecipeIngredients(recipe.id);
       })
       .catch((err) => {
         console.log("Error catched: ", err);
       });
+
+    updateRecipeIngredients(recipe.id);
+    updateRecipeSteps(recipe.id);
   };
 
-  const updateRecipeIngredients = async (recipeId) => {
-    await axios
+  const updateRecipeIngredients = (recipeId) => {
+    axios
       .put(`${Host}api/ingredients/${recipeId}`, ingredients)
       .then((res) => {
         if (!res) return console.log("No response from server");
         if (res.data.error) return console.log(res.data);
-        updateRecipeSteps(recipeId);
       })
       .catch((err) => {
         console.log("Error catched: ", err);
       });
   };
 
-  const updateRecipeSteps = async (recipeId) => {
+  const updateRecipeSteps = (recipeId) => {
     const stepsFormatedForAPI = steps.map((step, index) => {
       return {
         nbStep: index + 1,
@@ -219,7 +227,7 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
       };
     });
 
-    await axios
+    axios
       .put(`${Host}api/steps/${recipeId}`, stepsFormatedForAPI)
       .then((res) => {
         if (!res) return console.log("No response from server");
@@ -300,12 +308,34 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
               <li key={index} className="step">
                 <div className="addStep">
                   <div className="stepTitle">Etape {index + 1}</div>
-                  <div
-                    className="removeButtonStep"
-                    onClick={() => handleDeleteStep(index)}
-                  />
+                  {isEditing === index ? (
+                    <div
+                      className="confirmEditButtonStep"
+                      onClick={() => handleEditStep(index)}
+                    />
+                  ) : (
+                    <div className="groupButtons">
+                      <div
+                        className="editButtonStep"
+                        onClick={() => setIsEditing(index)}
+                      />
+                      <div
+                        className="removeButtonStep"
+                        onClick={() => handleDeleteStep(index)}
+                      />
+                    </div>
+                  )}
                 </div>
-                <p>{step}</p>
+                {isEditing === index ? (
+                  <input
+                    type="text"
+                    className="stepText"
+                    defaultValue={step}
+                    onChange={handleStep}
+                  />
+                ) : (
+                  <p>{step}</p>
+                )}
               </li>
             );
           })}
@@ -314,7 +344,7 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
               <div className="stepTitle">Ajouter une étape</div>
               <div className="addButtonStep" onClick={handleAddStep} />
             </div>
-            <textarea
+            <input
               type="text"
               className="stepText"
               onChange={handleStep}

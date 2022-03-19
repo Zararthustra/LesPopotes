@@ -211,18 +211,38 @@
   width: 2.3em;
   height: 2.3em;
 }
+.confirmEditButtonStep {
+  background-image: url("../../assets/icons/ok-512.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  width: 2.3em;
+  height: 2.3em;
+}
+.editButtonStep {
+  background-image: url("../../assets/icons/editStep.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  width: 2.3em;
+  height: 2.3em;
+}
+.groupButtons {
+  display: flex;
+  gap: 2em;
+}
 
 .stepText {
   width: 80%;
   height: 3em;
   white-space:pre;
+  padding-left: 1em;
 }
 .stepText:focus-within {
   border: 1px solid var(--popote);
   outline: none;
-}
-.stepText:hover {
-  border: 1px solid var(--popote);
 }
 
 .step {
@@ -239,6 +259,7 @@
 
 .authorRecipeComment {
   margin: 2em 0;
+  padding-left: 1em;
   height: 5em;
   width: 60%;
 }
