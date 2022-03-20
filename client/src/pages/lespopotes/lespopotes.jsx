@@ -6,6 +6,7 @@ import { Host } from "../../assets/utils/host";
 import { Popotesitem } from "../../components/popotesitem";
 import { SearchFilterPopotes } from "../../components/searchFilterPopotes";
 import ClipLoader from "react-spinners/ClipLoader";
+import { Forum } from "../../components/forum";
 
 export const Lespopotes = () => {
   const location = useLocation().pathname;
@@ -20,19 +21,18 @@ export const Lespopotes = () => {
 
   // Load data when mounting
   useEffect(() => {
-
     // Active Tab
     let lespopotes = document.getElementById("mypopotes").classList;
-    let chat = document.getElementById("chat").classList;
+    let forum = document.getElementById("forum").classList;
 
     if (location === "/lespopotes") {
       lespopotes.add("activePopotes");
-      chat.remove("activePopotes");
-    } else if (location === "/lespopotes/chat") {
-      chat.add("activePopotes");
+      forum.remove("activePopotes");
+    } else if (location === "/lespopotes/forum") {
+      forum.add("activePopotes");
       lespopotes.remove("activePopotes");
     }
-    
+
     // API calls
     setLoading(true);
 
@@ -41,9 +41,7 @@ export const Lespopotes = () => {
       if (res.data) {
         setLoading(false);
         setUsers(
-          res.data.filter(
-            (user) => user.id !== parseInt(localStorage.getItem("userid"))
-          )
+          res.data
         );
       }
     };
@@ -55,9 +53,7 @@ export const Lespopotes = () => {
         setTotalPage(res.data.count);
         setLoading(false);
         setUsers(
-          res.data.rows.filter(
-            (user) => user.id !== parseInt(localStorage.getItem("userid"))
-          )
+          res.data.rows
         );
       }
     };
@@ -81,16 +77,14 @@ export const Lespopotes = () => {
           <Link id="mypopotes" className="navlink" to="/lespopotes">
             Les Popotes
           </Link>
-          <Link id="chat" className="navlink" to="chat">
-            Chat
+          <Link id="forum" className="navlink" to="forum">
+            Forum
           </Link>
         </div>
       </div>
-      {location === "/lespopotes/chat" ? (
-       <main className="chat">Chat des Popotes (bientôt disponible)</main>
-      ) :
-      
-      location !== "/lespopotes" ? (
+      {location === "/lespopotes/forum" ? (
+        <Forum users={users} />
+      ) : location !== "/lespopotes" ? (
         <Outlet />
       ) : (
         <main className="lesPopotesPage">

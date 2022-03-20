@@ -376,8 +376,7 @@ router.get("/recipes/pagination/:offset", (req, res) => {
     offset,
     limit,
     order: [["createdAt", "DESC"]],
-  },
-  )
+  })
     .then((result) => res.send(result))
     .catch((err) => {
       console.log(customizedError(err, "GET Recipes pagination"));
@@ -584,9 +583,7 @@ router.post("/comments", (req, res) => {
           .catch((err) => console.log(err));
         //Increment recipe's comments
         axios
-          .put(
-            `http://localhost:3001/api/recipes/${recipe_id}/inccomments`
-          )
+          .put(`http://localhost:3001/api/recipes/${recipe_id}/inccomments`)
           .then((resp) => {
             if (resp.status !== 200)
               console.log("Increment recipe's comments: \n", resp);
@@ -940,6 +937,36 @@ router.get("/messages", (req, res) => {
     })
     .catch((err) => {
       console.log(customizedError(err, "GET all Messages"));
+      res.json({ error: err.name });
+    });
+});
+
+//________________________________________ Forums
+
+// Create a forum message
+router.post("/forum", (req, res) => {
+  const user_id = req.body.user_id;
+  const content = req.body.content;
+
+  db.Forum.create({
+    user_id,
+    content,
+  })
+    .then((createdForum) => res.json(createdForum))
+    .catch((err) => {
+      console.log(customizedError(err, "POST Forum message"));
+      res.json({ error: err.name });
+    });
+});
+
+// Retrieve all forum messages
+router.get("/forum", (req, res) => {
+  db.Forum.findAll({ order: [["createdAt", "DESC"]] })
+    .then((foundMessages) => {
+      res.json(foundMessages);
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "GET all Forum messages"));
       res.json({ error: err.name });
     });
 });

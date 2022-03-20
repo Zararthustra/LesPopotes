@@ -15,6 +15,7 @@ import "./styles/profile/profile.css";
 import "./styles/profile/myprofile.css";
 import "./styles/lespopotes/lespopotes.css";
 import "./styles/lespopotes/popotesitem.css";
+import "./styles/lespopotes/forum.css";
 import "./styles/lapopote/comments.css";
 
 ReactDOM.render(

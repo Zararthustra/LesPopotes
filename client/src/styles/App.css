@@ -147,6 +147,7 @@ input[type="text"]:focus-within {
   height: 3em;
 }
 #myprofile:hover,
+#forum:hover,
 #mypopotes:hover {
   background-color: var(--popotes);
   box-shadow: 0 -10px 20px #222;
