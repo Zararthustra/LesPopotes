@@ -360,6 +360,9 @@
 /*
  *_______________________________________________
  */
+.popoteRecipe > div {
+  max-width: 80%;
+}
 .popoteRecipe {
   width: 90%;
   padding: 0.5em;
@@ -368,6 +371,7 @@
   align-items: center;
   border-radius: 5px;
   font-weight: 600;
+  text-align: end;
 }
 .popoteRecipe:hover {
   cursor: pointer;

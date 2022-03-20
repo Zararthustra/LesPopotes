@@ -164,6 +164,7 @@
   font-weight: 600;
   color: var(--dark-popote);
   padding: 0.5em 0;
+  background-color: red;
 }
 .doneBy:hover {
   text-decoration: underline;

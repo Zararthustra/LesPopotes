@@ -9,6 +9,14 @@
 /* 
  * Forum
  */
+.forum ::selection {
+  background-color: var(--dark-popotes);
+  color: white;
+}
+.forum ::-moz-selection {
+  color: var(--white);
+  background: var(--dark-popotes);
+}
 .forum {
   display: flex;
   align-items: center;
@@ -120,5 +128,5 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  margin: .5em 0;
+  margin: 0.5em 0;
 }

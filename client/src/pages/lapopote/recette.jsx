@@ -244,6 +244,11 @@ export const Recette = () => {
     if (event.key === "Enter") addComment();
   };
   const addComment = () => {
+    if (!comment.trim()) {
+      document.querySelector(".userCommentTextArea").value = "";
+      setComment("");
+      return;
+    }
     if (comment)
       axios
         .post(
@@ -335,7 +340,8 @@ export const Recette = () => {
                   title="Copier le lien de la recette"
                 />
               )}
-              {capitalize(localStorage.getItem('username')) === capitalize(recipe.author) && (
+              {capitalize(localStorage.getItem("username")) ===
+                capitalize(recipe.author) && (
                 <img
                   src={require("../../assets/icons/edit.png").default}
                   className="editRecipe"
@@ -344,7 +350,8 @@ export const Recette = () => {
                   title="Modifier ma recette"
                 />
               )}
-              {capitalize(localStorage.getItem('username')) === capitalize(recipe.author) && (
+              {capitalize(localStorage.getItem("username")) ===
+                capitalize(recipe.author) && (
                 <img
                   src={require("../../assets/icons/delete.png").default}
                   className="deleteRecipe"
