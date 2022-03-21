@@ -1,9 +1,10 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { Host } from "../assets/utils/host";
 import { Avatar } from "../components/Avatar";
+import { Toaster } from "../components/toaster";
 
 export const Login = () => {
   //___________________________________________________ Variables
@@ -11,6 +12,8 @@ export const Login = () => {
   const location = useLocation().pathname;
   const [creation, setCreation] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
+  const toasterRef = useRef(null);
 
   const selectStyle = {
     control: (base, state) => ({
@@ -70,16 +73,18 @@ export const Login = () => {
     event.preventDefault();
     // Check empty mandatory fields
     if (userName === "") {
-      document.getElementsByClassName("inputName")[0].placeholder =
-        "Entrer un Nom";
+      setErrorMessage("Entrez un pseudo");
+      toasterRef.current.showToaster();
       return;
     }
     if (password === "") {
-      document.getElementsByClassName("inputPassword")[0].placeholder =
-        "Entrer un mdp";
+      setErrorMessage("Entrez un mot de passe");
+      toasterRef.current.showToaster();
       return;
     }
     if (type === "") {
+      setErrorMessage("Choisissez un type de popote");
+      toasterRef.current.showToaster();
       return;
     }
 
@@ -102,8 +107,8 @@ export const Login = () => {
       })
       .then((response) => {
         if (response.data === "User already exist") {
-          document.getElementsByClassName("inputName")[0].placeholder =
-            "Existe déjà !";
+          setErrorMessage("Ce pseudo existe déjà");
+          toasterRef.current.showToaster();
           document.getElementsByClassName("inputPassword")[0].placeholder = "";
         } else if (response.data.name) {
           localStorage.setItem("username", response.data.name);
@@ -160,13 +165,14 @@ export const Login = () => {
   if (creation)
     return (
       <div className="loginContainer">
+        <Toaster type="error" message={errorMessage} ref={toasterRef} />
         {location !== "/lapopote/creation" && (
           <h1 className="connexion">Création</h1>
         )}
         <div className="loginField">
           <form className="logform">
             <div className="inputs">
-            <div className="creationAvatar">
+              <div className="creationAvatar">
                 <div>
                   <div>Mon Avatar:</div>
                   <div className="clickToChange">(cliquer pour changer)</div>
@@ -243,7 +249,6 @@ export const Login = () => {
                   ""
                 )}
               </div>
-              
             </div>
             <div className="loginDiv">
               <button onClick={addUser} className="login">
@@ -254,7 +259,7 @@ export const Login = () => {
               </button>
             </div>
           </form>
-            <div>* champs obligatoires</div>
+          <div>* champs obligatoires</div>
         </div>
       </div>
     );

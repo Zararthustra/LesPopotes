@@ -10,17 +10,19 @@ import { Host } from "../../assets/utils/host";
 import { useRef } from "react";
 import { ingredientsList } from "../../assets/utils/ingredientsList";
 import { unityList } from "../../assets/utils/unityList";
-
+import { Toaster } from "../../components/toaster";
 export const Creation = () => {
   //___________________________________________________ Variables
 
   const navigate = useNavigate();
   const selectIngredientRef = useRef();
   const selectUnityRef = useRef();
+  const toasterRef = useRef(null);
   const clearSelectValues = () => {
     selectIngredientRef.current.setValue("");
     selectUnityRef.current.setValue("");
   };
+  const [showButtons, setShowButtons] = useState(true);
 
   const selectStyle = {
     control: (base, state) => ({
@@ -147,7 +149,7 @@ export const Creation = () => {
     setSteps(tmpSteps);
   };
   const handleEditStep = (index) => {
-    if (!addStep) return
+    if (!addStep) return;
     let tmpSteps = [...steps];
     tmpSteps[index] = addStep;
     setIsEditing(false);
@@ -173,19 +175,47 @@ export const Creation = () => {
 
   // Save created recipe to DB
   const handleSaveRecipe = () => {
-    if (
-      !recipeTitle ||
-      !nbPers ||
-      !diff ||
-      !type ||
-      !prepTime ||
-      ingredients.length === 0 ||
-      steps.length === 0
-    )
-      return setFieldMissing(true);
+    if (!recipeTitle) {
+      setFieldMissing("Titre");
+      toasterRef.current.showToaster();
+      return;
+    }
+    if (!type) {
+      setFieldMissing("Type");
+      toasterRef.current.showToaster();
+      return;
+    }
+    if (!nbPers) {
+      setFieldMissing("Nombre de personnes");
+      toasterRef.current.showToaster();
+      return;
+    }
+    if (!diff) {
+      setFieldMissing("Difficulté");
+      toasterRef.current.showToaster();
+      return;
+    }
+    if (!prepTime) {
+      setFieldMissing("Temps de préparation");
+      toasterRef.current.showToaster();
+      return;
+    }
+    if (ingredients.length === 0) {
+      setFieldMissing("Ingrédient");
+      toasterRef.current.showToaster();
+      return;
+    }
+    if (steps.length === 0) {
+      setFieldMissing("Etape");
+      toasterRef.current.showToaster();
+      return;
+    }
+
     createRecipe();
-    alert("Recette enregistrée, les popotes vous remercient pour votre participation 😊")
-    navigate(-1);
+    setShowButtons(false);
+    setFieldMissing(false);
+    toasterRef.current.showToaster();
+    setTimeout(() => navigate(-1), 3000);
   };
 
   const createRecipe = () => {
@@ -367,18 +397,28 @@ export const Creation = () => {
             onChange={handleComment}
           />
         </div>
-        <div className="finalButtons">
-          {fieldMissing ? <div>Recette incomplète !</div> : ""}
-          <button
-            className="creationIngredientsButton"
-            onClick={handleSaveRecipe}
-          >
-            Enregistrer
-          </button>
-          <div className="cancel" onClick={() => navigate(-1)}>
-            Annuler
+        <Toaster
+          type={fieldMissing !== false ? "warning" : "success"}
+          message={
+            fieldMissing !== false
+              ? `${fieldMissing} manquant`
+              : "Recette enregistrée !"
+          }
+          ref={toasterRef}
+        />
+        {showButtons && (
+          <div className="finalButtons">
+            <button
+              className="creationIngredientsButton"
+              onClick={handleSaveRecipe}
+            >
+              Enregistrer
+            </button>
+            <div className="cancel" onClick={() => navigate(-1)}>
+              Annuler
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </main>
   );

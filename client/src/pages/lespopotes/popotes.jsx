@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { capitalize } from "../../assets/utils/capitalize";
@@ -9,6 +9,7 @@ import { images } from "../../assets/utils/importImages";
 import { icons } from "../../assets/utils/importIcons";
 import { Messages } from "../../components/messages";
 import ClipLoader from "react-spinners/ClipLoader";
+import { Toaster } from "../../components/toaster";
 
 export const Popotes = () => {
   const { popote } = useParams();
@@ -18,7 +19,9 @@ export const Popotes = () => {
   const [activeTab, setActiveTab] = useState("infosTab");
   const [recipes, setRecipes] = useState([]);
   const [isMyPopote, setIsMyPopote] = useState(false);
+  const isNotMe = userObject.id !== parseInt(localStorage.getItem("userid"));
   const [loading, setLoading] = useState(false);
+  const toasterRef = useRef(null);
 
   // Load data when mounting
   useEffect(() => {
@@ -83,6 +86,7 @@ export const Popotes = () => {
       .then((res) => {
         if (res.data) {
           setIsMyPopote(true);
+          toasterRef.current.showToaster();
         }
       });
   };
@@ -95,6 +99,7 @@ export const Popotes = () => {
       .then((res) => {
         if (res.data) {
           setIsMyPopote(false);
+          toasterRef.current.showToaster();
         }
       });
   };
@@ -114,190 +119,212 @@ export const Popotes = () => {
         <ClipLoader css={""} color={"#78f5ca"} loading={loading} size={100} />
       </main>
     );
-  return (
-    <main className="popoteContainer">
-      <div className="popoteProfile">
-        <div className="popoteProfileHeader">
-          <img
-            src={icons.cross}
-            alt="fermer"
-            onClick={() => navigate(-1)}
-            className="closePopote"
-          />
-          <img src={userObject.avatar} alt="avatar" className="avatar" />
-          <div className="mypopoteNames">
-            <div className="pseudo">
-              {userObject.name && capitalize(userObject.name)}
-            </div>
-            <div className="type">{userObject.type}</div>
-            {isMyPopote ? (
-              <img
-                src={icons.removefriend}
-                alt="retirer de mes popotes"
-                title="Retirer de mes popotes"
-                onClick={deletePopote}
-                className="addPopote"
-              />
-            ) : (
-              <img
-                src={icons.addfriend}
-                alt="ajouter à mes popotes"
-                title="Ajouter à mes popotes"
-                onClick={addPopote}
-                className="addPopote"
-              />
-            )}
-          </div>
-        </div>
-        <div className="tabs">
-          <div onClick={toggleTabInfos} className="infosTab activeTab">
-            Infos
-          </div>
-          <div onClick={toggleTabMessages} className="messagesTab">
-            Messages
-          </div>
-          <div onClick={toggleTabRecettes} className="recettesTab">
-            Recettes
-          </div>
-        </div>
-        {activeTab === "infosTab" && (
-          <div className="popoteProfileInfosBody">
-            <div className="level">
-              {getLevel(
-                userObject.recipes,
-                userObject.notes,
-                userObject.popotes,
-                userObject.comments
+  if (userObject)
+    return (
+      <main className="popoteContainer">
+        <Toaster
+          type="info"
+          message={
+            isMyPopote
+              ? `${capitalize(userObject.name)} ajouté à mes popotes`
+              : `${capitalize(userObject.name)} supprimé de mes popotes`
+          }
+          ref={toasterRef}
+        />
+        <div className="popoteProfile">
+          <div className="popoteProfileHeader">
+            <img
+              src={icons.cross}
+              alt="fermer"
+              onClick={() => navigate(-1)}
+              className="closePopote"
+            />
+            <img src={userObject.avatar} alt="avatar" className="avatar" />
+            <div className="mypopoteNames">
+              <div className="pseudo">
+                {userObject.name && capitalize(userObject.name)}
+              </div>
+              <div className="type">{userObject.type}</div>
+              {isNotMe && (
+                <>
+                  {isMyPopote ? (
+                    <img
+                      src={icons.removefriend}
+                      alt="retirer de mes popotes"
+                      title="Retirer de mes popotes"
+                      onClick={deletePopote}
+                      className="addPopote"
+                    />
+                  ) : (
+                    <img
+                      src={icons.addfriend}
+                      alt="ajouter à mes popotes"
+                      title="Ajouter à mes popotes"
+                      onClick={addPopote}
+                      className="addPopote"
+                    />
+                  )}
+                </>
               )}
             </div>
-            <ul className="levelInfos">
-              <li>
-                <p>Recettes</p>
-                <p>{userObject.recipes}</p>
-              </li>
-              <li>
-                <p>Notes</p>
-                <p>{userObject.notes}</p>
-              </li>
-              <li>
-                <p>Popotes</p>
-                <p>{userObject.popotes}</p>
-              </li>
-              <li>
-                <p>Commentaires</p>
-                <p>{userObject.comments}</p>
-              </li>
-            </ul>
-            <ul className="socialnetworks">
-              {userObject.mail && (
-                <li>
-                  <a href={`mailto:${userObject.mail}`}>
-                    <img className="mail" src={images.mail} alt="mail" />
-                  </a>
-                </li>
-              )}
-              {userObject.linkedin && (
-                <li>
-                  <a href={userObject.linkedin}>
-                    <img
-                      className="linkedin"
-                      src={images.linkedin}
-                      alt="linkedin"
-                    />
-                  </a>
-                </li>
-              )}
-              {userObject.instagram && (
-                <li>
-                  <a href={userObject.instagram}>
-                    <img
-                      className="instagram"
-                      src={images.instagram}
-                      alt="instagram"
-                    />
-                  </a>
-                </li>
-              )}
-              {userObject.facebook && (
-                <li>
-                  <a href={userObject.facebook}>
-                    <img
-                      className="facebook"
-                      src={images.facebook}
-                      alt="facebook"
-                    />
-                  </a>
-                </li>
-              )}
-              {userObject.snapchat && (
-                <li>
-                  <a href={userObject.snapchat}>
-                    <img
-                      className="snapchat"
-                      src={images.snapchat}
-                      alt="snapchat"
-                    />
-                  </a>
-                </li>
-              )}
-              {userObject.twitter && (
-                <li>
-                  <a href={userObject.twitter}>
-                    <img
-                      className="twitter"
-                      src={images.twitter}
-                      alt="twitter"
-                    />
-                  </a>
-                </li>
-              )}
-              {userObject.tiktok && (
-                <li>
-                  <a href={userObject.tiktok}>
-                    <img className="tiktok" src={images.tiktok} alt="tiktok" />
-                  </a>
-                </li>
-              )}
-              {userObject.whatsapp && (
-                <li>
-                  <a href={userObject.whatsapp}>
-                    <img
-                      className="whatsapp"
-                      src={images.whatsapp}
-                      alt="whatsapp"
-                    />
-                  </a>
-                </li>
-              )}
-            </ul>
           </div>
-        )}
-        {activeTab === "messagesTab" && <Messages popote={userObject} />}
-        {activeTab === "recettesTab" && (
-          <div className="popoteRecipes">
-            {recipes.length > 0 ? (
-              recipes.map((recipe, index) => {
-                return (
-                  <div
-                    className="popoteRecipe"
-                    key={index}
-                    onClick={() => navigate(`/lapopote/${recipe.id}`)}
-                  >
-                    <img
-                      className="recipeType"
-                      src={recipeTypeIcon(recipe)}
-                      alt={recipe.type}
-                    />
-                    <div>{recipe.name && capitalize(recipe.name)}</div>
-                  </div>
-                );
-              })
-            ) : (
-              <div>Pas de recette</div>
-            )}
+          <div className="tabs">
+            <div onClick={toggleTabInfos} className="infosTab activeTab">
+              Infos
+            </div>
+            <div onClick={toggleTabMessages} className="messagesTab">
+              Messages
+            </div>
+            <div onClick={toggleTabRecettes} className="recettesTab">
+              Recettes
+            </div>
           </div>
-        )}
-      </div>
-    </main>
-  );
+          {activeTab === "infosTab" && (
+            <div className="popoteProfileInfosBody">
+              <div className="level">
+                {getLevel(
+                  userObject.recipes,
+                  userObject.notes,
+                  userObject.popotes,
+                  userObject.comments
+                )}
+              </div>
+              <ul className="levelInfos">
+                <li>
+                  <p>Recettes</p>
+                  <p>{userObject.recipes}</p>
+                </li>
+                <li>
+                  <p>Notes</p>
+                  <p>{userObject.notes}</p>
+                </li>
+                <li>
+                  <p>Popotes</p>
+                  <p>{userObject.popotes}</p>
+                </li>
+                <li>
+                  <p>Commentaires</p>
+                  <p>{userObject.comments}</p>
+                </li>
+              </ul>
+              <ul className="socialnetworks">
+                {userObject.mail && (
+                  <li>
+                    <a href={`mailto:${userObject.mail}`}>
+                      <img className="mail" src={images.mail} alt="mail" />
+                    </a>
+                  </li>
+                )}
+                {userObject.linkedin && (
+                  <li>
+                    <a href={userObject.linkedin}>
+                      <img
+                        className="linkedin"
+                        src={images.linkedin}
+                        alt="linkedin"
+                      />
+                    </a>
+                  </li>
+                )}
+                {userObject.instagram && (
+                  <li>
+                    <a href={userObject.instagram}>
+                      <img
+                        className="instagram"
+                        src={images.instagram}
+                        alt="instagram"
+                      />
+                    </a>
+                  </li>
+                )}
+                {userObject.facebook && (
+                  <li>
+                    <a href={userObject.facebook}>
+                      <img
+                        className="facebook"
+                        src={images.facebook}
+                        alt="facebook"
+                      />
+                    </a>
+                  </li>
+                )}
+                {userObject.snapchat && (
+                  <li>
+                    <a href={userObject.snapchat}>
+                      <img
+                        className="snapchat"
+                        src={images.snapchat}
+                        alt="snapchat"
+                      />
+                    </a>
+                  </li>
+                )}
+                {userObject.twitter && (
+                  <li>
+                    <a href={userObject.twitter}>
+                      <img
+                        className="twitter"
+                        src={images.twitter}
+                        alt="twitter"
+                      />
+                    </a>
+                  </li>
+                )}
+                {userObject.tiktok && (
+                  <li>
+                    <a href={userObject.tiktok}>
+                      <img
+                        className="tiktok"
+                        src={images.tiktok}
+                        alt="tiktok"
+                      />
+                    </a>
+                  </li>
+                )}
+                {userObject.whatsapp && (
+                  <li>
+                    <a href={userObject.whatsapp}>
+                      <img
+                        className="whatsapp"
+                        src={images.whatsapp}
+                        alt="whatsapp"
+                      />
+                    </a>
+                  </li>
+                )}
+              </ul>
+            </div>
+          )}
+          {isNotMe && (
+            <>
+              {activeTab === "messagesTab" && <Messages popote={userObject} />}
+            </>
+          )}
+          {activeTab === "recettesTab" && (
+            <div className="popoteRecipes">
+              {recipes.length > 0 ? (
+                recipes.map((recipe, index) => {
+                  return (
+                    <div
+                      className="popoteRecipe"
+                      key={index}
+                      onClick={() => navigate(`/lapopote/${recipe.id}`)}
+                    >
+                      <img
+                        className="recipeType"
+                        src={recipeTypeIcon(recipe)}
+                        alt={recipe.type}
+                      />
+                      <div>{recipe.name && capitalize(recipe.name)}</div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div>Pas de recette</div>
+              )}
+            </div>
+          )}
+        </div>
+      </main>
+    );
 };

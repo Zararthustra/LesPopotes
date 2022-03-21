@@ -202,3 +202,73 @@ input[type="text"]:focus-within {
   border-radius: 30px;
   border: none;
 }
+
+/*
+ * Toaster
+ */
+
+.toasterContainer {
+  cursor: pointer;
+  position: fixed;
+  left: 50%;
+  top: 0%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: fit-content;
+  max-width: 15em;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  font-size: 1.3em;
+  z-index: 2;
+  padding: 0.2em 0;
+  font-family: "Oswald", sans-serif;
+}
+
+.toasterIcon {
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0 0.7em;
+}
+
+.groupToasterMessage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.3em;
+}
+.toasterTitle {
+  font-weight: 600;
+}
+.toasterMessage {
+  font-weight: lighter;
+}
+
+#showToaster {
+  opacity: 0;
+  -webkit-animation: fadeinout 5s linear forwards;
+  animation: fadeinout 5s ease-in-out forwards;
+}
+#hideToaster {
+  visibility: hidden;
+}
+@-webkit-keyframes fadeinout {
+  10% {
+    opacity: 1;
+    top: 15%;
+  }
+  80% {
+    opacity: 1;
+    top: 15%;
+  }
+}
+@keyframes fadeinout {
+  10% {
+    opacity: 1;
+    top: 15%;
+  }
+  80% {
+    opacity: 1;
+    top: 15%;
+  }
+}

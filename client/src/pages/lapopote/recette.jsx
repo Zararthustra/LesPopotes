@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { capitalize } from "../../assets/utils/capitalize";
 import { Host } from "../../assets/utils/host";
@@ -9,6 +9,7 @@ import { RecipeIngredients } from "../../components/recipeIngredients";
 import { icons } from "../../assets/utils/importIcons";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Modification } from "../profile/modification";
+import { Toaster } from "../../components/toaster";
 
 export const Recette = () => {
   //___________________________________________________ Variables
@@ -18,6 +19,7 @@ export const Recette = () => {
   const [recipe, setRecipe] = useState({});
   const [isModifying, setIsModifying] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [steps, setSteps] = useState([]);
@@ -27,6 +29,7 @@ export const Recette = () => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
+  const toasterRef = useRef(null);
 
   //___________________________________________________ UseEffect
 
@@ -137,30 +140,40 @@ export const Recette = () => {
       })
       .then((res) => {
         if (res.data) {
-          alert("Recette supprimée avec succès 😊");
-          navigate("/profil/mesrecettes");
+          setIsFavorite(false);
+          setIsDeleted(true);
+          toasterRef.current.showToaster();
+          setTimeout(() => navigate(-1), 3000);
         }
       });
   };
 
   //________________ Favorite
   const addToFavorites = () => {
+    setIsFavorite(false);
     axios
       .post(`${Host}api/favorites`, {
         recipe_id: recetteID,
         user_id: localStorage.getItem("userid"),
       })
       .then((res) => {
-        if (res.data) setIsFavorite(true);
+        if (res.data) {
+          setIsFavorite(true);
+          toasterRef.current.showToaster();
+        }
       });
   };
   const removeFromFavorites = () => {
+    setIsFavorite(true);
     axios
       .delete(`${Host}api/favorites/${recetteID}`, {
         params: { userId: localStorage.getItem("userid") },
       })
       .then((res) => {
-        if (res.data) setIsFavorite(false);
+        if (res.data) {
+          setIsFavorite(false);
+          toasterRef.current.showToaster();
+        }
       });
   };
 
@@ -195,6 +208,7 @@ export const Recette = () => {
       };
   };
   const toggleHearts = (event) => {
+    if (hasVoted) return;
     const heartID = event.currentTarget.id;
 
     if (heartID === "heart1") setIsNoted({ heart1: true });
@@ -293,82 +307,99 @@ export const Recette = () => {
 
   return (
     <main className="recipePage">
+      <Toaster
+        type={isDeleted ? "success" : "info"}
+        message={
+          isFavorite
+            ? "Recette ajoutée aux favoris"
+            : isDeleted
+            ? "Recette supprimée"
+            : "Recette supprimée des favoris"
+        }
+        ref={toasterRef}
+      />
       <div className="recipeContainer">
-        {isDeleting ? (
-          <div className="overlayImage">
-            <div className="isDeletingRecipe">
-              Supprimer ?
-              <button className="confirmDel green" onClick={deleteRecipe}>
-                Oui
-              </button>
-              <button
-                className="confirmDel red"
-                onClick={() => setIsDeleting(false)}
-              >
-                Non
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="overlayImage">
-            <div className="leftOverlay">
-              {isFavorite ? (
+        {!isDeleted && (
+          <>
+            {isDeleting ? (
+              <div className="overlayImage">
+                <div className="isDeletingRecipe">
+                  Supprimer ?
+                  <button className="confirmDel green" onClick={deleteRecipe}>
+                    Oui
+                  </button>
+                  <button
+                    className="confirmDel red"
+                    onClick={() => setIsDeleting(false)}
+                  >
+                    Non
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="overlayImage">
+                <div className="leftOverlay">
+                  {isFavorite ? (
+                    <img
+                      src={
+                        require("../../assets/icons/star-checked.png").default
+                      }
+                      className="starChecked"
+                      onClick={removeFromFavorites}
+                      alt="retirer des recettes favorites"
+                      title="Retirer des recettes favorites"
+                    />
+                  ) : (
+                    <img
+                      onClick={addToFavorites}
+                      src={require("../../assets/icons/star.png").default}
+                      className="star"
+                      alt="ajouter aux recettes favorites"
+                      title="Ajouter aux recettes favorites"
+                    />
+                  )}
+                  {isCopied ? (
+                    <div className="copiedRecipe">Lien copié</div>
+                  ) : (
+                    <img
+                      src={require("../../assets/icons/copy.png").default}
+                      className="copyRecipe"
+                      onClick={() => copyRecipeUrl()}
+                      alt="copier le lien de la recette"
+                      title="Copier le lien de la recette"
+                    />
+                  )}
+                  {capitalize(localStorage.getItem("username")) ===
+                    capitalize(recipe.author) && (
+                    <img
+                      src={require("../../assets/icons/edit.png").default}
+                      className="editRecipe"
+                      onClick={() => setIsModifying(true)}
+                      alt="modifier ma recette"
+                      title="Modifier ma recette"
+                    />
+                  )}
+                  {capitalize(localStorage.getItem("username")) ===
+                    capitalize(recipe.author) && (
+                    <img
+                      src={require("../../assets/icons/delete.png").default}
+                      className="deleteRecipe"
+                      onClick={() => setIsDeleting(true)}
+                      alt="supprimer ma recette"
+                      title="Supprimer ma recette"
+                    />
+                  )}
+                </div>
                 <img
-                  src={require("../../assets/icons/star-checked.png").default}
-                  className="starChecked"
-                  onClick={removeFromFavorites}
-                  alt="retirer des recettes favorites"
-                  title="Retirer des recettes favorites"
+                  src={require("../../assets/icons/close.png").default}
+                  className="closeRecipe"
+                  onClick={() => navigate(removeLastUrlSegment(location))}
+                  alt="fermer"
+                  title="Fermer"
                 />
-              ) : (
-                <img
-                  onClick={addToFavorites}
-                  src={require("../../assets/icons/star.png").default}
-                  className="star"
-                  alt="ajouter aux recettes favorites"
-                  title="Ajouter aux recettes favorites"
-                />
-              )}
-              {isCopied ? (
-                <div className="copiedRecipe">Lien copié</div>
-              ) : (
-                <img
-                  src={require("../../assets/icons/copy.png").default}
-                  className="copyRecipe"
-                  onClick={() => copyRecipeUrl()}
-                  alt="copier le lien de la recette"
-                  title="Copier le lien de la recette"
-                />
-              )}
-              {capitalize(localStorage.getItem("username")) ===
-                capitalize(recipe.author) && (
-                <img
-                  src={require("../../assets/icons/edit.png").default}
-                  className="editRecipe"
-                  onClick={() => setIsModifying(true)}
-                  alt="modifier ma recette"
-                  title="Modifier ma recette"
-                />
-              )}
-              {capitalize(localStorage.getItem("username")) ===
-                capitalize(recipe.author) && (
-                <img
-                  src={require("../../assets/icons/delete.png").default}
-                  className="deleteRecipe"
-                  onClick={() => setIsDeleting(true)}
-                  alt="supprimer ma recette"
-                  title="Supprimer ma recette"
-                />
-              )}
-            </div>
-            <img
-              src={require("../../assets/icons/close.png").default}
-              className="closeRecipe"
-              onClick={() => navigate(removeLastUrlSegment(location))}
-              alt="fermer"
-              title="Fermer"
-            />
-          </div>
+              </div>
+            )}
+          </>
         )}
 
         <div className="recipeTitle">
@@ -414,6 +445,53 @@ export const Recette = () => {
         ) : (
           <div></div>
         )}
+        <div className="separatePopote"></div>
+
+        <div className="addNote">
+          <div className="hearts">
+            <img
+              id="heart1"
+              className="heart"
+              onClick={toggleHearts}
+              src={isNoted.heart1 ? icons.fullHeart : icons.emptyHeart}
+              alt="noter 1/5"
+            />
+            <img
+              id="heart2"
+              className="heart"
+              onClick={toggleHearts}
+              src={isNoted.heart2 ? icons.fullHeart : icons.emptyHeart}
+              alt="noter 2/5"
+            />
+            <img
+              id="heart3"
+              className="heart"
+              onClick={toggleHearts}
+              src={isNoted.heart3 ? icons.fullHeart : icons.emptyHeart}
+              alt="noter 3/5"
+            />
+            <img
+              id="heart4"
+              className="heart"
+              onClick={toggleHearts}
+              src={isNoted.heart4 ? icons.fullHeart : icons.emptyHeart}
+              alt="noter 4/5"
+            />
+            <img
+              id="heart5"
+              className="heart"
+              onClick={toggleHearts}
+              src={isNoted.heart5 ? icons.fullHeart : icons.emptyHeart}
+              alt="noter 5/5"
+            />
+          </div>
+          <button
+            className={hasVoted ? "doneButton" : "creationIngredientsButton"}
+            onClick={addNote}
+          >
+            {hasVoted ? "Noté" : "Noter"}
+          </button>
+        </div>
       </div>
       <div className="commentsContainer">
         <h1 className="commentsTitle">Commentaires</h1>
@@ -421,58 +499,6 @@ export const Recette = () => {
           // Add opinion only if logged
           localStorage.getItem("username") && (
             <div className="opinion">
-              {capitalize(localStorage.getItem("username")) ===
-                (recipe.author && capitalize(recipe.author)) || hasVoted ? (
-                ""
-              ) : (
-                <div className="addNote">
-                  <div className="hearts">
-                    <img
-                      id="heart1"
-                      className="heart"
-                      onClick={toggleHearts}
-                      src={isNoted.heart1 ? icons.fullHeart : icons.emptyHeart}
-                      alt="noter 1/5"
-                    />
-                    <img
-                      id="heart2"
-                      className="heart"
-                      onClick={toggleHearts}
-                      src={isNoted.heart2 ? icons.fullHeart : icons.emptyHeart}
-                      alt="noter 2/5"
-                    />
-                    <img
-                      id="heart3"
-                      className="heart"
-                      onClick={toggleHearts}
-                      src={isNoted.heart3 ? icons.fullHeart : icons.emptyHeart}
-                      alt="noter 3/5"
-                    />
-                    <img
-                      id="heart4"
-                      className="heart"
-                      onClick={toggleHearts}
-                      src={isNoted.heart4 ? icons.fullHeart : icons.emptyHeart}
-                      alt="noter 4/5"
-                    />
-                    <img
-                      id="heart5"
-                      className="heart"
-                      onClick={toggleHearts}
-                      src={isNoted.heart5 ? icons.fullHeart : icons.emptyHeart}
-                      alt="noter 5/5"
-                    />
-                  </div>
-                  <button
-                    className={
-                      hasVoted ? "doneButton" : "creationIngredientsButton"
-                    }
-                    onClick={addNote}
-                  >
-                    {hasVoted ? "Noté" : "Noter"}
-                  </button>
-                </div>
-              )}
               <div className="addComment">
                 <input
                   type="text"

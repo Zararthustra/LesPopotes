@@ -162,8 +162,10 @@
   font-size: 2em;
   font-family: "Oswald", sans-serif;
   font-weight: 600;
+  text-align: center;
+  max-width: 20ch;
   color: var(--dark-popote);
-  padding: 0.5em 0;
+  padding: 0.5em;
 }
 .doneBy:hover {
   text-decoration: underline;
@@ -319,6 +321,7 @@
 }
 
 .addNote {
+  margin: 2em 0;
   width: 80%;
   display: flex;
   justify-content: space-between;

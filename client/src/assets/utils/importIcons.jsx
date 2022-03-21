@@ -35,4 +35,7 @@ export const icons = {
   dessert: require("../../assets/icons/dessert.png").default,
   boisson: require("../../assets/icons/boisson.png").default,
   autre: require("../../assets/icons/autre.png").default,
+  warning: require("../../assets/icons/warning.png").default,
+  info: require("../../assets/icons/info.png").default,
+  cancel: require("../../assets/icons/cancel-512.png").default,
 };

@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Avatar } from "../../components/Avatar";
 import { Host } from "../../assets/utils/host";
 import axios from "axios";
 import { refreshPage } from "../../assets/utils/refreshPage";
 import Select from "react-select";
 import { images } from "../../assets/utils/importImages";
+import { Toaster } from "../../components/toaster";
 
 export const Modifymyprofile = ({ userObject }) => {
   const [avatar, setAvatar] = useState(userObject.avatar);
@@ -20,6 +21,8 @@ export const Modifymyprofile = ({ userObject }) => {
   const [twitter, setTwitter] = useState(userObject.twitter || "");
   const [tiktok, setTiktok] = useState(userObject.tiktok || "");
   const [whatsapp, setWhatsapp] = useState(userObject.whatsapp || "");
+  const [saved, setSaved] = useState(false);
+  const toasterRef = useRef(null);
 
   const selectStyle = {
     control: (base, state) => ({
@@ -75,8 +78,11 @@ export const Modifymyprofile = ({ userObject }) => {
       .then((res) => {
         if (!res) return console.log("No response from server");
         if (res.data.error) return console.log(res.data);
-        console.log(res.data);
-        refreshPage(true);
+        setSaved(true);
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0;
+        toasterRef.current.showToaster();
+        setTimeout(() => refreshPage(true), 3000);
       })
       .catch((err) => {
         console.log("Error catched: ", err);
@@ -262,9 +268,16 @@ export const Modifymyprofile = ({ userObject }) => {
         />
       </div>
       <div className="separatePopotes"></div>
-      <button className="myprofileModifyButton" onClick={updateUser}>
-        Enregistrer
-      </button>
+      <Toaster
+        type="success"
+        message="Modification enregistrée"
+        ref={toasterRef}
+      />
+      {!saved && (
+        <button className="myprofileModifyButton" onClick={updateUser}>
+          Enregistrer
+        </button>
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { capitalize } from "../../assets/utils/capitalize";
 import { getLevel } from "../../assets/utils/getLevel";
@@ -7,6 +7,7 @@ import { Host } from "../../assets/utils/host";
 import ClipLoader from "react-spinners/ClipLoader";
 import { images } from "../../assets/utils/importImages";
 import { Modifymyprofile } from "./modifymyprofile";
+import { Toaster } from "../../components/toaster";
 
 export const Monprofil = () => {
   const navigate = useNavigate();
@@ -14,10 +15,16 @@ export const Monprofil = () => {
   const [userObject, setUserObject] = useState({});
   const [loading, setLoading] = useState(false);
   const [isInfos, setIsInfos] = useState(true);
+  const [isDisconnected, setIsDisconnected] = useState(false);
+  const toasterRef = useRef(null);
 
-  const logout = (event) => {
-    localStorage.clear();
-    navigate("/lapopote");
+  const logout = () => {
+    setIsDisconnected(true);
+    toasterRef.current.showToaster();
+    setTimeout(() => {
+      localStorage.clear();
+      navigate("/lapopote");
+    }, 3000);
   };
 
   // Load data when mounting
@@ -188,9 +195,16 @@ export const Monprofil = () => {
         ) : (
           <Modifymyprofile userObject={userObject} />
         )}
-        <div className="disconnectButton" onClick={logout}>
-          Se déconnecter
-        </div>
+        <Toaster
+          type="info"
+          message="Vous allez être deconnecté. À bientôt !"
+          ref={toasterRef}
+        />
+        {!isDisconnected && (
+          <div className="disconnectButton" onClick={logout}>
+            Se déconnecter
+          </div>
+        )}
       </div>
     </main>
   );

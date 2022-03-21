@@ -9,7 +9,6 @@ import { Host } from "../assets/utils/host";
 export const Forum = ({ users }) => {
   const navigate = useNavigate();
   const userId = localStorage.getItem("userid");
-  const userName = localStorage.getItem("username");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
@@ -137,6 +136,7 @@ export const Forum = ({ users }) => {
                 </div>
               </div>
             );
+          return "";
         })}
       </div>
     </div>
