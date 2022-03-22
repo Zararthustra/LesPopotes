@@ -291,6 +291,33 @@
   justify-content: space-between;
 }
 
+.groupLevels {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.levelBar {
+  background-color: #e7e4e1;
+  display: flex;
+  width: 80%;
+  border-radius: 40px;
+  height: 3em;
+  overflow: hidden;
+}
+.currentLevel {
+  background-color: var(--dark-popotes);
+  height: auto;
+  animation: progressBar 1s ease-in-out;
+}
+
+@keyframes progressBar {
+  from {
+    width: 0%;
+  }
+}
+
 .level {
   color: var(--dark-popotes);
   font-weight: 600;

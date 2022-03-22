@@ -17,7 +17,12 @@ export const Monprofil = () => {
   const [isInfos, setIsInfos] = useState(true);
   const [isDisconnected, setIsDisconnected] = useState(false);
   const toasterRef = useRef(null);
-
+  const level = getLevel(
+    userObject.recipes,
+    userObject.notes,
+    userObject.popotes,
+    userObject.comments
+  );
   const logout = () => {
     setIsDisconnected(true);
     toasterRef.current.showToaster();
@@ -39,7 +44,6 @@ export const Monprofil = () => {
       }
     };
     getUserObject();
-
     return () => (isSubscribed = false);
   }, [userName]);
 
@@ -83,13 +87,18 @@ export const Monprofil = () => {
         </div>
         {isInfos ? (
           <div className="popoteProfileInfosBody">
-            <div className="level">
-              {getLevel(
-                userObject.recipes,
-                userObject.notes,
-                userObject.popotes,
-                userObject.comments
-              )}
+            <div className="groupLevels">
+              <div className="level">{level && level[0]}</div>
+              <div className="levelBar">
+                <div
+                  className="currentLevel"
+                  style={{
+                    width: `${
+                      level && (level[1] > 40 ? 100 : (level[1] * 100) / 40)
+                    }%`,
+                  }}
+                />
+              </div>
             </div>
             <ul className="levelInfos">
               <li>
@@ -196,7 +205,7 @@ export const Monprofil = () => {
           <Modifymyprofile userObject={userObject} />
         )}
         <Toaster
-          type="info"
+          type="warning"
           message="Vous allez être deconnecté. À bientôt !"
           ref={toasterRef}
         />

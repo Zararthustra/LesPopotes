@@ -211,7 +211,7 @@ input[type="text"]:focus-within {
   cursor: pointer;
   position: fixed;
   left: 50%;
-  top: 0%;
+  top: 0em;
   transform: translate(-50%, -50%);
   width: 80%;
   height: fit-content;
@@ -220,7 +220,7 @@ input[type="text"]:focus-within {
   display: flex;
   align-items: center;
   font-size: 1.3em;
-  z-index: 2;
+  z-index: 9999;
   padding: 0.2em 0;
   font-family: "Oswald", sans-serif;
 }
@@ -229,6 +229,7 @@ input[type="text"]:focus-within {
   width: 1.5em;
   height: 1.5em;
   padding: 0 0.7em;
+  color: #ffc401d5;
 }
 
 .groupToasterMessage {
@@ -255,20 +256,20 @@ input[type="text"]:focus-within {
 @-webkit-keyframes fadeinout {
   10% {
     opacity: 1;
-    top: 15%;
+    top: 5em;
   }
   80% {
     opacity: 1;
-    top: 15%;
+    top: 5em;
   }
 }
 @keyframes fadeinout {
   10% {
     opacity: 1;
-    top: 15%;
+    top: 5em;
   }
   80% {
     opacity: 1;
-    top: 15%;
+    top: 5em;
   }
 }

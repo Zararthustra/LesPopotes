@@ -129,6 +129,7 @@
   font-weight: bolder;
 }
 .confirmDel {
+  cursor: pointer;
   border-radius: 10px;
   border: none;
   color: var(--white);

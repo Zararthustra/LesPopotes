@@ -270,7 +270,7 @@ export const Modifymyprofile = ({ userObject }) => {
       <div className="separatePopotes"></div>
       <Toaster
         type="success"
-        message="Modification enregistrée"
+        message="Modification enregistrée. Redirection ..."
         ref={toasterRef}
       />
       {!saved && (

@@ -149,7 +149,7 @@ export const Creation = () => {
     setSteps(tmpSteps);
   };
   const handleEditStep = (index) => {
-    if (!addStep) return;
+    if (!addStep || addStep.trim() === "") return;
     let tmpSteps = [...steps];
     tmpSteps[index] = addStep;
     setIsEditing(false);
@@ -402,7 +402,7 @@ export const Creation = () => {
           message={
             fieldMissing !== false
               ? `${fieldMissing} manquant`
-              : "Recette enregistrée !"
+              : "Recette enregistrée ! Redirection ..."
           }
           ref={toasterRef}
         />

@@ -44,7 +44,7 @@ export const Toaster = forwardRef(({ type, message }, ref) => {
       <div
         id={showToaster ? "showToaster" : "hideToaster"}
         className="toasterContainer"
-        style={{ backgroundColor: "#ff9e01ec" }}
+        style={{ backgroundColor: "#ffc401e5" }}
       >
         <img
           src={icons.warning}
@@ -52,7 +52,7 @@ export const Toaster = forwardRef(({ type, message }, ref) => {
           alt="avertissement"
         ></img>
         <div className="groupToasterMessage">
-          <div className="toasterTitle">Avertissement</div>
+          <div className="toasterTitle">Attention</div>
           <div className="toasterMessage">{message}</div>
         </div>
       </div>

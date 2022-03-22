@@ -22,6 +22,12 @@ export const Popotes = () => {
   const isNotMe = userObject.id !== parseInt(localStorage.getItem("userid"));
   const [loading, setLoading] = useState(false);
   const toasterRef = useRef(null);
+  const level = getLevel(
+    userObject.recipes,
+    userObject.notes,
+    userObject.popotes,
+    userObject.comments
+  );
 
   // Load data when mounting
   useEffect(() => {
@@ -181,13 +187,18 @@ export const Popotes = () => {
           </div>
           {activeTab === "infosTab" && (
             <div className="popoteProfileInfosBody">
-              <div className="level">
-                {getLevel(
-                  userObject.recipes,
-                  userObject.notes,
-                  userObject.popotes,
-                  userObject.comments
-                )}
+              <div className="groupLevels">
+                <div className="level">{level && level[0]}</div>
+                <div className="levelBar">
+                  <div
+                    className="currentLevel"
+                    style={{
+                      width: `${
+                        level && (level[1] > 40 ? 100 : (level[1] * 100) / 40)
+                      }%`,
+                    }}
+                  />
+                </div>
               </div>
               <ul className="levelInfos">
                 <li>

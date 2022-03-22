@@ -11,13 +11,16 @@ import { unityList } from "../../assets/utils/unityList";
 import { RecipeInfosModification } from "../../components/recipeInfosModification";
 import { RecipeIngredientsModification } from "../../components/recipeIngredientsModification";
 import { refreshPage } from "../../assets/utils/refreshPage";
+import { Toaster } from "../../components/toaster";
 
 export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
   //___________________________________________________ Variables
 
   const navigate = useNavigate();
+  const toasterRef = useRef(null);
   const selectIngredientRef = useRef();
   const selectUnityRef = useRef();
+  const [showButtons, setShowButtons] = useState(true);
   const clearSelectValues = () => {
     selectIngredientRef.current.setValue("");
     selectUnityRef.current.setValue("");
@@ -153,7 +156,7 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
     setSteps(tmpSteps);
   };
   const handleEditStep = (index) => {
-    if (!addStep) return
+    if (!addStep || addStep.trim() === "") return;
     let tmpSteps = [...steps];
     tmpSteps[index] = addStep;
     setIsEditing(false);
@@ -166,6 +169,9 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
     // Reset input
     document.getElementsByClassName("stepText")[0].value = "";
   };
+  const handlePressEnter = (event) => {
+    if (event.key === "Enter") handleAddStep();
+  };
 
   // Comment
   const handleComment = (event) => {
@@ -176,19 +182,46 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
 
   // Save created recipe to DB
   const handleSaveRecipe = () => {
-    if (
-      !recipeTitle ||
-      !nbPers ||
-      !diff ||
-      !type ||
-      !prepTime ||
-      ingredients.length === 0 ||
-      steps.length === 0
-    )
-      return setFieldMissing(true);
+    if (!recipeTitle) {
+      setFieldMissing("Titre");
+      toasterRef.current.showToaster();
+      return;
+    }
+    if (!type) {
+      setFieldMissing("Type");
+      toasterRef.current.showToaster();
+      return;
+    }
+    if (!nbPers) {
+      setFieldMissing("Nombre de personnes");
+      toasterRef.current.showToaster();
+      return;
+    }
+    if (!diff) {
+      setFieldMissing("Difficulté");
+      toasterRef.current.showToaster();
+      return;
+    }
+    if (!prepTime) {
+      setFieldMissing("Temps de préparation");
+      toasterRef.current.showToaster();
+      return;
+    }
+    if (ingredients.length === 0) {
+      setFieldMissing("Ingrédient");
+      toasterRef.current.showToaster();
+      return;
+    }
+    if (steps.length === 0) {
+      setFieldMissing("Etape");
+      toasterRef.current.showToaster();
+      return;
+    }
+
     updateRecipe();
-    alert("Recette modifiée avec succès 😊");
-    refreshPage();
+    setShowButtons(false);
+    toasterRef.current.showToaster();
+    setTimeout(() => refreshPage(true), 3000);
   };
 
   const updateRecipe = () => {
@@ -242,6 +275,15 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
 
   return (
     <main className="recipePage">
+      <Toaster
+        type={fieldMissing !== false ? "warning" : "success"}
+        message={
+          fieldMissing !== false
+            ? `${fieldMissing} manquant`
+            : "Modification enregistrée. Redirection ..."
+        }
+        ref={toasterRef}
+      />
       <div className="recipeContainer">
         <div className="overlayCreationImage">
           <img
@@ -347,6 +389,7 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
             <input
               type="text"
               className="stepText"
+              onKeyDown={handlePressEnter}
               onChange={handleStep}
               placeholder="Décrire avec précision. Une étape = une action."
             />
@@ -363,18 +406,19 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
             onChange={handleComment}
           />
         </div>
-        <div className="finalButtons">
-          {fieldMissing ? <div>Recette incomplète !</div> : ""}
-          <button
-            className="creationIngredientsButton"
-            onClick={handleSaveRecipe}
-          >
-            Modifier
-          </button>
-          <div className="cancel" onClick={() => navigate(-1)}>
-            Annuler
+        {showButtons && (
+          <div className="finalButtons">
+            <button
+              className="creationIngredientsButton"
+              onClick={handleSaveRecipe}
+            >
+              Modifier
+            </button>
+            <div className="cancel" onClick={() => navigate(-1)}>
+              Annuler
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </main>
   );
