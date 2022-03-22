@@ -111,12 +111,14 @@ export const Forum = ({ users }) => {
                       <div className="commentInfos">
                         <div>{user.type}</div>
                         <div>
-                          {getLevel(
-                            user.recipes,
-                            user.notes,
-                            user.popotes,
-                            user.comments
-                          )}
+                          {
+                            getLevel(
+                              user.recipes,
+                              user.notes,
+                              user.popotes,
+                              user.comments
+                            )[0]
+                          }
                         </div>
                       </div>
                     </div>
