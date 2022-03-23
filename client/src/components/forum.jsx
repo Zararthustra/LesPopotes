@@ -5,22 +5,27 @@ import { icons } from "../assets/utils/importIcons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Host } from "../assets/utils/host";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export const Forum = ({ users }) => {
   const navigate = useNavigate();
   const userId = localStorage.getItem("userid");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // Load data when mounting
   useEffect(() => {
+    setLoading(true);
     try {
       axios.get(`${Host}api/forum`).then((res) => {
         if (res.data) {
+          setLoading(false);
           setMessages(res.data);
         }
       });
     } catch (error) {
+      setLoading(false);
       console.log("An error occured while getting messages : ", error);
     }
   }, []);
@@ -83,64 +88,70 @@ export const Forum = ({ users }) => {
           />
         </div>
       </div>
-      <div className="commentsForum">
-        {messages?.map((message, index) => {
-          const user = users.find((user) => user.id === message.user_id);
-          const date =
-            message.createdAt?.split("T")[0].split("-")[2] +
-            "-" +
-            message.createdAt?.split("T")[0].split("-")[1] +
-            "-" +
-            message.createdAt?.split("T")[0].split("-")[0];
-          if (user)
-            return (
-              <div key={index} className="commentForum">
-                <div className="hoverMessage">
-                  <div className="commentAvatarHeader">
-                    <img src={user?.avatar} alt="avatar" className="avatar" />
-                    <div className="commentHeader">
-                      <div className="commentTop">
-                        <div
-                          className="pseudoForum"
-                          onClick={() => navigate(`/lespopotes/${user.name}`)}
-                        >
-                          {user.name && capitalize(user.name)}
+      {loading ? (
+        <div className="commentsForum">
+          <ClipLoader css={""} color={"#78f5ca"} loading={loading} size={100} />
+        </div>
+      ) : (
+        <div className="commentsForum">
+          {messages?.map((message, index) => {
+            const user = users.find((user) => user.id === message.user_id);
+            const date =
+              message.createdAt?.split("T")[0].split("-")[2] +
+              "-" +
+              message.createdAt?.split("T")[0].split("-")[1] +
+              "-" +
+              message.createdAt?.split("T")[0].split("-")[0];
+            if (user)
+              return (
+                <div key={index} className="commentForum">
+                  <div className="hoverMessage">
+                    <div className="commentAvatarHeader">
+                      <img src={user?.avatar} alt="avatar" className="avatar" />
+                      <div className="commentHeader">
+                        <div className="commentTop">
+                          <div
+                            className="pseudoForum"
+                            onClick={() => navigate(`/lespopotes/${user.name}`)}
+                          >
+                            {user.name && capitalize(user.name)}
+                          </div>
+                          <div className="commentDate">{date}</div>
                         </div>
-                        <div className="commentDate">{date}</div>
-                      </div>
-                      <div className="commentInfos">
-                        <div>{user.type}</div>
-                        <div>
-                          {
-                            getLevel(
-                              user.recipes,
-                              user.notes,
-                              user.popotes,
-                              user.comments
-                            )[0]
-                          }
+                        <div className="commentInfos">
+                          <div>{user.type}</div>
+                          <div>
+                            {
+                              getLevel(
+                                user.recipes,
+                                user.notes,
+                                user.popotes,
+                                user.comments
+                              )[0]
+                            }
+                          </div>
                         </div>
                       </div>
                     </div>
+                    <div className="forumMessageContent">
+                      {message.content && capitalize(message.content)}
+                    </div>
                   </div>
-                  <div className="forumMessageContent">
-                    {message.content && capitalize(message.content)}
+                  <div className="groupForumButtons">
+                    {/* <div className="forumMoreButton">9 commentaires</div> */}
+                    <div
+                      className="forumRepButton"
+                      onClick={() => alert("Bientôt disponible !")}
+                    >
+                      Répondre
+                    </div>
                   </div>
                 </div>
-                <div className="groupForumButtons">
-                  {/* <div className="forumMoreButton">9 commentaires</div> */}
-                  <div
-                    className="forumRepButton"
-                    onClick={() => alert("Bientôt disponible !")}
-                  >
-                    Répondre
-                  </div>
-                </div>
-              </div>
-            );
-          return "";
-        })}
-      </div>
+              );
+            return "";
+          })}
+        </div>
+      )}
     </div>
   );
 };

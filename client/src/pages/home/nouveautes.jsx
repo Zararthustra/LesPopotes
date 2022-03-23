@@ -12,6 +12,7 @@ export const Lastpubs = () => {
 
   // Load data when mounting
   useEffect(() => {
+    setLoading(true);
     getRecipes();
     return () => setRecipes();
   }, []);

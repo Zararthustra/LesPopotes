@@ -168,6 +168,7 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
     setSteps([...steps, capitalize(value)]);
     // Reset input
     document.getElementsByClassName("stepText")[0].value = "";
+    setAddStep("")
   };
   const handlePressEnter = (event) => {
     if (event.key === "Enter") handleAddStep();

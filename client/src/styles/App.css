@@ -170,6 +170,7 @@ input[type="text"]:focus-within {
   background-color: var(--popote);
 }
 .separatePopotes {
+  margin: 0.5em 0;
   width: 80%;
   height: 1px;
   background-color: var(--popotes);

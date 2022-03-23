@@ -12,6 +12,7 @@ export const Bestof = () => {
 
   // Load data when mounting
   useEffect(() => {
+    setLoading(true);
     getRecipes();
     return () => setRecipes();
   }, []);
@@ -41,8 +42,9 @@ export const Bestof = () => {
         ) : (
           recipes.map((recipe, index) => {
             console.log(recipe);
-            if (recipe.average >= 3.5) return <Card key={index} recipe={recipe} />;
-            return ""
+            if (recipe.average >= 3.5)
+              return <Card key={index} recipe={recipe} />;
+            return "";
           })
         )}
       </main>

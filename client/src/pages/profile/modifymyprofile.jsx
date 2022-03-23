@@ -112,7 +112,9 @@ export const Modifymyprofile = ({ userObject }) => {
 
   return (
     <div className="modifyProfileContainer">
+      <h3 className="profileSubTitle">Mon Popote</h3>
       <Avatar chosenAvatar={setAvatar} defaultAvatar={avatar} />
+      <div className="clickToChange">Cliquer sur l'image pour changer d'avatar</div>
       <div className="selectModifyTypes">
         <Select
           isSearchable={false}
@@ -156,6 +158,7 @@ export const Modifymyprofile = ({ userObject }) => {
         ""
       )}
       <div className="separatePopotes"></div>
+      <h3 className="profileSubTitle">Connexion</h3>
       <div>
         <p>Pseudo</p>
         <input
@@ -178,7 +181,7 @@ export const Modifymyprofile = ({ userObject }) => {
       <div>
         <p>Mot de passe</p>
         <input
-          type="text"
+          type="password"
           className="password"
           value={password}
           onChange={handleInputChange}
@@ -195,6 +198,7 @@ export const Modifymyprofile = ({ userObject }) => {
         ""
       )}
       <div className="separatePopotes"></div>
+      <h3 className="profileSubTitle">Réseaux</h3>
       <div className="center">
         <img className="mail" src={images.mail} alt="mail" />
         <input
