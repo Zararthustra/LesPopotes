@@ -40,9 +40,7 @@ export const Lespopotes = () => {
       const res = await axios.get(`${Host}api/users`);
       if (res.data) {
         setLoading(false);
-        setUsers(
-          res.data
-        );
+        setUsers(res.data);
       }
     };
     const getUsersPaginated = async () => {
@@ -52,9 +50,7 @@ export const Lespopotes = () => {
       if (res.data) {
         setTotalPage(res.data.count);
         setLoading(false);
-        setUsers(
-          res.data.rows
-        );
+        setUsers(res.data.rows);
       }
     };
 
@@ -94,28 +90,6 @@ export const Lespopotes = () => {
             setSearchFilter={setSearchFilter}
           />
           <div className="separatePopotes"></div>
-          <div className="prevNextButtons">
-            {!filter && !searchFilter && offset - limit >= 0 ? (
-              <div
-                className="prevButton"
-                onClick={() => setOffset(offset - limit)}
-              >
-                Précédents
-              </div>
-            ) : (
-              <div></div>
-            )}
-            {!filter && !searchFilter && offset + limit < totalPage ? (
-              <div
-                className="nextButton"
-                onClick={() => setOffset(offset + limit)}
-              >
-                Suivants
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </div>
           <div className="itemsContainer">
             {loading ? (
               <ClipLoader

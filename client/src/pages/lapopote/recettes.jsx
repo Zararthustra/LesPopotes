@@ -60,22 +60,7 @@ export const Recettes = () => {
         searchFilter={searchFilter}
         setSearchFilter={setSearchFilter}
       />
-      <div className="prevNextButtons">
-        {!filter && !searchFilter && offset - limit >= 0 ? (
-          <div className="prevButtonPopote" onClick={() => setOffset(offset - limit)}>
-            Précédents
-          </div>
-        ) : (
-          <div></div>
-        )}
-        {!filter && !searchFilter && offset + limit < totalPage ? (
-          <div className="nextButtonPopote" onClick={() => setOffset(offset + limit)}>
-            Suivants
-          </div>
-        ) : (
-          <div></div>
-        )}
-      </div>
+      <div className="prevNextButtons" />
       <div className="cardList">
         {loading ? (
           <ClipLoader css={""} color={"#f5a76c"} loading={loading} size={100} />
@@ -102,14 +87,20 @@ export const Recettes = () => {
       </div>
       <div className="prevNextButtons">
         {!filter && !searchFilter && offset - limit >= 0 ? (
-          <div className="prevButtonPopote" onClick={() => setOffset(offset - limit)}>
+          <div
+            className="prevButtonPopote"
+            onClick={() => setOffset(offset - limit)}
+          >
             Précédents
           </div>
         ) : (
           <div></div>
         )}
         {!filter && !searchFilter && offset + limit < totalPage ? (
-          <div className="nextButtonPopote" onClick={() => setOffset(offset + limit)}>
+          <div
+            className="nextButtonPopote"
+            onClick={() => setOffset(offset + limit)}
+          >
             Suivants
           </div>
         ) : (
