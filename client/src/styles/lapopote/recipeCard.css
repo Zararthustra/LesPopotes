@@ -48,6 +48,9 @@
   gap: 2em;
   align-self: center;
 }
+main .cardList {
+  margin: 0;
+}
 
 .card {
   border: 5px solid white;
@@ -83,7 +86,7 @@
   padding: 0.5em 0;
   color: var(--dark-popote);
   filter: drop-shadow(0 0 5px white);
-  line-height: 1em
+  line-height: 1em;
 }
 
 .separateLine {
