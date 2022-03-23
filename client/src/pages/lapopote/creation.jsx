@@ -370,7 +370,7 @@ export const Creation = () => {
               </li>
             );
           })}
-          <li>
+          <li className="step">
             <div className="addStep">
               <div className="stepTitle">Ajouter une étape</div>
               <div
