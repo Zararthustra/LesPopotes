@@ -8,13 +8,19 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { images } from "../../assets/utils/importImages";
 import { Modifymyprofile } from "./modifymyprofile";
 import { Toaster } from "../../components/toaster";
+import { Notification } from "../../components/notification";
 
 export const Monprofil = () => {
   const navigate = useNavigate();
   const userName = localStorage.getItem("username");
+  const userID = localStorage.getItem("userid");
   const [userObject, setUserObject] = useState({});
   const [loading, setLoading] = useState(false);
   const [isInfos, setIsInfos] = useState(true);
+  const [isNotif, setIsNotif] = useState(false);
+  const [notifs, setNotifs] = useState([]);
+  const [notifsToCheck, setNotifsToCheck] = useState([]);
+  const [hasCheckedNotifs, setHasCheckedNotifs] = useState(false);
   const [isDisconnected, setIsDisconnected] = useState(false);
   const toasterRef = useRef(null);
   const level = getLevel(
@@ -36,26 +42,61 @@ export const Monprofil = () => {
   useEffect(() => {
     let isSubscribed = true;
     setLoading(true);
-    const getUserObject = async () => {
+    const getUserInfos = async () => {
       const res = await axios.get(`${Host}api/users/${userName}`);
+      const resNotif = await axios.get(`${Host}api/notification/${userID}`);
       if (isSubscribed && res) {
         setUserObject(res.data);
         setLoading(false);
       }
+      if (isSubscribed && resNotif.data.length > 0) {
+        setNotifs(resNotif.data);
+
+        let notificationIDToCheck = []
+        resNotif.data.map((notif) => {
+          if (!notif.isChecked) return notificationIDToCheck.push(notif.id)
+          return ''
+        })
+        setNotifsToCheck(notificationIDToCheck);
+
+        if (notificationIDToCheck.length > 0) {
+          document.querySelector(".notifTab").classList = "notifTab twinkle";
+        }
+        else if (notificationIDToCheck.length === 0) {
+          document.querySelector(".notifTab").classList = "notifTab";
+          setHasCheckedNotifs(true)
+        }
+      }
     };
-    getUserObject();
+    getUserInfos();
     return () => (isSubscribed = false);
-  }, [userName]);
+  }, [userName, userID]);
+
+  useEffect(() => {
+    if (isNotif && hasCheckedNotifs && notifsToCheck.length > 0) axios.put(`${Host}api/notification`, { notificationIDArray: notifsToCheck })
+  })
 
   const toggleTabInfos = () => {
     document.querySelector(".infosTab").classList = "infosTab activeTab";
     document.querySelector(".messagesTab").classList = "messagesTab";
+    document.querySelector(".notifTab").classList = `notifTab${hasCheckedNotifs ? '' : " twinkle"}`;
     setIsInfos(true);
+    setIsNotif(false)
   };
   const toggleTabMessages = () => {
     document.querySelector(".messagesTab").classList = "messagesTab activeTab";
     document.querySelector(".infosTab").classList = "infosTab";
+    document.querySelector(".notifTab").classList = `notifTab${hasCheckedNotifs ? '' : " twinkle"}`;
     setIsInfos(false);
+    setIsNotif(false)
+  };
+  const toggleTabNotif = () => {
+    document.querySelector(".notifTab").classList = "notifTab activeTab";
+    document.querySelector(".messagesTab").classList = "messagesTab";
+    document.querySelector(".infosTab").classList = "infosTab";
+    setHasCheckedNotifs(true)
+    setIsInfos(false);
+    setIsNotif(true)
   };
 
   if (loading)
@@ -81,6 +122,9 @@ export const Monprofil = () => {
           <div onClick={toggleTabInfos} className="infosTab activeTab">
             Infos
           </div>
+          <div onClick={toggleTabNotif} className="notifTab">
+            Notifications
+          </div>
           <div onClick={toggleTabMessages} className="messagesTab">
             Modifier
           </div>
@@ -93,9 +137,8 @@ export const Monprofil = () => {
                 <div
                   className="currentLevel"
                   style={{
-                    width: `${
-                      level && (level[1] > 40 ? 100 : (level[1] * 100) / 40)
-                    }%`,
+                    width: `${level && (level[1] > 40 ? 100 : (level[1] * 100) / 40)
+                      }%`,
                   }}
                 />
               </div>
@@ -201,9 +244,17 @@ export const Monprofil = () => {
               )}
             </ul>
           </div>
-        ) : (
-          <Modifymyprofile userObject={userObject} />
-        )}
+        ) : isNotif ?
+          <div className="notifications">
+            {notifs.length > 0 ?
+              notifs.map((notif, index) => {
+                return <Notification key={index} notification={notif} />
+              })
+              : <h2 style={{ color: "var(--dark-popotes)" }}>Pas de notification</h2>}
+          </div>
+          : (
+            <Modifymyprofile userObject={userObject} />
+          )}
         <Toaster
           type="warning"
           message="Vous allez être deconnecté. À bientôt !"

@@ -98,7 +98,12 @@
   font-style: italic;
   color: var(--light-text);
 }
-
+.clickToChangeLast {
+  font-size: 0.8em;
+  font-style: italic;
+  color: var(--light-text);
+  margin-bottom: 1em;
+}
 .login {
   font-size: 1.5em;
   box-shadow: 3px 3px 10px -5px black;

@@ -232,7 +232,7 @@ export const Recette = () => {
       ".creationIngredientsButton"
     )?.classList;
 
-    if (voteButton && note > 0)
+    if (voteButton && note > 0) {
       axios
         .post(`${Host}api/notes`, {
           recipe_id: recetteID,
@@ -248,6 +248,16 @@ export const Recette = () => {
             voteButton.add("doneButton");
           }
         });
+
+      axios
+        .post(`${Host}api/notification`, {
+          sender_id: localStorage.getItem("userid"),
+          sender_name: localStorage.getItem("username"),
+          receiver_id: recipe.user_id,
+          recipe_id: recipe.id,
+          type: 'note'
+        })
+    }
   };
 
   //________________ Opinion Comment
@@ -263,7 +273,7 @@ export const Recette = () => {
       setComment("");
       return;
     }
-    if (comment)
+    if (comment) {
       axios
         .post(
           `${Host}api/comments`,
@@ -284,6 +294,16 @@ export const Recette = () => {
             setComment("");
           }
         });
+
+      axios
+        .post(`${Host}api/notification`, {
+          sender_id: localStorage.getItem("userid"),
+          sender_name: localStorage.getItem("username"),
+          receiver_id: recipe.user_id,
+          recipe_id: recipe.id,
+          type: 'comment'
+        })
+    }
   };
 
   //___________________________________________________ Render
@@ -313,8 +333,8 @@ export const Recette = () => {
           isFavorite
             ? "Recette ajoutée aux favoris"
             : isDeleted
-            ? "Recette supprimée. Redirection ..."
-            : "Recette supprimée des favoris"
+              ? "Recette supprimée. Redirection ..."
+              : "Recette supprimée des favoris"
         }
         ref={toasterRef}
       />
@@ -376,24 +396,24 @@ export const Recette = () => {
                   )}
                   {capitalize(localStorage.getItem("username")) ===
                     capitalize(recipe.author) && (
-                    <img
-                      src={require("../../assets/icons/edit.png").default}
-                      className="editRecipe"
-                      onClick={() => setIsModifying(true)}
-                      alt="modifier ma recette"
-                      title="Modifier ma recette"
-                    />
-                  )}
+                      <img
+                        src={require("../../assets/icons/edit.png").default}
+                        className="editRecipe"
+                        onClick={() => setIsModifying(true)}
+                        alt="modifier ma recette"
+                        title="Modifier ma recette"
+                      />
+                    )}
                   {capitalize(localStorage.getItem("username")) ===
                     capitalize(recipe.author) && (
-                    <img
-                      src={require("../../assets/icons/delete.png").default}
-                      className="deleteRecipe"
-                      onClick={() => setIsDeleting(true)}
-                      alt="supprimer ma recette"
-                      title="Supprimer ma recette"
-                    />
-                  )}
+                      <img
+                        src={require("../../assets/icons/delete.png").default}
+                        className="deleteRecipe"
+                        onClick={() => setIsDeleting(true)}
+                        alt="supprimer ma recette"
+                        title="Supprimer ma recette"
+                      />
+                    )}
                 </div>
                 <img
                   src={require("../../assets/icons/close.png").default}
@@ -506,48 +526,48 @@ export const Recette = () => {
             </>
           )}
       </div>
-      {comments.length > 0 && (
-        <div className="commentsContainer">
-          <h1 className="commentsTitle">Commentaires</h1>
-          {
-            // Add opinion only if logged
-            localStorage.getItem("username") && (
-              <div className="opinion">
-                <div className="addComment">
-                  <input
-                    type="text"
-                    placeholder="Restez courtois :)"
-                    onChange={handleComment}
-                    onKeyDown={handlePressEnter}
-                    className="userCommentTextArea"
-                  />
-                  <button
-                    onClick={addComment}
-                    className="myprofileModifyButton"
-                  >
-                    Commenter
-                  </button>
-                </div>
-              </div>
-            )
-          }
-          <div
-            className={`${
-              comments.length > 6 ? "comments" : "commentsWithoutContainer"
-            }`}
-          >
-            {comments.map((comment, index) => {
-              return (
-                <Comment
-                  key={index}
-                  comment={comment}
-                  recipeAuthor={recipe.author}
+      <div className="commentsContainer">
+        {localStorage.getItem("username")
+          ? <h1 className="commentsTitle">Commentaires</h1>
+          : <div className="login" onClick={() => navigate("/profil")}>
+            Se connecter
+          </div>}
+        { // Add opinion only if logged
+          localStorage.getItem("username") && (
+            <div className="opinion">
+              <div className="addComment">
+                <input
+                  type="text"
+                  placeholder="Restez courtois :)"
+                  onChange={handleComment}
+                  onKeyDown={handlePressEnter}
+                  className="userCommentTextArea"
                 />
-              );
-            })}
-          </div>
+                <button
+                  onClick={addComment}
+                  className="myprofileModifyButton"
+                >
+                  Commenter
+                </button>
+              </div>
+            </div>
+          )
+        }
+        <div
+          className={`${comments.length > 6 ? "comments" : "commentsWithoutContainer"
+            }`}
+        >
+          {comments.map((comment, index) => {
+            return (
+              <Comment
+                key={index}
+                comment={comment}
+                recipeAuthor={recipe.author}
+              />
+            );
+          })}
         </div>
-      )}
+      </div>
     </main>
   );
 };

@@ -2,35 +2,44 @@
   .myprofileContainer {
     font-size: 0.9em !important;
   }
+
   .userInfos {
     width: 90% !important;
   }
 }
+
 @media all and (max-width: 400px) {
   .modifyProfileContainer input {
     width: 10em !important;
   }
+
   .addPopote {
     width: 2em !important;
   }
+
   .mypopoteNames {
     font-size: 1.4em !important;
   }
+
   .popoteProfileHeader .avatar,
   .myprofileHeader .avatar {
-    width: 5em !important;
+    width : 5em !important;
     height: 5em !important;
   }
 }
+
 @media all and (min-width: 500px) {
+
   .popoteProfileHeader .avatar,
   .myprofileHeader .avatar {
-    width: 8em !important;
+    width : 8em !important;
     height: 8em !important;
   }
+
   .myprofileHeader {
     gap: 2em !important;
   }
+
   .popoteProfile {
     width: 25em !important;
   }
@@ -40,30 +49,32 @@
  * My Profile
  */
 .myprofileBody {
-  min-height: 80vh;
-  display: flex;
+  min-height     : 80vh;
+  display        : flex;
   justify-content: center;
-  align-items: center;
+  align-items    : center;
 }
+
 .profileContainer {
-  width: 100%;
-  padding: 2em 0;
-  display: flex;
+  width          : 100%;
+  padding        : 2em 0;
+  display        : flex;
   justify-content: center;
 }
+
 .profileContainer ::selection {
-  color: var(--white);
+  color           : var(--white);
   background-color: var(--dark-popotes);
 }
 
 .profileNames {
-  font-size: 2em;
-  display: flex;
-  flex-direction: column;
+  font-size      : 2em;
+  display        : flex;
+  flex-direction : column;
   justify-content: flex-end;
-  align-items: flex-start;
-  font-family: "Oswald", sans-serif;
-  line-height: 1.2em;
+  align-items    : flex-start;
+  font-family    : "Oswald", sans-serif;
+  line-height    : 1.2em;
 }
 
 .modify {
@@ -71,23 +82,23 @@
 }
 
 .mypopoteInfos {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1em 1em;
+  width           : 100%;
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  padding         : 1em 1em;
   background-color: var(--popotes);
-  gap: 0.5em;
+  gap             : 0.5em;
 }
 
 .myprofileHeader {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1em 1em;
+  width           : 100%;
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  padding         : 1em 1em;
   background-color: var(--popotes);
-  gap: 0.5em;
+  gap             : 0.5em;
 }
 
 /*
@@ -95,196 +106,262 @@
  */
 
 .profileSubTitle {
-color: var(--dark);
-align-self: flex-start;
-padding-left: 1em;
-font-size: 1.5em;
-font-weight: 600;
-font-family: 'Oswald', sans-serif;
-margin: 0 0 1em;
-text-decoration: underline;
+  color          : var(--dark);
+  align-self     : flex-start;
+  padding-left   : 1em;
+  font-size      : 1.5em;
+  font-weight    : 600;
+  font-family    : 'Oswald', sans-serif;
+  margin         : 0 0 1em;
+  text-decoration: underline;
 }
 
 .modifyProfileContainer input:focus-within {
-  border: none;
+  border : none;
   outline: 1px solid var(--dark-popotes);
 }
+
 .modifyProfileContainer input {
-  width: 15em;
-  border: 1px solid var(--popotes);
+  width        : 15em;
+  border       : 1px solid var(--popotes);
   border-radius: 5px;
 }
+
 .modifyProfileContainer p {
-  margin: 0;
-  text-align: left;
-  color: var(--dark-popotes);
+  margin     : 0;
+  text-align : left;
+  color      : var(--dark-popotes);
   font-weight: 600;
 }
+
 .modifyProfileContainer {
-  padding: 1em 0;
-  width: 100%;
-  display: flex;
+  padding       : 1em 0;
+  width         : 100%;
+  display       : flex;
   flex-direction: column;
-  align-items: center;
-  font-size: 1.1em;
-  gap: 0.5em;
+  align-items   : center;
+  font-size     : 1.1em;
+  gap           : 0.5em;
 }
+
 .modifyProfileContainer .mail {
-  width: 2em;
+  width : 2em;
   height: 1.5em;
 }
+
 .modifyProfileContainer .linkedin {
-  width: 2em;
+  width : 2em;
   height: 2em;
 }
+
 .modifyProfileContainer .center {
-  width: 70%;
-  display: flex;
+  width          : 70%;
+  display        : flex;
   justify-content: space-between;
-  align-items: center;
+  align-items    : center;
 }
 
 .cautionMessage {
-  color: red;
+  color    : red;
   font-size: 0.7em;
 }
 
 .selectModifyTypes {
   display: flex;
-  gap: 0.5em;
+  gap    : 0.5em;
 }
 
 .popoteTypeDetailsButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Oswald", sans-serif;
-  font-size: 0.7em;
-  cursor: pointer;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  font-family     : "Oswald", sans-serif;
+  font-size       : 0.7em;
+  cursor          : pointer;
   background-color: var(--popotes);
-  border: 1px solid var(--dark-popotes);
-  border-radius: 5px;
-  padding: 0.5em 1em;
+  border          : 1px solid var(--dark-popotes);
+  border-radius   : 5px;
+  padding         : 0.5em 1em;
 }
+
 .popoteTypeDetailsButton:hover {
   background-color: #78f5c9a4;
 }
+
 .popoteTypeDetails {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  display         : flex;
+  flex-direction  : column;
+  justify-content : center;
+  align-items     : flex-start;
   background-color: rgba(138, 255, 230, 0.466);
-  padding: 0 2em;
-  border-radius: 10px;
+  padding         : 0 2em;
+  border-radius   : 10px;
 }
+
 .detailTitle {
-  font-size: 0.9em;
+  font-size  : 0.9em;
   font-family: "Oswald", sans-serif;
-  color: var(--dark-popotes);
+  color      : var(--dark-popotes);
 }
+
 .detailDescription {
-  color: var(--dark);
+  color        : var(--dark);
   margin-bottom: 1em;
-  font-size: 0.6em;
+  font-size    : 0.6em;
 }
 
 /*
  * Popote profile
  */
 .popoteContainer {
-  width: 100%;
-  min-height: 40em;
-  padding: 2em 0;
-  display: flex;
+  width          : 100%;
+  min-height     : 40em;
+  padding        : 2em 0;
+  display        : flex;
   justify-content: center;
 }
 
 .popoteContainer ::selection {
-  color: var(--white);
+  color           : var(--white);
   background-color: var(--dark-popotes);
 }
 
 .popoteProfile {
-  width: 90%;
-  display: flex;
-  border: 2px solid var(--dark-popotes);
-  border-radius: 30px;
-  overflow: hidden;
-  flex-direction: column;
-  align-items: center;
+  width           : 90%;
+  display         : flex;
+  border          : 2px solid var(--dark-popotes);
+  border-radius   : 30px;
+  overflow        : hidden;
+  flex-direction  : column;
+  align-items     : center;
   background-color: var(--white);
-  box-shadow: 0 0 10px grey;
+  box-shadow      : 0 0 10px grey;
 }
 
 .popoteProfileHeader {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 1em 1em;
+  width           : 100%;
+  display         : flex;
+  justify-content : flex-start;
+  align-items     : center;
+  padding         : 1em 1em;
   background-color: var(--popotes);
-  gap: 0.5em;
+  gap             : 0.5em;
 }
 
 .closePopote {
-  cursor: pointer;
-  width: 1.5em;
+  cursor  : pointer;
+  width   : 1.5em;
   position: relative;
-  top: -2.7em;
-  left: 0.7em;
+  top     : -2.7em;
+  left    : 0.7em;
 }
 
 .popoteProfileHeader .avatar {
-  width: 6em;
+  width : 6em;
   height: 6em;
 }
+
 .mypopoteNames {
-  font-size: 2em;
-  display: flex;
-  flex-direction: column;
+  font-size      : 2em;
+  display        : flex;
+  flex-direction : column;
   justify-content: flex-end;
-  align-items: flex-start;
-  font-family: "Oswald", sans-serif;
-  line-height: 1.2em;
-  width: 55%;
+  align-items    : flex-start;
+  font-family    : "Oswald", sans-serif;
+  line-height    : 1.2em;
+  width          : 55%;
 }
 
 .addPopote {
-  cursor: pointer;
+  cursor    : pointer;
   align-self: flex-end;
-  width: 1.5em;
+  width     : 1.5em;
 }
 
 .tabs {
-  display: flex;
-  width: 100%;
+  display        : flex;
+  width          : 100%;
   justify-content: center;
-  align-items: center;
+  align-items    : center;
 }
 
 .infosTab,
+.notifTab,
 .messagesTab,
 .recettesTab {
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  font-family: "Oswald", sans-serif;
-  border: 1px solid var(--dark-popotes);
-  font-size: 1.2em;
+  cursor          : pointer;
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  width           : 50%;
+  font-family     : "Oswald", sans-serif;
+  border          : 1px solid var(--dark-popotes);
+  font-size       : 1.2em;
   background-color: #adaaaa44;
-  height: 2em;
-  color: var(--dark);
+  height          : 2em;
+  color           : var(--dark);
 }
+
 .infosTab:hover,
 .messagesTab:hover {
   background-color: #67d1ac96;
 }
+
 .activeTab {
   background-color: var(--dark-popotes);
-  color: var(--white);
+  color           : var(--white);
+}
+
+.twinkle {
+  animation: twinkle 1.5s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0% {
+    background-color: none;
+  }
+
+  50% {
+    background-color: #eb5c5cec;
+    color           : var(--white);
+  }
+
+  100% {
+    background-color: none;
+  }
+}
+
+/*
+ * Notifications
+ */
+
+.notifications {
+  width         : 100%;
+  display       : flex;
+  flex-direction: column;
+  align-items   : center;
+  gap           : .2em;
+  margin        : 1em 0;
+  min-height    : 25em;
+}
+
+.notification {
+  cursor          : pointer;
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  text-align      : center;
+  min-height      : 2em;
+  padding         : .2em;
+  width           : 90%;
+  border-radius   : 5px;
+  background-color: var(--popotes);
+  color           : var(--dark);
+}
+
+.notification:hover {
+  background-color: var(--dark-popotes);
+  color           : var(--white);
 }
 
 /*
@@ -293,35 +370,38 @@ text-decoration: underline;
 
 .popoteProfileInfosBody,
 .popoteProfileMessagesBody {
-  width: 100%;
-  height: 27.5em;
-  display: flex;
+  width         : 100%;
+  height        : 27.5em;
+  display       : flex;
   flex-direction: column;
-  align-items: center;
+  align-items   : center;
 }
+
 .popoteProfileInfosBody {
   justify-content: space-between;
 }
 
 .groupLevels {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  width          : 100%;
+  display        : flex;
+  flex-direction : column;
   justify-content: center;
-  align-items: center;
+  align-items    : center;
 }
+
 .levelBar {
   background-color: #e7e4e1;
-  display: flex;
-  width: 80%;
-  border-radius: 40px;
-  height: 3em;
-  overflow: hidden;
+  display         : flex;
+  width           : 80%;
+  border-radius   : 40px;
+  height          : 3em;
+  overflow        : hidden;
 }
+
 .currentLevel {
   background-color: var(--dark-popotes);
-  height: auto;
-  animation: progressBar 1s ease-in-out;
+  height          : auto;
+  animation       : progressBar 1s ease-in-out;
 }
 
 @keyframes progressBar {
@@ -331,31 +411,34 @@ text-decoration: underline;
 }
 
 .level {
-  color: var(--dark-popotes);
+  color      : var(--dark-popotes);
   font-weight: 600;
-  font-size: 2.5em;
-  margin-top: 0.7em;
+  font-size  : 2.5em;
+  margin-top : 0.7em;
 }
 
 .levelInfos {
-  color: var(--light-text);
-  display: flex;
-  flex-direction: column;
+  color          : var(--light-text);
+  display        : flex;
+  flex-direction : column;
   justify-content: flex-start;
-  align-items: flex-start;
-  width: 80%;
-  margin: 2em 0;
+  align-items    : flex-start;
+  width          : 80%;
+  margin         : 2em 0;
 }
+
 .levelInfos li {
-  display: flex;
-  width: 100%;
+  display        : flex;
+  width          : 100%;
   justify-content: space-between;
 }
-.levelInfos li p + p {
+
+.levelInfos li p+p {
   color: var(--dark-popotes);
 }
+
 .levelInfos p {
-  margin: 0;
+  margin   : 0;
   font-size: 1.6em;
 }
 
@@ -364,67 +447,74 @@ text-decoration: underline;
  */
 
 .socialnetworks {
-  display: flex;
-  flex-wrap: wrap;
+  display        : flex;
+  flex-wrap      : wrap;
   justify-content: space-around;
-  align-items: center;
-  width: 90%;
-  margin: 1em;
+  align-items    : center;
+  width          : 90%;
+  margin         : 1em;
 }
+
 .socialnetworks .linkedin {
   cursor: pointer;
-  width: 2em;
+  width : 2em;
   height: 2em;
 }
+
 .socialnetworks .mail {
   cursor: pointer;
-  width: 2.5em;
+  width : 2.5em;
   height: 1.7em;
 }
+
 .instagram,
 .snapchat,
 .twitter,
 .tiktok,
 .whatsapp {
   cursor: pointer;
-  width: 2em;
+  width : 2em;
   height: 2em;
 }
+
 .facebook {
   cursor: pointer;
-  width: 1em;
+  width : 1em;
   height: 2em;
 }
 
 /*
  *_______________________________________________
  */
-.popoteRecipe > div {
+.popoteRecipe>div {
   max-width: 80%;
 }
+
 .popoteRecipe {
-  width: 90%;
-  padding: 0.5em;
-  display: flex;
+  width          : 90%;
+  padding        : 0.5em;
+  display        : flex;
   justify-content: space-between;
-  align-items: center;
-  border-radius: 5px;
-  font-weight: 600;
-  text-align: end;
+  align-items    : center;
+  border-radius  : 5px;
+  font-weight    : 600;
+  text-align     : end;
 }
+
 .popoteRecipe:hover {
-  cursor: pointer;
-  color: var(--white);
+  cursor          : pointer;
+  color           : var(--white);
   background-color: #e76400;
 }
+
 .popoteRecipes {
-  padding: 3em 0;
-  display: flex;
-  flex-direction: column;
+  padding        : 3em 0;
+  display        : flex;
+  flex-direction : column;
   justify-content: center;
-  align-items: center;
-  gap: 1em;
-  width: 100%;
+  align-items    : center;
+  gap            : 1em;
+  width          : 100%;
 }
 
 /*
@@ -432,27 +522,28 @@ text-decoration: underline;
  */
 
 .myprofileModifyButton {
-  width: fit-content;
-  margin: 1em 0 0;
-  cursor: pointer;
-  padding: 0.4em 1em;
-  color: var(--white);
-  font-weight: bolder;
-  font-size: 1.2em;
+  width           : fit-content;
+  margin          : 1em 0 0;
+  cursor          : pointer;
+  padding         : 0.4em 1em;
+  color           : var(--white);
+  font-weight     : bolder;
+  font-size       : 1.2em;
   background-color: var(--dark-popotes);
-  border-radius: 30px;
-  border: none;
-  box-shadow: 1px 1px 8px 1px #dcdcdc;
+  border-radius   : 30px;
+  border          : none;
+  box-shadow      : 1px 1px 8px 1px #dcdcdc;
 }
+
 .disconnectButton {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  cursor: pointer;
+  display         : flex;
+  justify-content : space-around;
+  align-items     : center;
+  cursor          : pointer;
   background-color: red;
-  border: none;
-  width: 100%;
-  height: 2em;
-  color: var(--white);
-  font-weight: bolder;
+  border          : none;
+  width           : 100%;
+  height          : 2em;
+  color           : var(--white);
+  font-weight     : bolder;
 }

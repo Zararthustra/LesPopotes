@@ -40,26 +40,35 @@ export const Messages = ({ popote }) => {
     if (event.key === "Enter") sendMessage();
   };
   const sendMessage = () => {
-    if (message)
+    if (message) {
       axios
         .post(`${Host}api/messages`, {
           content: message,
           user_id,
           popote_id,
         })
-        .then((res) => {
-          if (res.data) {
-            setMessages([
-              ...messages,
-              { user_id: parseInt(user_id), content: message },
-              res.data.content,
-            ]);
-            document.querySelector(".sendInput").value = "";
-            setMessage("");
-            const container = document.querySelector(".messageContainer");
-            container.scrollTo(0, container.scrollHeight);
-          }
-        });
+      .then((res) => {
+        if (res.data) {
+          setMessages([
+            ...messages,
+            { user_id: parseInt(user_id), content: message },
+            res.data.content,
+          ]);
+          document.querySelector(".sendInput").value = "";
+          setMessage("");
+          const container = document.querySelector(".messageContainer");
+          container.scrollTo(0, container.scrollHeight);
+        }
+      });
+
+      axios
+        .post(`${Host}api/notification`, {
+          sender_id: localStorage.getItem("userid"),
+          sender_name: localStorage.getItem("username"),
+          receiver_id: popote_id,
+          type: 'message'
+        })
+    }
   };
 
   return (

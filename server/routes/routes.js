@@ -165,6 +165,7 @@ router.get("/users/pagination/:offset", (req, res) => {
   db.User.findAndCountAll({
     offset,
     limit,
+    order: [["createdAt", "DESC"]],
   })
     .then((result) => res.send(result))
     .catch((err) => {
@@ -971,6 +972,84 @@ router.get("/forum", (req, res) => {
     });
 });
 
+//________________________________________ Notifications
+
+// Retrieve user notifications
+router.get("/notification/:userID", (req, res) => {
+  db.Notification.findAll({
+    where: {
+      receiver_id: req.params.userID,
+    },
+    order: [["createdAt", "DESC"]],
+  }).then((UserNotification) => res.json(UserNotification));
+});
+
+// Create
+router.post("/notification", (req, res) => {
+  const isChecked = req.body.isChecked;
+  const type = req.body.type;
+  const receiver_id = req.body.receiver_id;
+  const sender_id = req.body.sender_id;
+  const sender_name = req.body.sender_name;
+
+  const recipe_id = req.body.recipe_id;
+  const comment_id = req.body.comment_id;
+  const note_id = req.body.note_id;
+  const message_id = req.body.message_id;
+  const friendship_id = req.body.friendship_id;
+  const thread_id = req.body.thread_id;
+  const like_id = req.body.like_id;
+
+  db.Notification.create({
+    isChecked,
+    type,
+    receiver_id,
+    sender_id,
+    sender_name,
+    recipe_id,
+    comment_id,
+    note_id,
+    message_id,
+    friendship_id,
+    thread_id,
+    like_id
+  }).then((createdNotif) => res.json(createdNotif));
+});
+
+// Check
+router.put("/notification", (req, res) => {
+  db.Notification.update({
+    isChecked: true
+  }, {
+    where: {
+      id: req.body.notificationIDArray,
+    },
+  })
+    .then((resp) => {
+      if (!resp) {
+        res.sendStatus(500);
+        return console.log("Update notification: \n", resp);
+      }
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "PUT check notification"));
+      res.json({ error: err.name });
+    });
+});
+
+// Delete
+router.delete("/notification/:notificationID", (req, res) => {
+  db.Notification.destroy({
+    where: {
+      id: req.params.notificationID,
+    },
+  }).catch((err) => {
+    console.log(customizedError(err, "DELETE destroy notification"));
+    res.json({ error: err.name });
+  });
+})
+
 //________________________________________ Not implemented yet:
 
 //________________________________________ Tags
@@ -1013,23 +1092,6 @@ router.post("/like", (req, res) => {
 });
 
 module.exports = router;
-
-//________________________________________ Notifications
-
-// Create
-router.post("/notification", (req, res) => {
-  const isChecked = req.body.isChecked;
-  const recipe_id = req.body.recipe_id;
-  const comment_id = req.body.comment_id;
-  const user_id = req.body.user_id;
-
-  db.Notification.create({
-    isChecked,
-    recipe_id,
-    comment_id,
-    user_id,
-  }).then((createdNotif) => res.json(createdNotif));
-});
 
 //________________________________________ User Notifications
 

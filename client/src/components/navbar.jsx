@@ -1,10 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { refreshPage } from "../assets/utils/refreshPage";
+import { Host } from "../assets/utils/host";
+import axios from "axios";
 
 export const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation().pathname;
+  const userID = localStorage.getItem("userid");
+  const [notifsToCheck, setNotifsToCheck] = useState(0);
 
   // Display the switch box color according to route /^\/lapopote\/.*/
   useEffect(() => {
@@ -12,19 +16,35 @@ export const Navbar = () => {
     let profileIcon = document.getElementById("profile").classList;
     let homeIcon = document.getElementById("home").classList;
 
+    const getNotifs = async () => {
+      const resNotif = await axios.get(`${Host}api/notification/${userID}`);
+      if (resNotif.data.length > 0) {
+        setNotifsToCheck(resNotif.data.filter((notif) => notif.isChecked === false).length)
+      }
+    }
+
     if (location.match(/lapopote/)) {
       slider.background = "var(--popote)";
+      slider.animation = "none"
       slider.setProperty("--switch", "var(--dark-popote)");
     } else if (location.match(/lespopotes/)) {
       slider.background = "var(--popotes)";
+      slider.animation = "none"
       slider.setProperty("--switch", "var(--dark-popotes)");
-    } else {
+    } else if (location === '/') {
       slider.background = "grey";
+      slider.animation = "clickBait 3s infinite"
+      slider.webkitAnimation = "clickBait 3s infinite"
+    }
+     else {
+      slider.background = "grey";
+      slider.animation = "none"
       slider.setProperty("--switch", "var(--dark)");
       if (location === "/accueil") homeIcon.add("activeIcon");
       if (location === "/profil") profileIcon.add("activeIcon");
     }
-  }, [location]);
+    getNotifs()
+  }, [location, userID]);
 
   const onSwitch = () => {
     let slider = document.querySelector(".slider").style;
@@ -107,7 +127,9 @@ export const Navbar = () => {
         className="profileNav"
         onClick={() => activeIcon("profile")}
         title="Profil"
-      />
+      >
+        {notifsToCheck > 0 && <div className="notificationChip">{notifsToCheck}</div>}
+      </div>
     </div>
   );
 };

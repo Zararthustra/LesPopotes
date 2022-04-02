@@ -95,6 +95,13 @@ export const Popotes = () => {
           toasterRef.current.showToaster();
         }
       });
+    axios
+      .post(`${Host}api/notification`, {
+        sender_id: localStorage.getItem("userid"),
+        sender_name: localStorage.getItem("username"),
+        receiver_id: userObject.id,
+        type: 'friendship'
+      })
   };
 
   const deletePopote = () => {
@@ -193,9 +200,8 @@ export const Popotes = () => {
                   <div
                     className="currentLevel"
                     style={{
-                      width: `${
-                        level && (level[1] > 40 ? 100 : (level[1] * 100) / 40)
-                      }%`,
+                      width: `${level && (level[1] > 40 ? 100 : (level[1] * 100) / 40)
+                        }%`,
                     }}
                   />
                 </div>
@@ -331,7 +337,7 @@ export const Popotes = () => {
                   );
                 })
               ) : (
-                <div>Pas de recette</div>
+                <h2 style={{ color: "var(--dark-popote)" }}>Pas de recette</h2>
               )}
             </div>
           )}

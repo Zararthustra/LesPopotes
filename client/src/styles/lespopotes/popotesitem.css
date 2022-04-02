@@ -15,6 +15,7 @@
 
 .itemContainer {
   width: 20.5ch;
+  height: 5.5em;
   cursor: pointer;
   display: flex;
   flex-wrap: wrap;

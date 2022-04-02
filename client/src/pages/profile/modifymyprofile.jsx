@@ -199,11 +199,15 @@ export const Modifymyprofile = ({ userObject }) => {
       )}
       <div className="separatePopotes"></div>
       <h3 className="profileSubTitle">Réseaux</h3>
+      <div className="clickToChange">Copiez/collez un lien vers vos profils</div>
+      <div className="clickToChange">pour les partager avec les popotes.</div>
+      <div className="clickToChangeLast">Ils apparaîteront sur votre profil</div>
       <div className="center">
         <img className="mail" src={images.mail} alt="mail" />
         <input
           id="mail"
           type="text"
+          placeholder="Mon adresse mail"
           value={mail}
           onChange={handleInputChange}
         />
@@ -212,6 +216,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <img className="linkedin" src={images.linkedin} alt="linkedin" />
         <input
           id="linkedin"
+          placeholder="Lien vers mon profil Linkedin"
           type="text"
           value={linkedin}
           onChange={handleInputChange}
@@ -221,6 +226,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <img className="facebook" src={images.facebook} alt="facebook" />
         <input
           id="facebook"
+          placeholder="Lien vers mon profil Facebook"
           type="text"
           value={facebook}
           onChange={handleInputChange}
@@ -230,6 +236,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <img className="snapchat" src={images.snapchat} alt="snapchat" />
         <input
           id="snapchat"
+          placeholder="Lien vers mon profil Snapchat"
           type="text"
           value={snapchat}
           onChange={handleInputChange}
@@ -239,6 +246,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <img className="instagram" src={images.instagram} alt="instagram" />
         <input
           id="instagram"
+          placeholder="Lien vers mon profil Instagram"
           type="text"
           value={instagram}
           onChange={handleInputChange}
@@ -248,6 +256,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <img className="twitter" src={images.twitter} alt="twitter" />
         <input
           id="twitter"
+          placeholder="Lien vers mon profil Twitter"
           type="text"
           value={twitter}
           onChange={handleInputChange}
@@ -257,6 +266,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <img className="tiktok" src={images.tiktok} alt="tiktok" />
         <input
           id="tiktok"
+          placeholder="Lien vers mon profil Tiktok"
           type="text"
           value={tiktok}
           onChange={handleInputChange}
@@ -266,6 +276,7 @@ export const Modifymyprofile = ({ userObject }) => {
         <img className="whatsapp" src={images.whatsapp} alt="whatsapp" />
         <input
           id="whatsapp"
+          placeholder="Lien vers mon profil Whatsapp"
           type="text"
           value={whatsapp}
           onChange={handleInputChange}
