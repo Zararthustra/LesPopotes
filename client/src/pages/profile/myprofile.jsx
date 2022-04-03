@@ -73,8 +73,9 @@ export const Monprofil = () => {
   }, [userName, userID]);
 
   useEffect(() => {
+    notifsToCheck.length === 0 ? setHasCheckedNotifs(true) : setHasCheckedNotifs(false)
     if (isNotif && hasCheckedNotifs && notifsToCheck.length > 0) axios.put(`${Host}api/notification`, { notificationIDArray: notifsToCheck })
-  })
+  }, [notifsToCheck, isNotif, hasCheckedNotifs])
 
   const toggleTabInfos = () => {
     document.querySelector(".infosTab").classList = "infosTab activeTab";

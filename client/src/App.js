@@ -16,6 +16,7 @@ import { Favorites } from "./pages/profile/favorites";
 import { Mesrecettes } from "./pages/profile/mesrecettes";
 import { Monprofil } from "./pages/profile/myprofile";
 import { Homelanding } from "./pages/home/homelanding";
+import { NotFound } from "./components/notFound";
 
 export const App = () => {
   // Loader logo des popotes
@@ -72,12 +73,7 @@ export const App = () => {
         </Route>
 
         {/* 404 */}
-        <Route
-          path="*"
-          element={
-            <h1 style={{ overflowWrap: "anywhere" }}>{"40".repeat(999)}</h1>
-          }
-        />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </BrowserRouter>

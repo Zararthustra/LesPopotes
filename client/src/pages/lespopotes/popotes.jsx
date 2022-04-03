@@ -19,6 +19,7 @@ export const Popotes = () => {
   const [activeTab, setActiveTab] = useState("infosTab");
   const [recipes, setRecipes] = useState([]);
   const [isMyPopote, setIsMyPopote] = useState(false);
+  const [notFound, setNotFound] = useState(false);
   const isNotMe = userObject.id !== parseInt(localStorage.getItem("userid"));
   const [loading, setLoading] = useState(false);
   const toasterRef = useRef(null);
@@ -60,9 +61,14 @@ export const Popotes = () => {
               setLoading(false);
             } else setLoading(false);
           });
+      } else {
+        setLoading(false)
+        setNotFound(true)
       }
     });
+
   }, [popote]);
+
 
   const toggleTabInfos = () => {
     document.querySelector(".infosTab").classList = "infosTab activeTab";
@@ -132,6 +138,13 @@ export const Popotes = () => {
         <ClipLoader css={""} color={"#78f5ca"} loading={loading} size={100} />
       </main>
     );
+  if (notFound) return (
+    <main className="notFound" onClick={() => navigate('/lespopotes')}>
+      <img src="https://avatars.dicebear.com/api/big-smile/randomm400...........svg?translateY=10" alt="avatar" className="avatarNotFound" />
+      <h1 className="zindex">Ce popote n'existe pas !</h1>
+      <p className="infinite404">{"400 ".repeat(500)}</p>
+    </main>
+  )
   if (userObject)
     return (
       <main className="popoteContainer">

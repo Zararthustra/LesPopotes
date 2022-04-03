@@ -4,10 +4,10 @@ const router = express.Router();
 const db = require("../models");
 const { Op } = require("sequelize");
 const cors = require("cors");
-const multer = require("multer");
-const path = require("path");
-const { unlink } = require("fs");
 const axios = require("axios");
+//const { unlink } = require("fs");
+//const multer = require("multer");
+//const path = require("path");
 
 router.use(express.json());
 router.use(cors());
