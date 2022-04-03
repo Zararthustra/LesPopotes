@@ -7,7 +7,7 @@ export const NotFound = () => {
     <main className="notFound" onClick={() => navigate('/lapopote')}>
       <img src="https://avatars.dicebear.com/api/big-smile/random404......svg?translateY=10" alt="avatar" className="avatarNotFound" />
       <h1 className="zindex">On s'est perdu ?</h1>
-      <p className="infinite404">{"404 ".repeat(500)}</p>
+      <p className="infinite404">{"404 ".repeat(2100)}</p>
     </main>
   );
 };

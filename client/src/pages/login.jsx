@@ -111,6 +111,13 @@ export const Login = () => {
           toasterRef.current.showToaster();
           document.getElementsByClassName("inputPassword")[0].placeholder = "";
         } else if (response.data.name) {
+          axios
+            .post(`${Host}api/notification`, {
+              sender_id: 0,
+              sender_name: "Les popotes",
+              receiver_id: response.data.id,
+              type: 'welcome'
+            })
           localStorage.setItem("username", response.data.name);
           localStorage.setItem("password", response.data.password);
           localStorage.setItem("userid", response.data.id);

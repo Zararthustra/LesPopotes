@@ -142,7 +142,7 @@ export const Popotes = () => {
     <main className="notFound" onClick={() => navigate('/lespopotes')}>
       <img src="https://avatars.dicebear.com/api/big-smile/randomm400...........svg?translateY=10" alt="avatar" className="avatarNotFound" />
       <h1 className="zindex">Ce popote n'existe pas !</h1>
-      <p className="infinite404">{"400 ".repeat(500)}</p>
+      <p className="infinite404">{"400 ".repeat(2100)}</p>
     </main>
   )
   if (userObject)
