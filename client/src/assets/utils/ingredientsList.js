@@ -781,6 +781,7 @@ export const ingredientsList = [
   { label: "Saucisson sec", value: "Saucisson sec" },
   { label: "Sauge", value: "Sauge" },
   { label: "Saumon", value: "Saumon" },
+  { label: "Saumon fumé", value: "Saumon fumé" },
   { label: "Sauté", value: "Sauté" },
   { label: "Savora", value: "Savora" },
   { label: "Scampi", value: "Scampi" },
