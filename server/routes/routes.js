@@ -964,6 +964,7 @@ router.post("/forum", (req, res) => {
 router.get("/forum", (req, res) => {
   db.Forum.findAll({ order: [["createdAt", "DESC"]] })
     .then((foundMessages) => {
+      console.log(foundMessages);
       res.json(foundMessages);
     })
     .catch((err) => {

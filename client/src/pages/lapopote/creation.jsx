@@ -342,15 +342,15 @@ export const Creation = () => {
                   <div className="stepTitle">Etape {index + 1}</div>
                   {isEditing === index ? (
                     <div className="groupButtons">
-                    <div
-                      className="cancelEditButtonStep"
-                      onClick={() => setIsEditing(false)}
-                      title="Annuler la modification"
+                      <div
+                        className="cancelEditButtonStep"
+                        onClick={() => setIsEditing(false)}
+                        title="Annuler la modification"
                       />
-                    <div
-                      className="confirmEditButtonStep"
-                      onClick={() => handleEditStep(index)}
-                      title="Confirmer la modification"
+                      <div
+                        className="confirmEditButtonStep"
+                        onClick={() => handleEditStep(index)}
+                        title="Confirmer la modification"
                       />
                     </div>
                   ) : (
@@ -374,30 +374,31 @@ export const Creation = () => {
                     className="editStepText"
                     defaultValue={step}
                     onChange={handleStep}
-                    />
+                  />
                 ) : (
                   <p>{step}</p>
                 )}
               </li>
             );
           })}
-          {!isEditing && <li className="step">
-            <div className="addStep">
-              <div className="stepTitle">Ajouter une étape</div>
-              <div
-                className="addButtonStep"
-                title="Ajouter l'étape"
-                onClick={handleAddStep}
+          {!Number.isInteger(isEditing) && (
+            <li className="step">
+              <div className="addStep">
+                <div className="stepTitle">Ajouter une étape</div>
+                <div
+                  className="addButtonStep"
+                  title="Ajouter l'étape"
+                  onClick={handleAddStep}
+                />
+              </div>
+              <input
+                type="text"
+                className="stepText"
+                onKeyDown={handlePressEnter}
+                onChange={handleStep}
+                placeholder="Décrire avec précision. Une étape = une action."
               />
-            </div>
-            <input
-              type="text"
-              className="stepText"
-              onKeyDown={handlePressEnter}
-              onChange={handleStep}
-              placeholder="Décrire avec précision. Une étape = une action."
-            />
-          </li>}
+            </li>)}
         </ul>
         <div className="separateCreation"></div>
         <div className="recipeComment">
