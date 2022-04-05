@@ -1,14 +1,12 @@
-import { capitalize } from "../assets/utils/capitalize";
 import { useNavigate } from "react-router-dom";
-import { getLevel } from "../assets/utils/getLevel";
 import { icons } from "../assets/utils/importIcons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Host } from "../assets/utils/host";
 import ClipLoader from "react-spinners/ClipLoader";
+import { ForumMessage } from "./forumMessage";
 
 export const Forum = ({ users }) => {
-  const navigate = useNavigate();
   const userId = localStorage.getItem("userid");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -105,49 +103,9 @@ export const Forum = ({ users }) => {
             if (user)
               return (
                 <div key={index} className="commentForum">
-                  <div className="hoverMessage">
-                    <div className="commentAvatarHeader">
-                      <img src={user?.avatar} alt="avatar" className="avatar" />
-                      <div className="commentHeader">
-                        <div className="commentTop">
-                          <div
-                            className="pseudoForum"
-                            onClick={() => navigate(`/lespopotes/${user.name}`)}
-                          >
-                            {user.name && capitalize(user.name)}
-                          </div>
-                          <div className="commentDate">{date}</div>
-                        </div>
-                        <div className="commentInfos">
-                          <div>{user.type}</div>
-                          <div>
-                            {
-                              getLevel(
-                                user.recipes,
-                                user.notes,
-                                user.popotes,
-                                user.comments
-                              )[0]
-                            }
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="forumMessageContent">
-                      {message.content && capitalize(message.content)}
-                    </div>
-                  </div>
-                  <div className="groupForumButtons">
-                    {/* <div className="forumMoreButton">9 commentaires</div> */}
-                    <div
-                      className="forumRepButton"
-                      onClick={() => alert("Bientôt disponible !")}
-                    >
-                      Répondre
-                    </div>
-                  </div>
+                  <ForumMessage user={user} date={date} message={message} />
                 </div>
-              );
+              )
             return "";
           })}
         </div>

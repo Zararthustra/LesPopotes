@@ -156,11 +156,12 @@ export const Creation = () => {
     setSteps(tmpSteps);
   };
   const handleAddStep = () => {
-    let value = document.getElementsByClassName("stepText")[0].value;
+    let value = document.querySelector(".stepText").value;
     if (!addStep || addStep.trim() === "") return;
+    if (!value || value.trim() === "") return;
     setSteps([...steps, capitalize(value)]);
     // Reset input
-    document.getElementsByClassName("stepText")[0].value = "";
+    document.querySelector(".stepText").value = "";
     setAddStep("")
   };
   const handlePressEnter = (event) => {
@@ -216,7 +217,7 @@ export const Creation = () => {
     setShowButtons(false);
     setFieldMissing(false);
     toasterRef.current.showToaster();
-    setTimeout(() => navigate(-1), 3000);
+    setTimeout(() => navigate("/lapopote"), 3000);
   };
 
   const createRecipe = () => {
@@ -340,19 +341,29 @@ export const Creation = () => {
                 <div className="addStep">
                   <div className="stepTitle">Etape {index + 1}</div>
                   {isEditing === index ? (
+                    <div className="groupButtons">
+                    <div
+                      className="cancelEditButtonStep"
+                      onClick={() => setIsEditing(false)}
+                      title="Annuler la modification"
+                      />
                     <div
                       className="confirmEditButtonStep"
                       onClick={() => handleEditStep(index)}
-                    />
+                      title="Confirmer la modification"
+                      />
+                    </div>
                   ) : (
                     <div className="groupButtons">
                       <div
                         className="editButtonStep"
                         onClick={() => setIsEditing(index)}
+                        title="Modifier l'étape"
                       />
                       <div
                         className="removeButtonStep"
                         onClick={() => handleDeleteStep(index)}
+                        title="Supprimer l'étape"
                       />
                     </div>
                   )}
@@ -360,17 +371,17 @@ export const Creation = () => {
                 {isEditing === index ? (
                   <input
                     type="text"
-                    className="stepText"
+                    className="editStepText"
                     defaultValue={step}
                     onChange={handleStep}
-                  />
+                    />
                 ) : (
                   <p>{step}</p>
                 )}
               </li>
             );
           })}
-          <li className="step">
+          {!isEditing && <li className="step">
             <div className="addStep">
               <div className="stepTitle">Ajouter une étape</div>
               <div
@@ -386,7 +397,7 @@ export const Creation = () => {
               onChange={handleStep}
               placeholder="Décrire avec précision. Une étape = une action."
             />
-          </li>
+          </li>}
         </ul>
         <div className="separateCreation"></div>
         <div className="recipeComment">

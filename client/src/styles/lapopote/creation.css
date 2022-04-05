@@ -212,7 +212,16 @@
   height: 2.3em;
 }
 .confirmEditButtonStep {
-  background-image: url("../../assets/icons/ok-512.png");
+  background-image: url("../../assets/icons/okStep-512.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  width: 2.3em;
+  height: 2.3em;
+}
+.cancelEditButtonStep {
+  background-image: url("../../assets/icons/cancelStep-512.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -241,6 +250,17 @@
   padding-left: 1em;
 }
 .stepText:focus-within {
+  border: 1px solid var(--popote);
+  outline: none;
+}
+
+.editStepText {
+  width: 80%;
+  height: 3em;
+  white-space:pre;
+  padding-left: 1em;
+}
+.editStepText:focus-within {
   border: 1px solid var(--popote);
   outline: none;
 }
