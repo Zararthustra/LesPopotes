@@ -79,7 +79,7 @@ export const Lespopotes = () => {
         </div>
       </div>
       {location === "/lespopotes/forum" ? (
-        <Forum users={users} />
+        <Forum />
       ) : location !== "/lespopotes" ? (
         <Outlet />
       ) : (

@@ -6,30 +6,29 @@ import { Host } from "../assets/utils/host";
 import ClipLoader from "react-spinners/ClipLoader";
 import { ForumMessage } from "./forumMessage";
 
-export const Forum = ({ users }) => {
+export const Forum = () => {
   const userId = localStorage.getItem("userid");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  //const [userss, setUserss] = useState(users);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // Load data when mounting
   useEffect(() => {
     setLoading(true);
     try {
-      //axios.get(`${Host}api/forum`).then((res) => {
-        axios.get(`${Host}api/forum`).then((res) => {
+      axios.get(`${Host}api/forum`).then((res) => {
         if (res.data) {
           setLoading(false);
           setMessages(res.data);
         }
       })
-    //   axios.get(`${Host}api/users`).then((res) => {
-    //   if (res.data) {
-    //     setLoading(false);
-    //     setUserss(res.data);
-    //   }
-    // });
+      axios.get(`${Host}api/users`).then((res) => {
+        if (res.data) {
+          setLoading(false);
+          setUsers(res.data);
+        }
+      });
     } catch (error) {
       setLoading(false);
       console.log("An error occured while getting messages : ", error);
@@ -100,25 +99,21 @@ export const Forum = ({ users }) => {
         <div className="commentsForum">
           {messages &&
             messages.map((message, index) => {
-            const user = users.find((user) => user.id === message.user_id);
-            console.log("___________________________");
-            console.log("User ",index, " : \n", user);
-            console.log("Message :\n", message);
-            console.log("___________________________");
-            const date =
-              message.createdAt?.split("T")[0].split("-")[2] +
-              "-" +
-              message.createdAt?.split("T")[0].split("-")[1] +
-              "-" +
-              message.createdAt?.split("T")[0].split("-")[0];
-            if (user)
-              return (
-                <div key={index} className="commentForum">
-                  <ForumMessage user={user} date={date} message={message} />
-                </div>
-              )
-            return "error";
-          })}
+              const user = users.find((user) => user.id === message.user_id);
+              const date =
+                message.createdAt?.split("T")[0].split("-")[2] +
+                "-" +
+                message.createdAt?.split("T")[0].split("-")[1] +
+                "-" +
+                message.createdAt?.split("T")[0].split("-")[0];
+              if (user)
+                return (
+                  <div key={index} className="commentForum">
+                    <ForumMessage user={user} date={date} message={message} />
+                  </div>
+                )
+              return "Erreur de chargement du message";
+            })}
         </div>
       )}
     </div>
