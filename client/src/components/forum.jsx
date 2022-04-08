@@ -10,18 +10,26 @@ export const Forum = ({ users }) => {
   const userId = localStorage.getItem("userid");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  //const [userss, setUserss] = useState(users);
   const [loading, setLoading] = useState(false);
 
   // Load data when mounting
   useEffect(() => {
     setLoading(true);
     try {
-      axios.get(`${Host}api/forum`).then((res) => {
+      //axios.get(`${Host}api/forum`).then((res) => {
+        axios.get(`${Host}api/forum`).then((res) => {
         if (res.data) {
           setLoading(false);
           setMessages(res.data);
         }
-      });
+      })
+    //   axios.get(`${Host}api/users`).then((res) => {
+    //   if (res.data) {
+    //     setLoading(false);
+    //     setUserss(res.data);
+    //   }
+    // });
     } catch (error) {
       setLoading(false);
       console.log("An error occured while getting messages : ", error);
@@ -50,8 +58,6 @@ export const Forum = ({ users }) => {
         })
         .then((res) => {
           if (res.data) {
-            console.log("res.data:", res.data);
-
             setMessages([
               {
                 user_id: parseInt(res.data.user_id),
@@ -92,8 +98,13 @@ export const Forum = ({ users }) => {
         </div>
       ) : (
         <div className="commentsForum">
-          {messages?.map((message, index) => {
+          {messages &&
+            messages.map((message, index) => {
             const user = users.find((user) => user.id === message.user_id);
+            console.log("___________________________");
+            console.log("User ",index, " : \n", user);
+            console.log("Message :\n", message);
+            console.log("___________________________");
             const date =
               message.createdAt?.split("T")[0].split("-")[2] +
               "-" +
@@ -106,7 +117,7 @@ export const Forum = ({ users }) => {
                   <ForumMessage user={user} date={date} message={message} />
                 </div>
               )
-            return "";
+            return "error";
           })}
         </div>
       )}

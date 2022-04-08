@@ -41,7 +41,6 @@ export const Bestof = () => {
           <ClipLoader css={""} color={"#f5a76c"} loading={loading} size={100} />
         ) : (
           recipes.map((recipe, index) => {
-            console.log(recipe);
             if (recipe.average >= 3.5)
               return <Card key={index} recipe={recipe} />;
             return "";
