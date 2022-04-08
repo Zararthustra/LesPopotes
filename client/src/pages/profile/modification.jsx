@@ -163,11 +163,12 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
     setSteps(tmpSteps);
   };
   const handleAddStep = () => {
-    let value = document.getElementsByClassName("stepText")[0].value;
+    let value = document.querySelector(".stepText").value;
     if (!addStep || addStep.trim() === "") return;
+    if (!value || value.trim() === "") return;
     setSteps([...steps, capitalize(value)]);
     // Reset input
-    document.getElementsByClassName("stepText")[0].value = "";
+    document.querySelector(".stepText").value = "";
     setAddStep("")
   };
   const handlePressEnter = (event) => {
@@ -352,19 +353,29 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
                 <div className="addStep">
                   <div className="stepTitle">Etape {index + 1}</div>
                   {isEditing === index ? (
-                    <div
-                      className="confirmEditButtonStep"
-                      onClick={() => handleEditStep(index)}
-                    />
+                    <div className="groupButtons">
+                      <div
+                        className="cancelEditButtonStep"
+                        onClick={() => setIsEditing(false)}
+                        title="Annuler la modification"
+                      />
+                      <div
+                        className="confirmEditButtonStep"
+                        onClick={() => handleEditStep(index)}
+                        title="Confirmer la modification"
+                      />
+                    </div>
                   ) : (
                     <div className="groupButtons">
                       <div
                         className="editButtonStep"
                         onClick={() => setIsEditing(index)}
+                        title="Modifier l'étape"
                       />
                       <div
                         className="removeButtonStep"
                         onClick={() => handleDeleteStep(index)}
+                        title="Supprimer l'étape"
                       />
                     </div>
                   )}
@@ -372,7 +383,7 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
                 {isEditing === index ? (
                   <input
                     type="text"
-                    className="stepText"
+                    className="editStepText"
                     defaultValue={step}
                     onChange={handleStep}
                   />
@@ -382,19 +393,24 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
               </li>
             );
           })}
-          <li>
-            <div className="addStep">
-              <div className="stepTitle">Ajouter une étape</div>
-              <div className="addButtonStep" onClick={handleAddStep} />
-            </div>
-            <input
-              type="text"
-              className="stepText"
-              onKeyDown={handlePressEnter}
-              onChange={handleStep}
-              placeholder="Décrire avec précision. Une étape = une action."
-            />
-          </li>
+          {!Number.isInteger(isEditing) && (
+            <li className="step">
+              <div className="addStep">
+                <div className="stepTitle">Ajouter une étape</div>
+                <div
+                  className="addButtonStep"
+                  title="Ajouter l'étape"
+                  onClick={handleAddStep}
+                />
+              </div>
+              <input
+                type="text"
+                className="stepText"
+                onKeyDown={handlePressEnter}
+                onChange={handleStep}
+                placeholder="Une étape = une action."
+              />
+            </li>)}
         </ul>
         <div className="separateCreation"></div>
         <div className="recipeComment">

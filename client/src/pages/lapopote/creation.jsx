@@ -396,7 +396,7 @@ export const Creation = () => {
                 className="stepText"
                 onKeyDown={handlePressEnter}
                 onChange={handleStep}
-                placeholder="Décrire avec précision. Une étape = une action."
+                placeholder="Une étape = une action."
               />
             </li>)}
         </ul>
