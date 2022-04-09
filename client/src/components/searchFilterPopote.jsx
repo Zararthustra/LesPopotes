@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { icons } from "../assets/utils/importIcons";
 
 export const SearchFilterPopote = ({
   setFilter,
@@ -101,7 +102,10 @@ export const SearchFilterPopote = ({
                 stroke={apero ? "#fff" : "none"}
               />
             </svg>
-            Apéritifs
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", color: "var(--dark-popote)", width: "4em" }}>
+              <img className="recipeType" src={icons.apero} alt="Type apéro" title="Type apéro" />
+              Apéritifs
+            </div>
           </label>
           <label className="box">
             <input
@@ -120,7 +124,10 @@ export const SearchFilterPopote = ({
                 stroke={entree ? "#fff" : "none"}
               />
             </svg>
-            Entrées
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", color: "var(--dark-popote)", width: "4em" }}>
+              <img className="recipeType" src={icons.entree} alt="Type entrée" title="Type entrée" />
+              Entrées
+            </div>
           </label>
           <label className="box">
             <input
@@ -139,7 +146,10 @@ export const SearchFilterPopote = ({
                 stroke={plat ? "#fff" : "none"}
               />
             </svg>
-            Plats
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", color: "var(--dark-popote)", width: "4em" }}>
+              <img className="recipeType" src={icons.plat} alt="Type plat" title="Type plat" />
+              Plats
+            </div>
           </label>
           <label className="box">
             <input
@@ -158,7 +168,10 @@ export const SearchFilterPopote = ({
                 stroke={dessert ? "#fff" : "none"}
               />
             </svg>
-            Desserts
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", color: "var(--dark-popote)", width: "4em" }}>
+              <img className="recipeType" src={icons.dessert} alt="Type dessert" title="Type dessert" />
+              Desserts
+            </div>
           </label>
           <label className="box">
             <input
@@ -177,7 +190,10 @@ export const SearchFilterPopote = ({
                 stroke={boisson ? "#fff" : "none"}
               />
             </svg>
-            Boissons
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", color: "var(--dark-popote)", width: "4em" }}>
+              <img className="recipeType" src={icons.boisson} alt="Type boisson" title="Type boisson" />
+              Boissons
+            </div>
           </label>
           <label className="box">
             <input
@@ -196,7 +212,10 @@ export const SearchFilterPopote = ({
                 stroke={autre ? "#fff" : "none"}
               />
             </svg>
-            Autres
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", color: "var(--dark-popote)", width: "4em" }}>
+              <img className="recipeType" src={icons.autre} alt="Type autre" title="Type autre" />
+              Autres
+            </div>
           </label>
         </div>
       ) : (

@@ -168,6 +168,17 @@
   color: var(--dark-popote);
   padding: 0.5em;
 }
+.typeAndDoneBy {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: .5em 0;
+}
+.recipeTypeInfo {
+  color: var(--dark-popote);
+  font-size: 1.5em;
+}
 .doneBy:hover {
   text-decoration: underline;
 }
@@ -177,7 +188,6 @@
   font-size: 1.5em;
   color: var(--dark-popotes);
   font-style: italic;
-  margin: 0.5em 2em;
 }
 
 /*

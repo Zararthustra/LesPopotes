@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { icons } from "../assets/utils/importIcons";
 import { useState, useEffect } from "react";
 import axios from "axios";

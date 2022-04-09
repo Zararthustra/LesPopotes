@@ -431,11 +431,20 @@ export const Recette = () => {
           {recipe.name && capitalize(recipe.name)}
         </div>
         <div className="separatePopote"></div>
-        <div
-          className="doneBy"
-          onClick={() => navigate(`/lespopotes/${recipe.author}`)}
-        >
-          {recipe.author && capitalize(recipe.author)}
+        <div className="typeAndDoneBy">
+          <div className="recipeTypeInfo">
+            {capitalize(recipe.type) === "Entree" ?
+              "Entrée" :
+              capitalize(recipe.type) === "Apero" ?
+                "Apéro" :
+                capitalize(recipe.type)}
+          </div>
+          <div
+            className="doneBy"
+            onClick={() => navigate(`/lespopotes/${recipe.author}`)}
+          >
+            {recipe.author && capitalize(recipe.author)}
+          </div>
         </div>
         <RecipeInfos infos={recipe} />
         <div className="separatePopote"></div>
