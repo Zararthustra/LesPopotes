@@ -16,7 +16,7 @@ export const Lespopotes = () => {
   const [filter, setFilter] = useState();
   const [offset, setOffset] = useState(0);
   const limit = 10;
-  const [totalPage, setTotalPage] = useState();
+  const [totalItems, setTotalItems] = useState();
   const [searchFilter, setSearchFilter] = useState("");
 
   // Load data when mounting
@@ -48,7 +48,7 @@ export const Lespopotes = () => {
         params: { limit },
       });
       if (res.data) {
-        setTotalPage(res.data.count);
+        setTotalItems(res.data.count);
         setLoading(false);
         setUsers(res.data.rows);
       }
@@ -131,9 +131,13 @@ export const Lespopotes = () => {
                 Précédents
               </div>
             ) : (
-              <div></div>
+              <div style={{ width: "4em", padding: "0 1em 0" }}></div>
             )}
-            {!filter && !searchFilter && offset + limit < totalPage ? (
+            {!filter && !searchFilter &&
+              <div>
+                Page {offset / limit + 1}/{parseInt(totalItems / limit) + 1}
+              </div>}
+            {!filter && !searchFilter && offset + limit < totalItems ? (
               <div
                 className="nextButton"
                 onClick={() => setOffset(offset + limit)}
@@ -141,7 +145,7 @@ export const Lespopotes = () => {
                 Suivants
               </div>
             ) : (
-              <div></div>
+              <div style={{ width: "4em", padding: "0 1em 0" }}></div>
             )}
           </div>
         </main>

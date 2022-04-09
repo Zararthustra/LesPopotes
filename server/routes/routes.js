@@ -360,6 +360,7 @@ router.get("/userrecipes/:userID", (req, res) => {
     where: {
       user_id: req.params.userID,
     },
+    order: [["createdAt", "DESC"]],
   })
     .then((userrecipes) => res.json(userrecipes))
     .catch((err) => {
@@ -371,12 +372,15 @@ router.get("/userrecipes/:userID", (req, res) => {
 // Retrieve all with pagination
 router.get("/recipes/pagination/:offset", (req, res) => {
   const offset = parseInt(req.params.offset);
-  const limit = parseInt(req.query.limit);
+  const limit = parseInt(req.query.limit) || 10;
+  const orderByName = req.query.orderByName || false;
 
   db.Recipe.findAndCountAll({
     offset,
     limit,
-    order: [["createdAt", "DESC"]],
+    order: [
+      orderByName ? ["name", "ASC"] : ["createdAt", "DESC"]
+    ],
   })
     .then((result) => res.send(result))
     .catch((err) => {
