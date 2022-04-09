@@ -359,11 +359,11 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
                         onClick={() => setIsEditing(false)}
                         title="Annuler la modification"
                       />
-                      <div
+                      {addStep && <div
                         className="confirmEditButtonStep"
                         onClick={() => handleEditStep(index)}
                         title="Confirmer la modification"
-                      />
+                      />}
                     </div>
                   ) : (
                     <div className="groupButtons">
