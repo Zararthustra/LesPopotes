@@ -928,6 +928,7 @@ router.get("/messages", (req, res) => {
         { user_id: popote_id, popote_id: user_id },
       ],
     },
+    order: [[ 'createdAt', 'ASC' ]]
   })
     .then((foundMessages) => {
       if (foundMessages.length > 50)

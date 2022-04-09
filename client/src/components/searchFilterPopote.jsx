@@ -18,24 +18,14 @@ export const SearchFilterPopote = ({
   const [autre, setAutre] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
-  const allFiltersNotChecked =
-    !apero && !entree && !plat && !dessert && !boisson && !autre;
-  const onlyAperoChecked = !entree && !plat && !dessert && !boisson && !autre;
-  const onlyEntreeChecked = !apero && !plat && !dessert && !boisson && !autre;
-  const onlyPlatChecked = !apero && !entree && !dessert && !boisson && !autre;
-  const onlyDessertChecked = !apero && !entree && !plat && !boisson && !autre;
-  const onlyBoissonChecked = !apero && !entree && !plat && !dessert && !autre;
-  const onlyAutreChecked = !apero && !entree && !plat && !dessert && !boisson;
-
   useEffect(() => {
-    if (allFiltersNotChecked) setFilter();
-    if (apero) setFilter("apero");
-    if (entree) setFilter("entree");
-    if (plat) setFilter("plat");
-    if (dessert) setFilter("dessert");
-    if (boisson) setFilter("boisson");
-    if (autre) setFilter("autre");
-  });
+    setFilter([apero && "apero",
+      entree && "entree",
+      plat && "plat",
+      dessert && "dessert",
+      boisson && "boisson",
+      autre && "autre"])
+  }, [setFilter, apero, entree, plat, dessert, boisson, autre]);
 
   const handleSearch = (event) => {
     const value = event.target.value;
@@ -88,7 +78,7 @@ export const SearchFilterPopote = ({
           <label className="box">
             <input
               type="checkbox"
-              onChange={() => onlyAperoChecked && setApero(!apero)}
+              onChange={() => setApero(!apero)}
             />
             <svg
               className={`check ${apero ? "check--active" : ""}`}
@@ -110,7 +100,7 @@ export const SearchFilterPopote = ({
           <label className="box">
             <input
               type="checkbox"
-              onChange={() => onlyEntreeChecked && setEntree(!entree)}
+              onChange={() => setEntree(!entree)}
             />
             <svg
               className={`check ${entree ? "check--active" : ""}`}
@@ -132,7 +122,7 @@ export const SearchFilterPopote = ({
           <label className="box">
             <input
               type="checkbox"
-              onChange={() => onlyPlatChecked && setPlat(!plat)}
+              onChange={() => setPlat(!plat)}
             />
             <svg
               className={`check ${plat ? "check--active" : ""}`}
@@ -154,7 +144,7 @@ export const SearchFilterPopote = ({
           <label className="box">
             <input
               type="checkbox"
-              onChange={() => onlyDessertChecked && setDessert(!dessert)}
+              onChange={() => setDessert(!dessert)}
             />
             <svg
               className={`check ${dessert ? "check--active" : ""}`}
@@ -176,7 +166,7 @@ export const SearchFilterPopote = ({
           <label className="box">
             <input
               type="checkbox"
-              onChange={() => onlyBoissonChecked && setBoisson(!boisson)}
+              onChange={() => setBoisson(!boisson)}
             />
             <svg
               className={`check ${boisson ? "check--active" : ""}`}
@@ -198,7 +188,7 @@ export const SearchFilterPopote = ({
           <label className="box">
             <input
               type="checkbox"
-              onChange={() => onlyAutreChecked && setAutre(!autre)}
+              onChange={() => setAutre(!autre)}
             />
             <svg
               className={`check ${autre ? "check--active" : ""}`}
