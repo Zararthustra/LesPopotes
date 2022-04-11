@@ -2,3 +2,4 @@
 /build
 /src/assets/utils/host.js
 /package-lock.json
+/yarn.lock

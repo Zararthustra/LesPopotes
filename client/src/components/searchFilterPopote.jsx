@@ -19,12 +19,14 @@ export const SearchFilterPopote = ({
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
-    setFilter([apero && "apero",
+    setFilter([
+      apero && "apero",
       entree && "entree",
       plat && "plat",
       dessert && "dessert",
       boisson && "boisson",
-      autre && "autre"])
+      autre && "autre"
+    ])
   }, [setFilter, apero, entree, plat, dessert, boisson, autre]);
 
   const handleSearch = (event) => {

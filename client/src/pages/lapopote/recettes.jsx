@@ -66,15 +66,15 @@ export const Recettes = () => {
       for (let index in filterArray) {
         if (typeof filterArray[index] === 'string') filterState = true
       }
-      return setIsFiltering(filterState)
+      setIsFiltering(filterState)
+      return filterState
     }
-    
-    isFilteringFunc(filter)
-    if (searchFilter || isFiltering) getRecipes();
+
+    if (searchFilter || isFilteringFunc(filter)) getRecipes();
     else getRecipesPaginated();
 
     return () => setRecipes();
-  }, [isFiltering, offset, filter, searchFilter]);
+  }, [offset, filter, searchFilter]);
 
   return (
     <main className="laPopotePage">
@@ -104,7 +104,7 @@ export const Recettes = () => {
         )}
       </div>
       <div className="prevNextButtons">
-        {!filter && !searchFilter && offset - limit >= 0 ? (
+        {!isFiltering && !searchFilter && offset - limit >= 0 ? (
           <div
             className="prevButtonPopote"
             onClick={() => setOffset(offset - limit)}
@@ -114,11 +114,11 @@ export const Recettes = () => {
         ) : (
           <div style={{ width: "4em", padding: "0 1em 0" }}></div>
         )}
-        {!filter && !searchFilter &&
+        {!isFiltering && !searchFilter &&
           <div>
             Page {offset / limit + 1}/{parseInt(totalItems / limit) + 1}
           </div>}
-        {!filter && !searchFilter && offset + limit < totalItems ? (
+        {!isFiltering && !searchFilter && offset + limit < totalItems ? (
           <div
             className="nextButtonPopote"
             onClick={() => setOffset(offset + limit)}
