@@ -36,7 +36,7 @@ export const Footer = () => {
           <h2 className="footerTitles">Du même developpeur</h2>
           <div className="footerInfos devs">
             <div>
-              <a href="https://recordit.games/">
+              <a href="https://recordit.arthurmayer.fr/">
                 <img
                   className="recordit"
                   src={images.recordit}
@@ -45,7 +45,7 @@ export const Footer = () => {
               </a>
             </div>
             <div>
-              <a href="https://checklist.arthurm.tech/">
+              <a href="https://checklist.arthurmayer.fr/">
                 <img
                   className="checklist"
                   src={images.checklist}
