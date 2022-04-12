@@ -1,173 +1,180 @@
 @import url(https://fonts.googleapis.com/css?family=Rubik);
 @import url(https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&display=swap);
 @import url(https://fonts.googleapis.com/css2?family=Courgette&display=swap);
-
 @media all and (max-width: 500px) {
-  .navlink {
-    font-size: 0.9em !important;
-  }
+    .navlink {
+        font-size: 0.9em !important;
+    }
 }
 
 :root {
-  padding       : 0;
-  margin        : 0;
-  --switch      : #2c2a3a;
-  --popotes     : #78f5ca;
-  --dark-popotes: #00be7c;
-  --popote      : #f5a76c;
-  --dark-popote : #e76400;
-  --white       : #fcfaf6;
-  --dark        : #2c2a3a;
-  --dark-text   : #2c2c2c;
-  --light-text  : #9c9c9c;
+    padding: 0;
+    margin: 0;
+    --switch: #2c2a3a;
+    --popotes: #78f5ca;
+    --dark-popotes: #00be7c;
+    --popote: #f5a76c;
+    --dark-popote: #e76400;
+    --white: #fcfaf6;
+    --dark: #2c2a3a;
+    --dark-text: #2c2c2c;
+    --light-text: #9c9c9c;
 }
+
 
 /*
  * Popote selection
  */
+
 .recipePage ::selection {
-  color     : var(--white);
-  background: var(--dark-popote);
+    color: var(--white);
+    background: var(--dark-popote);
 }
 
 .recipePage ::-moz-selection {
-  color     : var(--white);
-  background: var(--dark-popote);
+    color: var(--white);
+    background: var(--dark-popote);
 }
+
 
 /*
  * Popotes selection
  */
+
 .myprofileBody ::selection {
-  color     : var(--white);
-  background: var(--dark-popotes);
+    color: var(--white);
+    background: var(--dark-popotes);
 }
 
 .myprofileBody ::-moz-selection {
-  color     : var(--white);
-  background: var(--dark-popotes);
+    color: var(--white);
+    background: var(--dark-popotes);
 }
 
 html {
-  padding: 0;
-  margin : 0;
+    padding: 0;
+    margin: 0;
 }
 
 body {
-  margin          : 0;
-  padding         : 0;
-  background-color: white;
-  font-family     : "Rubik";
-  overflow-x      : hidden;
-  min-height      : 90vh;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    font-family: "Rubik";
+    overflow-x: hidden;
+    min-height: 90vh;
 }
 
 tr {
-  height: 2.5em;
+    height: 2.5em;
 }
 
 ul {
-  padding: 0;
-  margin : 0;
+    padding: 0;
+    margin: 0;
 }
 
 li {
-  list-style: none;
+    list-style: none;
 }
 
 a {
-  text-decoration: none;
-  color          : var(--popotes);
+    text-decoration: none;
+    color: var(--popotes);
 }
 
 h1 {
-  margin: 0;
+    margin: 0;
 }
 
 input[type="text"]:focus-within {
-  box-shadow: none;
+    box-shadow: none;
 }
 
 .avatar {
-  cursor  : pointer;
-  position: relative;
-  top     : -0.3em;
+    cursor: pointer;
+    position: relative;
+    top: -0.3em;
 }
+
 
 /*
  * Scrollbar
  */
+
 ::-webkit-scrollbar {
-  width: 5px;
+    width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: var(--white);
+    background-color: var(--white);
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #3d3d42;
+    background-color: #3d3d42;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  cursor          : pointer !important;
-  background-color: #39364d;
+    cursor: pointer !important;
+    background-color: #39364d;
 }
+
 
 /**
  * Body
  */
 
 .headerContainer {
-  display         : flex;
-  justify-content : center;
-  text-align      : center;
-  align-items     : center;
-  flex-direction  : column;
-  overflow        : hidden;
-  background-color: var(--dark);
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--dark);
 }
 
 .title {
-  padding         : 1.5em 0 0.5em;
-  word-spacing    : 0.1em;
-  font-family     : "Oswald", sans-serif;
-  font-size       : 3em;
-  font-weight     : 400;
-  width           : 100%;
-  background-color: var(--dark);
+    padding: 1.5em 0 0.5em;
+    word-spacing: 0.1em;
+    font-family: "Oswald", sans-serif;
+    font-size: 3em;
+    font-weight: 400;
+    width: 100%;
+    background-color: var(--dark);
 }
 
 .links {
-  display        : flex;
-  justify-content: space-around;
-  align-items    : flex-end;
-  width          : 100%;
-  height         : 3em;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    width: 100%;
+    height: 3em;
 }
 
 .navlink {
-  width                  : 100%;
-  background-color       : var(--light-text);
-  font-family            : "Oswald", sans-serif;
-  font-size              : 1.3em;
-  color                  : var(--dark);
-  border-top-left-radius : 10px;
-  border-top-right-radius: 10px;
-  transition             : height 1s;
-  -webkit-transition     : height 1s;
-  height                 : 2em;
+    width: 100%;
+    background-color: var(--light-text);
+    font-family: "Oswald", sans-serif;
+    font-size: 1.3em;
+    color: var(--dark);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    transition: height 1s;
+    -webkit-transition: height 1s;
+    height: 2em;
 }
 
 .navlink:hover {
-  height: 3em;
+    height: 3em;
 }
 
 #myprofile:hover,
 #forum:hover,
 #mypopotes:hover {
-  background-color: var(--popotes);
-  box-shadow      : 0 -10px 20px #222;
+    background-color: var(--popotes);
+    z-index: 10;
+    box-shadow: 0 -10px 20px #222;
 }
 
 #favorites:hover,
@@ -175,170 +182,173 @@ input[type="text"]:focus-within {
 #mesrecettes:hover,
 #lastpubs:hover,
 #bestof:hover {
-  background-color: var(--popote);
-  box-shadow      : 0 -10px 20px #222;
+    z-index: 10;
+    background-color: var(--popote);
+    box-shadow: 0 -10px 20px #222;
 }
+
 
 /*
 * Separate lines
 */
+
 .separatePopote {
-  width           : 80%;
-  height          : 1px;
-  background-color: var(--popote);
+    width: 80%;
+    height: 1px;
+    background-color: var(--popote);
 }
 
 .separatePopotes {
-  margin          : 0.5em 0;
-  width           : 80%;
-  height          : 1px;
-  background-color: var(--popotes);
+    margin: 0.5em 0;
+    width: 80%;
+    height: 1px;
+    background-color: var(--popotes);
 }
 
 .addButton {
-  background-image   : url("../assets/icons/plus-512.png");
-  background-size    : contain;
-  background-position: center;
-  background-repeat  : no-repeat;
-  width              : 3em;
-  height             : 3em;
+    background-image: url("../assets/icons/plus-512.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 3em;
+    height: 3em;
 }
 
 .removeButton {
-  background-image   : url("../assets/icons/moins-512.png");
-  background-size    : contain;
-  background-position: center;
-  background-repeat  : no-repeat;
-  width              : 3em;
-  height             : 3em;
+    background-image: url("../assets/icons/moins-512.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 3em;
+    height: 3em;
 }
 
 .doneButton {
-  padding         : 0.4em 1em;
-  font-weight     : bolder;
-  font-size       : 1.2em;
-  color           : var(--popote);
-  background-color: transparent;
-  border-radius   : 30px;
-  border          : none;
+    padding: 0.4em 1em;
+    font-weight: bolder;
+    font-size: 1.2em;
+    color: var(--popote);
+    background-color: transparent;
+    border-radius: 30px;
+    border: none;
 }
+
 
 /*
  * Toaster
  */
 
 .toasterContainer {
-  cursor       : pointer;
-  position     : fixed;
-  left         : 50%;
-  top          : 0em;
-  transform    : translate(-50%, -50%);
-  width        : 80%;
-  height       : fit-content;
-  max-width    : 15em;
-  border-radius: 5px;
-  display      : flex;
-  align-items  : center;
-  font-size    : 1.3em;
-  z-index      : 9999;
-  padding      : 0.2em 0;
-  font-family  : "Oswald", sans-serif;
+    cursor: pointer;
+    position: fixed;
+    left: 50%;
+    top: 0em;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: fit-content;
+    max-width: 15em;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 1.3em;
+    z-index: 9999;
+    padding: 0.2em 0;
+    font-family: "Oswald", sans-serif;
 }
 
 .toasterIcon {
-  width  : 1.5em;
-  height : 1.5em;
-  padding: 0 0.7em;
-  color  : #ffc401d5;
+    width: 1.5em;
+    height: 1.5em;
+    padding: 0 0.7em;
+    color: #ffc401d5;
 }
 
 .groupToasterMessage {
-  display        : flex;
-  flex-direction : column;
-  justify-content: center;
-  line-height    : 1.3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.3em;
 }
 
 .toasterTitle {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .toasterMessage {
-  font-weight: lighter;
+    font-weight: lighter;
 }
 
 #showToaster {
-  opacity          : 0;
-  -webkit-animation: fadeinout 5s linear forwards;
-  animation        : fadeinout 5s ease-in-out forwards;
+    opacity: 0;
+    -webkit-animation: fadeinout 5s linear forwards;
+    animation: fadeinout 5s ease-in-out forwards;
 }
 
 #hideToaster {
-  visibility: hidden;
+    visibility: hidden;
 }
 
 @-webkit-keyframes fadeinout {
-  10% {
-    opacity: 1;
-    top    : 5em;
-  }
-
-  80% {
-    opacity: 1;
-    top    : 5em;
-  }
+    10% {
+        opacity: 1;
+        top: 5em;
+    }
+    80% {
+        opacity: 1;
+        top: 5em;
+    }
 }
 
 @keyframes fadeinout {
-  10% {
-    opacity: 1;
-    top    : 5em;
-  }
-
-  80% {
-    opacity: 1;
-    top    : 5em;
-  }
+    10% {
+        opacity: 1;
+        top: 5em;
+    }
+    80% {
+        opacity: 1;
+        top: 5em;
+    }
 }
+
 
 /**
  * 404
  */
 
 .notFound {
-  height         : 80vh;
-  display        : flex;
-  flex-direction : column;
-  justify-content: center;
-  align-items    : center;
-  font-family    : 'Oswald', sans-serif;
-  color          : var(--dark-popotes);
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Oswald', sans-serif;
+    color: var(--dark-popotes);
 }
 
 .avatarNotFound {
-  z-index: 1;
-  width  : 10em;
+    z-index: 1;
+    width: 10em;
 }
 
 .zindex {
-  display         : flex;
-  align-items     : center;
-  z-index         : 1;
-  height          : 2em;
-  background-color: rgba(255, 255, 255, 0.466);
-  box-shadow      : 0 0 10px white;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+    height: 2em;
+    background-color: rgba(255, 255, 255, 0.466);
+    box-shadow: 0 0 10px white;
 }
 
 .infinite404 {
-  z-index        : 0;
-  position       : absolute;
-  display        : flex;
-  flex-wrap      : wrap;
-  width          : 100%;
-  color          : rgba(128, 128, 128, 0.336);
-  height         : 76vh;
-  overflow       : hidden;
-  justify-content: center;
-  align-items    : center;
-  text-align     : center;
+    z-index: 0;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    color: rgba(128, 128, 128, 0.336);
+    height: 76vh;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
