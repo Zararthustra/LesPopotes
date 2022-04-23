@@ -17,6 +17,9 @@ import { Mesrecettes } from "./pages/profile/mesrecettes";
 import { Monprofil } from "./pages/profile/myprofile";
 import { Homelanding } from "./pages/home/homelanding";
 import { NotFound } from "./components/notFound";
+import { PrivacyPolicy } from "./components/privacyPolicy";
+import { TermsConditions } from "./components/termsConditions";
+import { SitePlan } from "./components/sitePlan";
 
 export const App = () => {
   // Loader logo des popotes
@@ -72,6 +75,12 @@ export const App = () => {
           </Route>
         </Route>
 
+        {/* Privacy Policy */}
+        <Route path="privacypolicy" element={<PrivacyPolicy />} />
+        {/* Terms & Conditions */}
+        <Route path="termsconditions" element={<TermsConditions />} />
+        {/* Plan du site */}
+        <Route path="plandusite" element={<SitePlan />} />
         {/* 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>

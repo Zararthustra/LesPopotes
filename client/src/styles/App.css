@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Rubik);
 @import url(https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&display=swap);
 @import url(https://fonts.googleapis.com/css2?family=Courgette&display=swap);
+
 @media all and (max-width: 500px) {
     .navlink {
         font-size: 0.9em !important;
@@ -293,6 +294,7 @@ input[type="text"]:focus-within {
         opacity: 1;
         top: 5em;
     }
+
     80% {
         opacity: 1;
         top: 5em;
@@ -304,6 +306,7 @@ input[type="text"]:focus-within {
         opacity: 1;
         top: 5em;
     }
+
     80% {
         opacity: 1;
         top: 5em;
@@ -351,4 +354,29 @@ input[type="text"]:focus-within {
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+
+.privacyPolicy h1 {
+    color: var(--dark-popotes);
+}
+
+.privacyPolicy h2 {
+    color: var(--popotes);
+    margin-left: 2em;
+}
+
+.privacyPolicy {
+    font-family: 'Oswald', sans-serif;
+    padding: 5em 2em;
+    text-align: justify;
+    background-color: var(--dark-text);
+    color: var(--white);
+}
+
+.simpleLink:hover {
+text-decoration: underline;
+}
+    .simpleLink {
+    cursor: pointer;
+    color: var(--popotes);
 }
