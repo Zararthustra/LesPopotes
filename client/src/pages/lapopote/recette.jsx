@@ -115,6 +115,15 @@ export const Recette = () => {
 
   //___________________________________________________ Functions
 
+  const recipeTypeIcon = () => {
+    if (recipe.type === "apero") return icons.apero
+    if (recipe.type === "entree") return icons.entree
+    if (recipe.type === "plat") return icons.plat
+    if (recipe.type === "dessert") return icons.dessert
+    if (recipe.type === "boisson") return icons.boisson
+    return icons.autre
+  }
+
   const removeLastUrlSegment = (url) => {
     const lastSegment = url.split("/").pop();
     return url.replace(`/${lastSegment}`, "");
@@ -432,13 +441,7 @@ export const Recette = () => {
         </div>
         <div className="separatePopote"></div>
         <div className="typeAndDoneBy">
-          <div className="recipeTypeInfo">
-            {capitalize(recipe.type) === "Entree" ?
-              "Entrée" :
-              capitalize(recipe.type) === "Apero" ?
-                "Apéro" :
-                capitalize(recipe.type)}
-          </div>
+          <img className="recipeType" src={recipeTypeIcon()} alt={"Type " + recipe.type} title={"Type " + recipe.type} />
           <div
             className="doneBy"
             onClick={() => navigate(`/lespopotes/${recipe.author}`)}

@@ -12,6 +12,7 @@ const axios = require("axios");
 router.use(express.json());
 router.use(cors());
 
+// Error
 const customizedError = (error, from) => {
   return {
     From: from,
@@ -23,6 +24,66 @@ const customizedError = (error, from) => {
     FullError: error.parent ? "" : error,
   };
 };
+
+// JWT Strategy
+
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+const ATSecret = process.env.ACCESS_TOKEN_SECRET;
+const RTSecret = process.env.REFRESH_TOKEN_SECRET;
+
+const createAccessToken = (user) => {
+  return jwt.sign(user, ATSecret, { expiresIn: "15s" }); //1h
+};
+
+const authenticateAccessToken = (req, res, next) => {
+  const accessToken = req.headers["authorization"];
+
+  if (!accessToken) res.sendStatus(401);
+
+  jwt.verify(accessToken, ATSecret, (err, data) => {
+    if (err) return res.sendStatus(401);
+    data.userValidated.token = accessToken;
+    req.data = data.userValidated;
+    next();
+  });
+};
+
+const createRTinDB = (refreshToken) => {
+  db.RefreshToken.create({
+    token: refreshToken,
+  }).then((addedRT) =>
+    addedRT
+      ? console.log("RT created.")
+      : console.log("RT not created, an error occured.")
+  );
+};
+
+const deleteRTfromDB = (refreshToken) => {
+  db.RefreshToken.destroy({
+    where: { token: refreshToken },
+  }).then((res) => console.log(res === 1 ? "RT deleted" : "RT doesnt exist"));
+};
+
+const retrieveRTfromDB = (refreshToken) => {
+  return db.RefreshToken.findOne({
+    where: { token: refreshToken },
+  }).then((RT) => RT).catch((err) => console.log("Error GET RT from DB"));
+};
+
+router.get("/refreshAT/:RT", async (req, res) => {
+  const refreshToken = req.params.RT;
+  if (refreshToken == null) return res.sendStatus(401);
+  const dbResponse = await retrieveRTfromDB(refreshToken)
+  if (!dbResponse) return res.sendStatus(407);
+
+  jwt.verify(refreshToken, RTSecret, (err, user) => {
+    if (err) return res.sendStatus(400);
+    const userValidated = user.userValidated;
+    const accessToken = createAccessToken({ userValidated });
+    res.json({ accessToken: accessToken });
+  });
+});
 
 //________________________________________ Users
 
@@ -53,7 +114,7 @@ router.post("/user", (req, res) => {
     },
   }).then((response) => {
     if (response) return res.send("User already exist");
-    else
+    else {
       db.User.create({
         name,
         password,
@@ -73,7 +134,20 @@ router.post("/user", (req, res) => {
         tiktok,
         whatsapp,
         isAdmin,
-      }).then((createdUser) => res.json(createdUser));
+      }).then((createdUser) => {
+        const userValidated = createdUser;
+        const accessToken = createAccessToken({ userValidated });
+        const refreshToken = jwt.sign({ userValidated }, RTSecret, { expiresIn: "30d" });
+        createRTinDB(refreshToken);
+
+        res.send({
+          ...
+          userValidated.dataValues,
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+        });
+      });
+    }
   });
 });
 
@@ -90,17 +164,27 @@ router.post("/user/login", (req, res) => {
   }).then((userValidated) => {
     if (!userValidated) res.send("Wrong credentials");
     else {
-      //const accessToken = createAccessToken({ userValidated });
+      const accessToken = createAccessToken({ userValidated });
+      const refreshToken = jwt.sign({ userValidated }, RTSecret, { expiresIn: "30d" });
+      createRTinDB(refreshToken);
+
       res.send({
-        userValidated,
-        //accessToken: accessToken,
+        ...userValidated,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
       });
     }
   });
 });
 
+// Logout
+router.delete("/user/logout/:refreshToken", (req, res) => {
+  deleteRTfromDB(req.params.refreshToken)
+  res.sendStatus(204)
+})
+
 // Update
-router.put("/users/:userID", (req, res) => {
+router.put("/users/:userID", authenticateAccessToken, (req, res) => {
   const payload = req.body;
   db.User.update(payload, {
     where: {
@@ -108,7 +192,7 @@ router.put("/users/:userID", (req, res) => {
     },
   })
     .then((resp) => {
-      if (resp[0] !== 1) console.log("Update recipe: \n", resp);
+      if (resp[0] !== 1) console.log("Update user: \n", resp);
       res.sendStatus(200);
     })
     .catch((err) => {
@@ -144,12 +228,12 @@ router.put("/users/:userID/decrement/:field", (req, res) => {
 });
 
 // Retrieve all
-router.get("/users", (req, res) => {
+router.get("/users", authenticateAccessToken, (req, res) => {
   db.User.findAll().then((users) => res.json(users));
 });
 
 // Retrieve one
-router.get("/users/:username", (req, res) => {
+router.get("/users/:username", authenticateAccessToken, (req, res) => {
   db.User.findOne({
     where: {
       name: req.params.username,
@@ -158,7 +242,7 @@ router.get("/users/:username", (req, res) => {
 });
 
 // Retrieve all with pagination
-router.get("/users/pagination/:offset", (req, res) => {
+router.get("/users/pagination/:offset", authenticateAccessToken, (req, res) => {
   const offset = parseInt(req.params.offset);
   const limit = parseInt(req.query.limit);
 
@@ -237,7 +321,7 @@ router.post("/recipe", (req, res) => {
 });
 
 // Update
-router.put("/recipes/:recipeID", (req, res) => {
+router.put("/recipes/:recipeID", authenticateAccessToken, (req, res) => {
   const payload = req.body;
   db.Recipe.update(payload, {
     where: {
@@ -355,7 +439,7 @@ router.get("/recipes", (req, res) => {
 });
 
 // Retrieve all from userID
-router.get("/userrecipes/:userID", (req, res) => {
+router.get("/userrecipes/:userID", authenticateAccessToken, (req, res) => {
   db.Recipe.findAll({
     where: {
       user_id: req.params.userID,
@@ -457,7 +541,7 @@ router.get("/favorites/:recipeID", (req, res) => {
 });
 
 // Retrieve all by userID
-router.get("/userfavorites/:userID", (req, res) => {
+router.get("/userfavorites/:userID", authenticateAccessToken, (req, res) => {
   db.FavoriteRecipe.findAll({
     where: {
       user_id: req.params.userID,
@@ -811,7 +895,7 @@ router.post("/friendships", (req, res) => {
 });
 
 // Delete
-router.delete("/friendships/:userID", (req, res) => {
+router.delete("/friendships/:userID", authenticateAccessToken, (req, res) => {
   const user_id = req.params.userID;
   const popote_id = req.query.popote_id;
 
@@ -856,7 +940,7 @@ router.get("/friendships/:userID", (req, res) => {
 });
 
 // Retrieve all by user_id
-router.get("/friendships", (req, res) => {
+router.get("/friendships", authenticateAccessToken, (req, res) => {
   const user_id = req.query.user_id;
 
   db.Friendship.findAll({
@@ -928,7 +1012,7 @@ router.get("/messages", (req, res) => {
         { user_id: popote_id, popote_id: user_id },
       ],
     },
-    order: [[ 'createdAt', 'ASC' ]]
+    order: [['createdAt', 'ASC']]
   })
     .then((foundMessages) => {
       if (foundMessages.length > 50)
@@ -966,7 +1050,7 @@ router.post("/forum", (req, res) => {
 });
 
 // Retrieve all forum messages
-router.get("/forum", (req, res) => {
+router.get("/forum", authenticateAccessToken, (req, res) => {
   db.Forum.findAll({ order: [["createdAt", "DESC"]] })
     .then((foundMessages) => {
       res.json(foundMessages);
@@ -1022,7 +1106,7 @@ router.post("/notification", (req, res) => {
 });
 
 // Check
-router.put("/notification", (req, res) => {
+router.put("/notification", authenticateAccessToken, (req, res) => {
   db.Notification.update({
     isChecked: true
   }, {

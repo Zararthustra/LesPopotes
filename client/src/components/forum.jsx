@@ -4,6 +4,7 @@ import axios from "axios";
 import { Host } from "../assets/utils/host";
 import ClipLoader from "react-spinners/ClipLoader";
 import { ForumMessage } from "./forumMessage";
+import { RefreshSession } from "./refreshSession";
 
 export const Forum = () => {
   const userId = localStorage.getItem("userid");
@@ -11,6 +12,8 @@ export const Forum = () => {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  axios.defaults.headers.common["authorization"] = localStorage.getItem("accessToken");
+  const [expiredSession, setExpiredSession] = useState(false);
 
   // Load data when mounting
   useEffect(() => {
@@ -30,7 +33,8 @@ export const Forum = () => {
       });
     } catch (error) {
       setLoading(false);
-      console.log("An error occured while getting messages : ", error);
+      console.log("Session expirée, veuillez vous reconnecter.");
+      return setExpiredSession(true)
     }
   }, []);
 
@@ -70,6 +74,7 @@ export const Forum = () => {
         });
   };
 
+  if (expiredSession) return <RefreshSession />
   return (
     <div className="forum">
       <div className="inputContainer">

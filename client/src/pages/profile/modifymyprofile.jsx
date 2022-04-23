@@ -6,8 +6,12 @@ import { refreshPage } from "../../assets/utils/refreshPage";
 import Select from "react-select";
 import { images } from "../../assets/utils/importImages";
 import { Toaster } from "../../components/toaster";
+import { RefreshSession } from "../../components/refreshSession";
 
 export const Modifymyprofile = ({ userObject }) => {
+  axios.defaults.headers.common["authorization"] = localStorage.getItem("accessToken");
+  const [expiredSession, setExpiredSession] = useState(false);
+
   const [avatar, setAvatar] = useState(userObject.avatar);
   const [name, setName] = useState(userObject.name);
   const [password, setPassword] = useState(userObject.password);
@@ -85,7 +89,8 @@ export const Modifymyprofile = ({ userObject }) => {
         setTimeout(() => refreshPage(true), 3000);
       })
       .catch((err) => {
-        console.log("Error catched: ", err);
+        console.log("Session expirée, veuillez vous reconnecter.");
+        setExpiredSession(true)
       });
   };
 
@@ -109,6 +114,8 @@ export const Modifymyprofile = ({ userObject }) => {
   const handleSelectChange = (event) => {
     setType(event.label);
   };
+
+  if (expiredSession) return <RefreshSession />
 
   return (
     <div className="modifyProfileContainer">

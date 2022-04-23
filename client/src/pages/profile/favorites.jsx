@@ -5,6 +5,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import axios from "axios";
 import { Host } from "../../assets/utils/host";
 import { Outlet, useLocation } from "react-router-dom";
+import { RefreshSession } from "../../components/refreshSession";
 
 export const Favorites = () => {
   const location = useLocation().pathname;
@@ -15,6 +16,8 @@ export const Favorites = () => {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [isFiltering, setIsFiltering] = useState(false);
   const userID = localStorage.getItem("userid");
+  axios.defaults.headers.common["authorization"] = localStorage.getItem("accessToken");
+  const [expiredSession, setExpiredSession] = useState(false);
 
   // Load data when mounting
   useEffect(() => {
@@ -30,14 +33,20 @@ export const Favorites = () => {
     }
     const getRecipes = async () => {
       try {
-        const res = await axios.get(`${Host}api/recipes`);
-        if (res.data) {
+        const res = await axios.get(`${Host}api/recipes`).catch((err) => {
+          console.log("Session expirée, veuillez vous reconnecter.");
+          return setExpiredSession(true)
+        });
+        if (res && res.data) {
           let tmpRecipes = res.data;
 
           const resFavorites = await axios.get(
             `${Host}api/userfavorites/${userID}`
-          );
-          if (resFavorites.data) {
+          ).catch((err) => {
+            console.log("Session expirée, veuillez vous reconnecter.");
+            return setExpiredSession(true)
+          });
+          if (resFavorites && resFavorites.data) {
             const getOnlyFavs = tmpRecipes.filter((recipe) =>
               resFavorites.data.includes(recipe.id)
             );
@@ -66,6 +75,16 @@ export const Favorites = () => {
     return () => setRecipes();
   }, [userID, filter]);
 
+  if (expiredSession) return (
+    <main className="mapopotebody">
+      <SearchFilterPopote
+        setFilter={setFilter}
+        searchFilter={searchFilter}
+        setSearchFilter={setSearchFilter}
+      />
+      <RefreshSession />
+    </main>
+  )
   if (location !== "/profil/favorites") return <Outlet />;
 
   return (

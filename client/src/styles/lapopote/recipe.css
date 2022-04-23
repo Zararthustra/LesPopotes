@@ -175,10 +175,6 @@
   width: 90%;
   margin: .5em 0;
 }
-.recipeTypeInfo {
-  color: var(--dark-popote);
-  font-size: 1.5em;
-}
 .doneBy:hover {
   text-decoration: underline;
 }

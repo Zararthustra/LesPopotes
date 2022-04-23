@@ -5,6 +5,7 @@ import { Card } from "../../components/card";
 import { SearchFilterPopote } from "../../components/searchFilterPopote";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Outlet, useLocation } from "react-router-dom";
+import { RefreshSession } from "../../components/refreshSession";
 
 export const Mesrecettes = () => {
   const location = useLocation().pathname;
@@ -15,6 +16,8 @@ export const Mesrecettes = () => {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [isFiltering, setIsFiltering] = useState(false);
   const userID = localStorage.getItem("userid");
+  axios.defaults.headers.common["authorization"] = localStorage.getItem("accessToken");
+  const [expiredSession, setExpiredSession] = useState(false);
 
   // Load data when mounting
   useEffect(() => {
@@ -30,8 +33,11 @@ export const Mesrecettes = () => {
     }
     const getRecipes = async () => {
       try {
-        const res = await axios.get(`${Host}api/userrecipes/${userID}`);
-        if (res.data) {
+        const res = await axios.get(`${Host}api/userrecipes/${userID}`).catch((err) => {
+          console.log("Session expirée, veuillez vous reconnecter.");
+          return setExpiredSession(true)
+        });
+        if (res && res.data) {
           setRecipes(res.data)
           setFilteredRecipes(filterFunc(res.data, filter))
         }
@@ -55,6 +61,16 @@ export const Mesrecettes = () => {
     return () => setRecipes();
   }, [userID, filter]);
 
+  if (expiredSession) return (
+    <main className="mapopotebody">
+      <SearchFilterPopote
+        setFilter={setFilter}
+        searchFilter={searchFilter}
+        setSearchFilter={setSearchFilter}
+      />
+      <RefreshSession />
+    </main>
+  )
   if (location !== "/profil/mesrecettes") return <Outlet />;
   return (
     <main className="mapopotebody">

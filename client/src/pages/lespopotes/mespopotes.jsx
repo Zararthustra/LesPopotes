@@ -4,12 +4,15 @@ import { Host } from "../../assets/utils/host";
 import { Popotesitem } from "../../components/popotesitem";
 import ClipLoader from "react-spinners/ClipLoader";
 import { SearchFilterPopotes } from "../../components/searchFilterPopotes";
+import { RefreshSession } from "../../components/refreshSession";
 
 export const Mespopotes = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState();
   const [searchFilter, setSearchFilter] = useState("");
+  const [expiredSession, setExpiredSession] = useState(false);
+  axios.defaults.headers.common["authorization"] = localStorage.getItem("accessToken");
 
   // Load data when mounting
   useEffect(() => {
@@ -34,12 +37,29 @@ export const Mespopotes = () => {
               setUsers(mypopotes);
               setLoading(false);
             }
+          }).catch((err) => {
+            console.log("Session expirée, veuillez vous reconnecter.");
+            return setExpiredSession(true)
           });
       }
+    }).catch((err) => {
+      console.log("Session expirée, veuillez vous reconnecter.");
+      return setExpiredSession(true)
     });
 
     return () => (isSubscribed = false);
   }, []);
+
+  if (expiredSession) return (
+    <main className="lesPopotesPage">
+      <SearchFilterPopotes
+        setFilter={setFilter}
+        setSearchFilter={setSearchFilter}
+      />
+      <RefreshSession />
+    </main>
+  )
+
   return (
     <div className="mespopotesBody">
       <main className="lesPopotesPage">

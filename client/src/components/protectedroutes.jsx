@@ -9,10 +9,9 @@ import { useCallback } from "react";
 
 export const ProtectedRoutes = () => {
   const location = useLocation().pathname;
-
-  const [isAuth, setIsAuth] = useState(false);// refreshToken in localstorage ? true : false
+  const refreshToken = localStorage.getItem("refreshToken");
+  const [isAuth, setIsAuth] = useState(refreshToken ? true : false)
   const [loading, setLoading] = useState(false);
-
   const name = localStorage.getItem("username");
   const password = localStorage.getItem("password");
 
@@ -29,7 +28,9 @@ export const ProtectedRoutes = () => {
         setLoading(false);
         setIsAuth(false);
       } else {
-        localStorage.setItem("userid", response.data.userValidated.id);
+        localStorage.setItem("userid", response.data.dataValues.id);
+        localStorage.setItem("accessToken", response.data.accessToken);
+        localStorage.setItem("refreshToken", response.data.refreshToken);
         setLoading(false);
         setIsAuth(true);
       }
@@ -43,8 +44,8 @@ export const ProtectedRoutes = () => {
   }, [name, password]);
 
   useEffect(() => {
-    authenticate();
-  }, [authenticate]);
+    if (!isAuth) authenticate();
+  }, [authenticate, isAuth]);
 
   return loading ? (
     // while requesting API
@@ -61,9 +62,9 @@ export const ProtectedRoutes = () => {
       </div>
     )
   ) : // API responded
-  isAuth ? (
-    <Outlet />
-  ) : (
-    <Login />
-  );
+    isAuth ? (
+      <Outlet />
+    ) : (
+      <Login />
+    );
 };

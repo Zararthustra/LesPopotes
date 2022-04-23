@@ -7,6 +7,7 @@ import { Popotesitem } from "../../components/popotesitem";
 import { SearchFilterPopotes } from "../../components/searchFilterPopotes";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Forum } from "../../components/forum";
+import { RefreshSession } from "../../components/refreshSession";
 
 export const Lespopotes = () => {
   const location = useLocation().pathname;
@@ -18,6 +19,8 @@ export const Lespopotes = () => {
   const limit = 10;
   const [totalItems, setTotalItems] = useState();
   const [searchFilter, setSearchFilter] = useState("");
+  axios.defaults.headers.common["authorization"] = localStorage.getItem("accessToken");
+  const [expiredSession, setExpiredSession] = useState(false);
 
   // Load data when mounting
   useEffect(() => {
@@ -37,7 +40,10 @@ export const Lespopotes = () => {
     setLoading(true);
 
     const getUsers = async () => {
-      const res = await axios.get(`${Host}api/users`);
+      const res = await axios.get(`${Host}api/users`).catch((err) => {
+        console.log("Session expirée, veuillez vous reconnecter.");
+        return setExpiredSession(true)
+      });
       if (res.data) {
         setLoading(false);
         setUsers(res.data);
@@ -46,8 +52,11 @@ export const Lespopotes = () => {
     const getUsersPaginated = async () => {
       const res = await axios.get(`${Host}api/users/pagination/${offset}`, {
         params: { limit },
+      }).catch((err) => {
+        console.log("Session expirée, veuillez vous reconnecter.");
+        return setExpiredSession(true)
       });
-      if (res.data) {
+      if (res && res.data) {
         setTotalItems(res.data.count);
         setLoading(false);
         setUsers(res.data.rows);
@@ -60,6 +69,29 @@ export const Lespopotes = () => {
     return () => setUsers([]);
   }, [offset, filter, searchFilter, location]);
 
+  if (expiredSession) return (
+    <div>
+      <div className="headerContainer">
+        <h1
+          className="title lespopotes"
+          onClick={() => navigate("/lespopotes")}
+        >
+          Les Popotes
+        </h1>
+        <div className="links">
+          <Link id="mypopotes" className="navlink" to="/lespopotes">
+            Les Popotes
+          </Link>
+          <Link id="forum" className="navlink" to="forum">
+            Forum
+          </Link>
+        </div>
+      </div>
+      <main className="lesPopotesPage">
+        <RefreshSession />
+      </main>
+    </div>
+  )
   return (
     <div>
       <div className="headerContainer">

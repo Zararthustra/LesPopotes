@@ -9,9 +9,11 @@ import { images } from "../../assets/utils/importImages";
 import { Modifymyprofile } from "./modifymyprofile";
 import { Toaster } from "../../components/toaster";
 import { Notification } from "../../components/notification";
+import { RefreshSession } from "../../components/refreshSession";
 
 export const Monprofil = () => {
   const navigate = useNavigate();
+  axios.defaults.headers.common["authorization"] = localStorage.getItem("accessToken");
   const userName = localStorage.getItem("username");
   const userID = localStorage.getItem("userid");
   const [userObject, setUserObject] = useState({});
@@ -23,13 +25,17 @@ export const Monprofil = () => {
   const [hasCheckedNotifs, setHasCheckedNotifs] = useState(false);
   const [isDisconnected, setIsDisconnected] = useState(false);
   const toasterRef = useRef(null);
+  const refreshToken = localStorage.getItem("refreshToken");
+  const [expiredSession, setExpiredSession] = useState(false);
   const level = getLevel(
     userObject.recipes,
     userObject.notes,
     userObject.popotes,
     userObject.comments
   );
-  const logout = () => {
+
+  const logout = async () => {
+    await axios.delete(`${Host}api/user/logout/${refreshToken}`);
     setIsDisconnected(true);
     toasterRef.current.showToaster();
     setTimeout(() => {
@@ -43,13 +49,19 @@ export const Monprofil = () => {
     let isSubscribed = true;
     setLoading(true);
     const getUserInfos = async () => {
-      const res = await axios.get(`${Host}api/users/${userName}`);
-      const resNotif = await axios.get(`${Host}api/notification/${userID}`);
+      const res = await axios.get(`${Host}api/users/${userName}`).catch((err) => {
+        console.log("Session expirée, veuillez vous reconnecter.");
+        return setExpiredSession(true)
+      });
+      const resNotif = await axios.get(`${Host}api/notification/${userID}`).catch((err) => {
+        console.log("Session expirée, veuillez vous reconnecter.");
+        return setExpiredSession(true)
+      });
       if (isSubscribed && res) {
         setUserObject(res.data);
         setLoading(false);
       }
-      if (isSubscribed && resNotif.data.length > 0) {
+      if (isSubscribed && resNotif?.data.length > 0) {
         setNotifs(resNotif.data);
 
         let notificationIDToCheck = []
@@ -74,7 +86,10 @@ export const Monprofil = () => {
 
   useEffect(() => {
     notifsToCheck.length === 0 ? setHasCheckedNotifs(true) : setHasCheckedNotifs(false)
-    if (isNotif && hasCheckedNotifs && notifsToCheck.length > 0) axios.put(`${Host}api/notification`, { notificationIDArray: notifsToCheck })
+    if (isNotif && hasCheckedNotifs && notifsToCheck.length > 0) axios.put(`${Host}api/notification`, { notificationIDArray: notifsToCheck }).catch((err) => {
+      console.log("Session expirée, veuillez vous reconnecter.");
+      return setExpiredSession(true)
+    });
   }, [notifsToCheck, isNotif, hasCheckedNotifs])
 
   const toggleTabInfos = () => {
@@ -99,6 +114,12 @@ export const Monprofil = () => {
     setIsInfos(false);
     setIsNotif(true)
   };
+
+  if (expiredSession) return (
+    <main className="lesPopotesPage">
+      <RefreshSession />
+    </main>
+  )
 
   if (loading)
     return (

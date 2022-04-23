@@ -121,7 +121,8 @@ export const Login = () => {
           localStorage.setItem("username", response.data.name);
           localStorage.setItem("password", response.data.password);
           localStorage.setItem("userid", response.data.id);
-          //localStorage.setItem("token", response.data.accessToken);
+          localStorage.setItem("accessToken", response.data.accessToken);
+          localStorage.setItem("refreshToken", response.data.refreshToken);
           navigate("/lapopote");
         }
       });
@@ -138,10 +139,8 @@ export const Login = () => {
   async function logUser(event) {
     localStorage.setItem("username", userName);
     localStorage.setItem("password", password);
-    //localStorage.setItem("token", response.data.accessToken);
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    //}
   }
 
   const handleInputChange = (event) => {

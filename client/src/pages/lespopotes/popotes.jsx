@@ -10,10 +10,13 @@ import { icons } from "../../assets/utils/importIcons";
 import { Messages } from "../../components/messages";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Toaster } from "../../components/toaster";
+import { RefreshSession } from "../../components/refreshSession";
 
 export const Popotes = () => {
   const { popote } = useParams();
   const navigate = useNavigate();
+  axios.defaults.headers.common["authorization"] = localStorage.getItem("accessToken");
+  const [expiredSession, setExpiredSession] = useState(false);
 
   const [userObject, setUserObject] = useState({});
   const [activeTab, setActiveTab] = useState("infosTab");
@@ -47,7 +50,8 @@ export const Popotes = () => {
             }
           })
           .catch((error) => {
-            console.log("An error occured while requesting recipes:\n", error);
+            console.log("Session expirée, veuillez vous reconnecter.");
+            return setExpiredSession(true)
           });
 
         // get friendship status
@@ -60,11 +64,17 @@ export const Popotes = () => {
               setIsMyPopote(true);
               setLoading(false);
             } else setLoading(false);
+          }).catch((error) => {
+            console.log("Session expirée, veuillez vous reconnecter.");
+            return setExpiredSession(true)
           });
       } else {
         setLoading(false)
         setNotFound(true)
       }
+    }).catch((error) => {
+      console.log("Session expirée, veuillez vous reconnecter.");
+      return setExpiredSession(true)
     });
 
   }, [popote]);
@@ -132,6 +142,8 @@ export const Popotes = () => {
     return icons.autre;
   };
 
+  if (expiredSession) return <RefreshSession />
+
   if (loading)
     return (
       <main className="popoteContainer">
@@ -142,7 +154,7 @@ export const Popotes = () => {
     <main className="notFound" onClick={() => navigate('/lespopotes')}>
       <img src="https://avatars.dicebear.com/api/big-smile/randomm400...........svg?translateY=10" alt="avatar" className="avatarNotFound" />
       <h1 className="zindex">Ce popote n'existe pas !</h1>
-      <p className="infinite404">{"400 ".repeat(2100)}</p>
+      <p className="infinite404">{"404 ".repeat(2100)}</p>
     </main>
   )
   if (userObject)
