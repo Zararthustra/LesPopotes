@@ -33,7 +33,7 @@ const ATSecret = process.env.ACCESS_TOKEN_SECRET;
 const RTSecret = process.env.REFRESH_TOKEN_SECRET;
 
 const createAccessToken = (user) => {
-  return jwt.sign(user, ATSecret, { expiresIn: "15s" }); //1h
+  return jwt.sign(user, ATSecret, { expiresIn: "2h" });
 };
 
 const authenticateAccessToken = (req, res, next) => {
