@@ -113,7 +113,23 @@
   font-weight    : 600;
   font-family    : 'Oswald', sans-serif;
   margin         : 0 0 1em;
-  text-decoration: underline;
+}
+.profileSubTitle::first-letter {
+  color          : var(--dark-popotes);
+  font-size: 1.3em;
+}
+
+.profileSubSubTitle {
+  color          : var(--dark);
+  align-self     : flex-start;
+  padding-left   : 1em;
+  font-weight    : 600;
+  font-family    : 'Oswald', sans-serif;
+  margin         : 0 0 0 1.5em;
+}
+.profileSubSubTitle::first-letter {
+  color          : var(--dark-popotes);
+  font-size: 1.3em;
 }
 
 .modifyProfileContainer input:focus-within {
@@ -208,6 +224,16 @@
   color        : var(--dark);
   margin-bottom: 1em;
   font-size    : 0.6em;
+}
+
+.checklistButton {
+  background-color: var(--dark);
+  padding         : .3em .7em;
+  border-radius   : 3px;
+  font-family     : 'Oswald', sans-serif;
+  color           : var(--white);
+  margin          : .5em 0 0;
+  cursor          : pointer;
 }
 
 /*

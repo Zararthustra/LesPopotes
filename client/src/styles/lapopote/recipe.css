@@ -421,3 +421,36 @@
   justify-content: center;
   align-items: center;
 }
+
+/*
+ * Add to checklist
+ */
+ .addToChecklist {
+   display: flex;
+   gap: 1em;
+   justify-content: center;
+   align-items: center;
+   cursor: pointer;
+   font-family: 'Oswald', sans-serif;
+   padding: 0.5em;
+   margin: 1em 0;
+   border-radius: 3px;
+   color: var(--white);
+   box-shadow: 0 0 5px grey;
+   background-color: var(--dark);
+ }
+ .addToChecklist:hover {
+ opacity: 0.8;
+}
+
+.checklistKO {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-family: 'Oswald', sans-serif;
+  color: var(--dark);
+  margin: 1em 0;
+  padding: 1em;
+}

@@ -10,6 +10,7 @@ import { icons } from "../../assets/utils/importIcons";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Modification } from "../profile/modification";
 import { Toaster } from "../../components/toaster";
+import { images } from "../../assets/utils/importImages"
 
 export const Recette = () => {
   //___________________________________________________ Variables
@@ -29,6 +30,12 @@ export const Recette = () => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingChecklist, setLoadingChecklist] = useState(false);
+  const [ingredientsChecklistOK, setIngredientsChecklistOK] = useState(false);
+  const [ingredientsChecklistKO, setIngredientsChecklistKO] = useState(false);
+  const [stepsChecklistOK, setStepsChecklistOK] = useState(false);
+  const [stepsChecklistKO, setStepsChecklistKO] = useState(false);
+  const [checklistCredentials, setChecklistCredentials] = useState({});
   const toasterRef = useRef(null);
 
   //___________________________________________________ UseEffect
@@ -109,6 +116,16 @@ export const Recette = () => {
       }
     };
     if (isSubscribed) getNotes();
+
+    // Get checklist credentials
+    const getChecklistCredentials = async () => {
+      const res = await axios.get(`${Host}api/checklist/users/${localStorage.getItem("userid")}`);
+      if (res) setChecklistCredentials({
+        name: res.data.name,
+        password: res.data.password,
+      });
+    };
+    if (isSubscribed) getChecklistCredentials();
 
     return () => (isSubscribed = false);
   }, [recetteID]);
@@ -315,6 +332,40 @@ export const Recette = () => {
     }
   };
 
+  const checklistPayload = {
+    recipeName: recipe.name,
+    credentials: checklistCredentials,
+    ingredients,
+    steps
+  }
+
+  const addIngredientsToChecklist = async () => {
+    setLoadingChecklist(true)
+    if (Object.keys(checklistCredentials).length === 0) {
+      setLoadingChecklist(false)
+      return setIngredientsChecklistKO(true)
+    }
+    await axios
+      .post(`${Host}api/checklist/ingredients`, checklistPayload).then((res) => {
+        if (res.status === 201) setIngredientsChecklistOK(true)
+        else setIngredientsChecklistKO(true)
+      })
+    setLoadingChecklist(false)
+  }
+  const addStepsToChecklist = async () => {
+    setLoadingChecklist(true)
+    if (Object.keys(checklistCredentials).length === 0) {
+      setLoadingChecklist(false)
+      return setStepsChecklistKO(true)
+    }
+    await axios
+      .post(`${Host}api/checklist/steps`, checklistPayload).then((res) => {
+        if (res.status === 201) setStepsChecklistOK(true)
+        else setStepsChecklistKO(true)
+      })
+    setLoadingChecklist(false)
+  }
+
   //___________________________________________________ Render
 
   if (loading)
@@ -452,6 +503,42 @@ export const Recette = () => {
         <RecipeInfos infos={recipe} />
         <div className="separatePopote"></div>
         <RecipeIngredients ingredients={ingredients} />
+        
+        {loadingChecklist ?
+          <ClipLoader css={""} color={"#f5a76c"} loading={loadingChecklist} size={50} /> :
+          ingredientsChecklistOK ?
+            <div style={{ display: "flex", alignItems: "center", color: "var(--dark-popotes)", marginBottom: "1em" }}>
+              Ingrédients ajoutés à votre checklist avec succès
+              <img src={icons.ok} className="toasterIcon" alt="succès" />
+            </div> :
+            ingredientsChecklistKO ?
+              <div className="checklistKO">
+                <h2>Aucun compte connecté !</h2>
+                <div>Ajoutez votre compte <strong>Checklist</strong> dans</div>
+                <div className="addToChecklist" onClick={() => navigate("/profil")}>
+                  <img
+                    className="checklist"
+                    src={icons.profile}
+                    alt="mon compte"
+                  />Mon profil</div>
+                <div>ou alors</div>
+                <a className="addToChecklist" href="https://checklist.arthurmayer.fr">
+                  <img
+                    className="checklist"
+                    src={images.checklist}
+                    alt="checklist"
+                  />Créez un compte</a>
+              </div> :
+              <div className="addToChecklist" onClick={addIngredientsToChecklist}>
+                <img
+                  className="checklist"
+                  src={images.checklist}
+                  alt="checklist"
+                />
+                Ajouter à ma checklist
+              </div>
+        }
+
         <div className="separatePopote"></div>
         <ul className="steps">
           {steps.map((step, index) => {
@@ -463,6 +550,42 @@ export const Recette = () => {
             );
           })}
         </ul>
+
+        {loadingChecklist ?
+          <ClipLoader css={""} color={"#f5a76c"} loading={loadingChecklist} size={50} /> :
+          stepsChecklistOK ?
+            <div style={{ display: "flex", alignItems: "center", color: "var(--dark-popotes)", marginBottom: "1em" }}>
+              Etapes ajoutées à votre checklist avec succès
+              <img src={icons.ok} className="toasterIcon" alt="succès" />
+            </div> :
+            stepsChecklistKO ?
+              <div className="checklistKO">
+                <h2>Aucun compte connecté !</h2>
+                <div>Ajoutez votre compte <strong>Checklist</strong> dans</div>
+                <div className="addToChecklist" onClick={() => navigate("/profil")}>
+                  <img
+                    className="checklist"
+                    src={icons.profile}
+                    alt="mon compte"
+                  />Mon profil</div>
+                <div>ou alors</div>
+                <a className="addToChecklist" href="https://checklist.arthurmayer.fr">
+                  <img
+                    className="checklist"
+                    src={images.checklist}
+                    alt="checklist"
+                  />Créez un compte</a>
+              </div> :
+              <div className="addToChecklist" onClick={addStepsToChecklist}>
+                <img
+                  className="checklist"
+                  src={images.checklist}
+                  alt="checklist"
+                />
+                Ajouter à ma checklist
+              </div>
+        }
+
         {recipe.authorComment ? (
           <div className="ifAuthorComment">
             <div className="separatePopote"></div>

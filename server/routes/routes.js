@@ -1139,6 +1139,160 @@ router.delete("/notification/:notificationID", (req, res) => {
   });
 })
 
+//________________________________________ Checklist
+const checklistHost = "https://checklist.arthurmayer.fr/apiroutes/"
+
+const getChecklistAccessToken = async (credentials) => {
+  let checklistLoginResponse
+  if (!credentials) return
+
+  checklistLoginResponse = await axios.post(
+    `${checklistHost}user/login`, credentials
+  )
+    .catch((err) => {
+      return console.log(customizedError(err, "POST checklist login"));
+    });
+  return checklistLoginResponse.data;
+}
+const addCategory = async (recipeName, loginObject, ingredientsOrSteps) => {
+  let checklistCategoryID
+  const listType = ingredientsOrSteps === "steps" ? "Etapes" : "Ingrédients"
+
+  checklistCategoryID = await axios.post(
+    `${checklistHost}category`, {
+    name: recipeName + " - " + listType + ":",
+    userId: loginObject.id
+  }, {
+    headers: {
+      authorization: loginObject.accessToken,
+    }
+  }
+  ).catch((err) => {
+    return console.log(customizedError(err, "POST checklist category"));
+  });
+
+  return checklistCategoryID.data.id
+}
+
+const addTasks = async (ingredientsOrSteps, checklistAccessToken, list, CategoryId) => {
+  let tasks
+
+  if (ingredientsOrSteps === "ingredients") tasks = list.map((task) => {
+    return {
+      name: task.name + " " + task.quantity + " " + task.unity,
+      CategoryId
+    }
+  })
+  else if (ingredientsOrSteps === "steps") tasks = list.map((task) => {
+    return {
+      name: task.nbStep + " - " + task.content,
+      CategoryId
+    }
+  })
+
+  await axios.post(
+    `${checklistHost}tasks`, tasks, {
+    headers: {
+      authorization: checklistAccessToken,
+    }
+  }
+  ).catch((err) => {
+    return console.log(customizedError(err, "POST checklist tasks"));
+  });
+
+}
+
+
+// Create ingredients or/and steps list
+router.post("/checklist/:list", async (req, res) => {
+  const payload = req.body;
+  const list = req.params.list;
+  let checklistLoginResponse
+  let ingredientsOrStepsList
+
+  if (list === "ingredients") ingredientsOrStepsList = req.body.ingredients;
+  if (list === "steps") ingredientsOrStepsList = req.body.steps;
+
+  checklistLoginResponse = await getChecklistAccessToken(payload.credentials)
+
+  checklistCategoryID = await addCategory(payload.recipeName, checklistLoginResponse, list)
+
+  await addTasks(list, checklistLoginResponse.accessToken, ingredientsOrStepsList, checklistCategoryID)
+
+  res.sendStatus(201);
+});
+
+// Create user's credentials
+router.post("/checklist/users/:userID", async (req, res) => {
+  const user_id = req.params.userID;
+  const name = req.body.name;
+  const password = req.body.password;
+  const credentials = {
+    name: req.body.name,
+    password: req.body.password
+  }
+  let loginResponse
+
+  loginResponse = await getChecklistAccessToken(credentials)
+  if (loginResponse === "Wrong credentials") {
+    return res.json(404)
+  }
+  if (loginResponse) {
+    console.log(loginResponse);
+    console.log(loginResponse === "Wrong credentials");
+    console.log(loginResponse);
+    db.ChecklistCredentials.create({
+      user_id,
+      name,
+      password,
+    }).catch((err) => {
+      console.log(customizedError(err, "Create checklist credentials"));
+    });
+    res.sendStatus(201)
+  } else {
+    console.log("Error occured during checklist credentials check");
+    res.sendStatus(500)
+  };
+});
+
+// Retrieve user's credentials
+router.get("/checklist/users/:userID", (req, res) => {
+  db.ChecklistCredentials.findOne({
+    where: {
+      user_id: req.params.userID,
+    },
+  })
+    .then((userCredentials) => {
+      if (!userCredentials)
+        res.sendStatus(404)
+      else
+        res.json(userCredentials)
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "GET checklist credentials"));
+      res.json({ error: err.name });
+    });
+})
+
+// Delete user's credentials
+router.delete("/checklist/users/:userID", (req, res) => {
+  db.ChecklistCredentials.destroy({
+    where: {
+      user_id: parseInt(req.params.userID),
+    },
+  })
+    .then((deletedFav) => {
+      if (deletedFav) {
+        return res.json(deletedFav);
+      }
+      return res.send("Could not delete checklist user's credentials.");
+    })
+    .catch((err) => {
+      console.log(customizedError(err, "DELETE ChecklistCredentials"));
+      res.json({ error: err.name });
+    });
+});
+
 //________________________________________ Not implemented yet:
 
 //________________________________________ Tags

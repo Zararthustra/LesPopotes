@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Avatar } from "../../components/Avatar";
 import { Host } from "../../assets/utils/host";
 import axios from "axios";
@@ -7,14 +7,22 @@ import Select from "react-select";
 import { images } from "../../assets/utils/importImages";
 import { Toaster } from "../../components/toaster";
 import { RefreshSession } from "../../components/refreshSession";
+import { icons } from "../../assets/utils/importIcons";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export const Modifymyprofile = ({ userObject }) => {
   axios.defaults.headers.common["authorization"] = localStorage.getItem("accessToken");
   const [expiredSession, setExpiredSession] = useState(false);
 
+  const [loading, setLoading] = useState(false);
   const [avatar, setAvatar] = useState(userObject.avatar);
   const [name, setName] = useState(userObject.name);
   const [password, setPassword] = useState(userObject.password);
+  const [checklistName, setChecklistName] = useState("");
+  const [checklistPassword, setChecklistPassword] = useState("");
+  const [checklistOK, setChecklistOK] = useState(false);
+  const [retryChecklist, setRetryChecklist] = useState(false);
+  const [accountRecognized, setAccountRecognized] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [type, setType] = useState(userObject.type || "");
   const [mail, setMail] = useState(userObject.mail || "");
@@ -50,6 +58,19 @@ export const Modifymyprofile = ({ userObject }) => {
     }),
   };
 
+  useEffect(() => {
+    // Get checklist credentials
+    const getChecklistCredentials = async () => {
+      const res = await axios.get(`${Host}api/checklist/users/${localStorage.getItem("userid")}`);
+      if (res) {
+        setChecklistName(res.data.name)
+        setChecklistPassword(res.data.password)
+        setAccountRecognized(true)
+      }
+    };
+    getChecklistCredentials();
+  }, [])
+
   const popoteTypes = [
     { value: "gourmand", label: "Gourmand" },
     { value: "bon vivant", label: "Bon vivant" },
@@ -76,8 +97,30 @@ export const Modifymyprofile = ({ userObject }) => {
     whatsapp,
   };
 
-  const updateUser = () => {
-    axios
+  const checkLoginChecklist = async () => {
+    if (!checklistName || !checklistPassword) return
+    setLoading(true)
+    await axios.post(
+      `${Host}api/checklist/users/${localStorage.getItem("userid")}`, {
+      name: checklistName,
+      password: checklistPassword
+    }).then((res) => {
+      if (res.data === 404)
+        setRetryChecklist(true)
+      else
+        setChecklistOK(true)
+      setLoading(false)
+    })
+  }
+
+  const dissociateAccount = () => {
+    axios.delete(`${Host}api/checklist/users/${localStorage.getItem("userid")}`)
+    refreshPage(true)
+  }
+
+  const updateUser = async () => {
+
+    await axios
       .put(`${Host}api/users/${userObject.id}`, updatedUserPayload)
       .then((res) => {
         if (!res) return console.log("No response from server");
@@ -101,6 +144,8 @@ export const Modifymyprofile = ({ userObject }) => {
 
     if (className === "pseudoo") setName(value);
     if (className === "password") setPassword(value);
+    if (className === "checklistName") setChecklistName(value);
+    if (className === "checklistPassword") setChecklistPassword(value);
     if (id === "mail") setMail(value);
     if (id === "linkedin") setLinkedin(value);
     if (id === "facebook") setFacebook(value);
@@ -166,6 +211,7 @@ export const Modifymyprofile = ({ userObject }) => {
       )}
       <div className="separatePopotes"></div>
       <h3 className="profileSubTitle">Connexion</h3>
+      <h4 className="profileSubSubTitle">Les Popotes</h4>
       <div>
         <p>Pseudo</p>
         <input
@@ -204,6 +250,41 @@ export const Modifymyprofile = ({ userObject }) => {
       ) : (
         ""
       )}
+      <h4 className="profileSubSubTitle">Checklist</h4>
+      <div>
+        <p>Pseudo</p>
+        <input
+          type="text"
+          className="checklistName"
+          value={checklistName}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div>
+        <p>Mot de passe</p>
+        <input
+          type="password"
+          className="checklistPassword"
+          value={checklistPassword}
+          onChange={handleInputChange}
+        />
+      </div>
+      {loading ?
+        <ClipLoader css={""} color={"#78f5ca"} loading={loading} size={50} /> :
+        checklistOK ?
+          <div style={{ display: "flex", alignItems: "center", color: "var(--dark-popotes)", marginTop: "0.5em" }}>
+            Compte valide
+            <img src={icons.ok} className="toasterIcon" alt="succès" />
+          </div> :
+          retryChecklist ?
+            <div className="checklistButton" onClick={checkLoginChecklist}>Réessayer</div> :
+            <div className="checklistButton" onClick={checkLoginChecklist}>Test connexion</div>
+      }
+      {
+        accountRecognized &&
+        <div onClick={dissociateAccount} style={{ color: "red", fontWeight: "bolder", cursor: "pointer", fontSize: "0.8em"}}>Dissocier mon compte</div>
+      }
+
       <div className="separatePopotes"></div>
       <h3 className="profileSubTitle">Réseaux</h3>
       <div className="clickToChange">Copiez/collez un lien vers vos profils</div>

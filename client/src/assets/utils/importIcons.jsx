@@ -38,4 +38,5 @@ export const icons = {
   warning: require("../../assets/icons/warning.png").default,
   info: require("../../assets/icons/info.png").default,
   cancel: require("../../assets/icons/cancel-512.png").default,
+  profile: require("../../assets/icons/contacts-512.png").default,
 };
