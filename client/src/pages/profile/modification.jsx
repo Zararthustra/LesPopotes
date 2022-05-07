@@ -288,6 +288,13 @@ export const Modification = ({ recipe, recipeIngredients, recipeSteps }) => {
       />
       <div className="recipeContainer">
         <div className="overlayCreationImage">
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <img
+              src={icons.warning}
+              className="toasterIcon"
+              alt="avertissement"
+            />
+            Enregistrez votre brouillon avant de quitter la page</div>
           <img
             src={require("../../assets/icons/close.png").default}
             className="closeRecipe"

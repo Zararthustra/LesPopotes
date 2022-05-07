@@ -61,7 +61,7 @@ export const Monprofil = () => {
         setUserObject(res.data);
         setLoading(false);
       }
-      if (isSubscribed && resNotif?.data.length > 0) {
+      if (isSubscribed && res && resNotif?.data.length > 0) {
         setNotifs(resNotif.data);
 
         let notificationIDToCheck = []

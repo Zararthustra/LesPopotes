@@ -36,6 +36,7 @@ export const Recette = () => {
   const [stepsChecklistOK, setStepsChecklistOK] = useState(false);
   const [stepsChecklistKO, setStepsChecklistKO] = useState(false);
   const [checklistCredentials, setChecklistCredentials] = useState({});
+  axios.defaults.headers.common["authorization"] = localStorage.getItem("accessToken");
   const toasterRef = useRef(null);
 
   //___________________________________________________ UseEffect
@@ -319,6 +320,9 @@ export const Recette = () => {
             document.querySelector(".userCommentTextArea").value = "";
             setComment("");
           }
+        })
+        .catch((err) => {
+          console.log("Error catched: ", err);
         });
 
       axios
@@ -405,12 +409,13 @@ export const Recette = () => {
               <div className="overlayImage">
                 <div className="isDeletingRecipe">
                   Supprimer ?
-                  <button className="confirmDel green" onClick={deleteRecipe}>
+                  <button className="confirmDel green" onClick={deleteRecipe} title="Confirmer">
                     Oui
                   </button>
                   <button
                     className="confirmDel red"
                     onClick={() => setIsDeleting(false)}
+                    title="Infirmer"
                   >
                     Non
                   </button>
@@ -507,7 +512,7 @@ export const Recette = () => {
         {loadingChecklist ?
           <ClipLoader css={""} color={"#f5a76c"} loading={loadingChecklist} size={50} /> :
           ingredientsChecklistOK ?
-            <div style={{ display: "flex", alignItems: "center", color: "var(--dark-popotes)", marginBottom: "1em" }}>
+            <div style={{ display: "flex", alignItems: "center", textAlign: "center", color: "var(--dark-popotes)", marginBottom: "1em" }}>
               Ingrédients ajoutés à votre checklist avec succès
               <img src={icons.ok} className="toasterIcon" alt="succès" />
             </div> :
@@ -529,7 +534,7 @@ export const Recette = () => {
                     alt="checklist"
                   />Créez un compte</a>
               </div> :
-              <div className="addToChecklist" onClick={addIngredientsToChecklist}>
+              <div className="addToChecklist" onClick={addIngredientsToChecklist} title="Ajouter les ingrédients à ma checklist">
                 <img
                   className="checklist"
                   src={images.checklist}
@@ -562,7 +567,7 @@ export const Recette = () => {
               <div className="checklistKO">
                 <h2>Aucun compte connecté !</h2>
                 <div>Ajoutez votre compte <strong>Checklist</strong> dans</div>
-                <div className="addToChecklist" onClick={() => navigate("/profil")}>
+                <div className="addToChecklist" onClick={() => navigate("/profil")} >
                   <img
                     className="checklist"
                     src={icons.profile}
@@ -576,7 +581,7 @@ export const Recette = () => {
                     alt="checklist"
                   />Créez un compte</a>
               </div> :
-              <div className="addToChecklist" onClick={addStepsToChecklist}>
+              <div className="addToChecklist" onClick={addStepsToChecklist} title="Ajouter les étapes à ma checklist">
                 <img
                   className="checklist"
                   src={images.checklist}
@@ -619,6 +624,7 @@ export const Recette = () => {
                     onClick={toggleHearts}
                     src={isNoted.heart1 ? icons.fullHeart : icons.emptyHeart}
                     alt="noter 1/5"
+                    title="noter 1/5"
                   />
                   <img
                     id="heart2"
@@ -626,6 +632,7 @@ export const Recette = () => {
                     onClick={toggleHearts}
                     src={isNoted.heart2 ? icons.fullHeart : icons.emptyHeart}
                     alt="noter 2/5"
+                    title="noter 2/5"
                   />
                   <img
                     id="heart3"
@@ -633,6 +640,7 @@ export const Recette = () => {
                     onClick={toggleHearts}
                     src={isNoted.heart3 ? icons.fullHeart : icons.emptyHeart}
                     alt="noter 3/5"
+                    title="noter 3/5"
                   />
                   <img
                     id="heart4"
@@ -640,6 +648,7 @@ export const Recette = () => {
                     onClick={toggleHearts}
                     src={isNoted.heart4 ? icons.fullHeart : icons.emptyHeart}
                     alt="noter 4/5"
+                    title="noter 4/5"
                   />
                   <img
                     id="heart5"
@@ -647,6 +656,7 @@ export const Recette = () => {
                     onClick={toggleHearts}
                     src={isNoted.heart5 ? icons.fullHeart : icons.emptyHeart}
                     alt="noter 5/5"
+                    title="noter 5/5"
                   />
                 </div>
                 <button
@@ -664,7 +674,7 @@ export const Recette = () => {
       <div className="commentsContainer">
         {localStorage.getItem("username")
           ? <h1 className="commentsTitle">Commentaires</h1>
-          : <div className="login" onClick={() => navigate("/profil")}>
+          : <div className="login" onClick={() => navigate("/profil")} title="Se connecter">
             Se connecter
           </div>}
         { // Add opinion only if logged
@@ -681,6 +691,7 @@ export const Recette = () => {
                 <button
                   onClick={addComment}
                   className="myprofileModifyButton"
+                  title="Commenter"
                 >
                   Commenter
                 </button>

@@ -11,6 +11,7 @@ import { useRef } from "react";
 import { ingredientsList } from "../../assets/utils/ingredientsList";
 import { unityList } from "../../assets/utils/unityList";
 import { Toaster } from "../../components/toaster";
+
 export const Creation = () => {
   //___________________________________________________ Variables
 
@@ -23,6 +24,7 @@ export const Creation = () => {
     selectUnityRef.current.setValue("");
   };
   const [showButtons, setShowButtons] = useState(true);
+  axios.defaults.headers.common["authorization"] = localStorage.getItem("accessToken");
 
   const selectStyle = {
     control: (base, state) => ({
@@ -229,6 +231,8 @@ export const Creation = () => {
         createRecipeIngredients(res.data.id);
       })
       .catch((err) => {
+        setFieldMissing("Token");
+        window.location.reload(false);
         console.log("Error catched: ", err);
       });
   };
@@ -275,6 +279,13 @@ export const Creation = () => {
     <main className="recipePage">
       <div className="recipeContainer">
         <div className="overlayCreationImage">
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <img
+              src={icons.warning}
+              className="toasterIcon"
+              alt="avertissement"
+            />
+            Enregistrez votre brouillon avant de quitter la page</div>
           <img
             src={require("../../assets/icons/close.png").default}
             className="closeRecipe"

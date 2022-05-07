@@ -282,7 +282,7 @@ export const Modifymyprofile = ({ userObject }) => {
       }
       {
         accountRecognized &&
-        <div onClick={dissociateAccount} style={{ color: "red", fontWeight: "bolder", cursor: "pointer", fontSize: "0.8em"}}>Dissocier mon compte</div>
+        <div onClick={dissociateAccount} style={{ color: "red", fontWeight: "bolder", cursor: "pointer", fontSize: "0.8em"}}>Dissocier mon compte Checklist</div>
       }
 
       <div className="separatePopotes"></div>

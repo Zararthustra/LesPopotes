@@ -39,7 +39,7 @@
 .overlayCreationImage {
   bottom: 51vh;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   background-color: #e764003a;
   width: 100%;

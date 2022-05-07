@@ -33,7 +33,7 @@ const ATSecret = process.env.ACCESS_TOKEN_SECRET;
 const RTSecret = process.env.REFRESH_TOKEN_SECRET;
 
 const createAccessToken = (user) => {
-  return jwt.sign(user, ATSecret, { expiresIn: "3h" });
+  return jwt.sign(user, ATSecret, { expiresIn: "10s" });
 };
 
 const authenticateAccessToken = (req, res, next) => {
@@ -564,7 +564,7 @@ router.get("/userfavorites/:userID", authenticateAccessToken, (req, res) => {
 //________________________________________ Ingredients
 
 // Create
-router.post("/ingredients/:recipeId", (req, res) => {
+router.post("/ingredients/:recipeId", authenticateAccessToken, (req, res) => {
   const ingredientsArrayInput = req.body.ingredients;
 
   const ingredientsArrayOutput = ingredientsArrayInput.map((ingredient) => {
@@ -637,7 +637,7 @@ router.get("/ingredients/:recipeId", (req, res) => {
 //________________________________________ Comments
 
 // Create
-router.post("/comments", (req, res) => {
+router.post("/comments", authenticateAccessToken, (req, res) => {
   const content = req.body.content;
   const note = req.body.note | null;
   const thread_id = req.body.thread_id;
@@ -704,7 +704,7 @@ router.get("/comments/:recipeId", (req, res) => {
 //________________________________________ Steps
 
 // Create
-router.post("/steps/:recipeId", (req, res) => {
+router.post("/steps/:recipeId", authenticateAccessToken, (req, res) => {
   const stepsArrayInput = req.body.stepsFormatedForAPI;
 
   const stepsArrayOutput = stepsArrayInput.map((step) => {
@@ -775,7 +775,7 @@ router.get("/steps/:recipeId", (req, res) => {
 //________________________________________ Notes
 
 // Create
-router.post("/notes", (req, res) => {
+router.post("/notes", authenticateAccessToken, (req, res) => {
   const value = req.body.value;
   const recipe_id = req.body.recipe_id;
   const user_id = req.body.user_id;
@@ -955,7 +955,7 @@ router.get("/friendships", authenticateAccessToken, (req, res) => {
 //________________________________________ Messages
 
 // Create
-router.post("/messages", (req, res) => {
+router.post("/messages", authenticateAccessToken, (req, res) => {
   const user_id = req.body.user_id;
   const popote_id = req.body.popote_id;
   const content = req.body.content;
@@ -1033,7 +1033,7 @@ router.get("/messages", (req, res) => {
 //________________________________________ Forums
 
 // Create a forum message
-router.post("/forum", (req, res) => {
+router.post("/forum", authenticateAccessToken, (req, res) => {
   const user_id = req.body.user_id;
   const content = req.body.content;
 
@@ -1073,7 +1073,7 @@ router.get("/notification/:userID", (req, res) => {
 });
 
 // Create
-router.post("/notification", (req, res) => {
+router.post("/notification", authenticateAccessToken, (req, res) => {
   const isChecked = req.body.isChecked;
   const type = req.body.type;
   const receiver_id = req.body.receiver_id;
