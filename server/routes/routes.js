@@ -33,7 +33,7 @@ const ATSecret = process.env.ACCESS_TOKEN_SECRET;
 const RTSecret = process.env.REFRESH_TOKEN_SECRET;
 
 const createAccessToken = (user) => {
-  return jwt.sign(user, ATSecret, { expiresIn: "2h" });
+  return jwt.sign(user, ATSecret, { expiresIn: "3h" });
 };
 
 const authenticateAccessToken = (req, res, next) => {
@@ -114,40 +114,39 @@ router.post("/user", (req, res) => {
     },
   }).then((response) => {
     if (response) return res.send("User already exist");
-    else {
-      db.User.create({
-        name,
-        password,
-        type,
-        mail,
-        diet,
-        avatar,
-        recipes,
-        popotes,
-        comments,
-        notes,
-        linkedin,
-        snapchat,
-        facebook,
-        instagram,
-        twitter,
-        tiktok,
-        whatsapp,
-        isAdmin,
-      }).then((createdUser) => {
-        const userValidated = createdUser;
-        const accessToken = createAccessToken({ userValidated });
-        const refreshToken = jwt.sign({ userValidated }, RTSecret, { expiresIn: "30d" });
-        createRTinDB(refreshToken);
 
-        res.send({
-          ...
-          userValidated.dataValues,
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-        });
+    db.User.create({
+      name,
+      password,
+      type,
+      mail,
+      diet,
+      avatar,
+      recipes,
+      popotes,
+      comments,
+      notes,
+      linkedin,
+      snapchat,
+      facebook,
+      instagram,
+      twitter,
+      tiktok,
+      whatsapp,
+      isAdmin,
+    }).then((createdUser) => {
+      const userValidated = createdUser;
+      const accessToken = createAccessToken({ userValidated });
+      const refreshToken = jwt.sign({ userValidated }, RTSecret, { expiresIn: "30d" });
+      createRTinDB(refreshToken);
+
+      res.send({
+        ...
+        userValidated.dataValues,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
       });
-    }
+    });
   });
 });
 
@@ -261,7 +260,7 @@ router.get("/users/pagination/:offset", authenticateAccessToken, (req, res) => {
 //________________________________________ Recipes
 
 // Create
-router.post("/recipe", (req, res) => {
+router.post("/recipe", authenticateAccessToken, (req, res) => {
   const name = req.body.name;
   const image = "";
   const tags = req.body.tags;
@@ -1176,10 +1175,15 @@ const addCategory = async (recipeName, loginObject, ingredientsOrSteps) => {
 
 const addTasks = async (ingredientsOrSteps, checklistAccessToken, list, CategoryId) => {
   let tasks
+  const vowels = ['a', 'e', 'i', 'o', 'u', 'y']
 
   if (ingredientsOrSteps === "ingredients") tasks = list.map((task) => {
+    const quantity = task.quantity > 0 ? task.quantity + " " : ""
+    const unity = task.unity !== null && task.unity ? task.unity : ""
+    const name = (unity ? (vowels.includes(task.name[0].toLowerCase()) ? " d'" : " de ") : "") + task.name + (quantity && !unity > 0 ? "s" : "")
+
     return {
-      name: task.name + " " + task.quantity + " " + task.unity,
+      name: quantity + unity + name,
       CategoryId
     }
   })
