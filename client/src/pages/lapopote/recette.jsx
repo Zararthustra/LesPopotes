@@ -120,7 +120,7 @@ export const Recette = () => {
 
     // Get checklist credentials
     const getChecklistCredentials = async () => {
-      const res = await axios.get(`${Host}api/checklist/users/${localStorage.getItem("userid")}`);
+      const res = await axios.get(`${Host}api/checklist/users/${localStorage.getItem("userid")}`).catch((err) => console.log("Pas de compte Checklist associé."))
       if (res) setChecklistCredentials({
         name: res.data.name,
         password: res.data.password,
