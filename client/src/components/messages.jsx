@@ -40,7 +40,7 @@ export const Messages = ({ popote }) => {
     if (event.key === "Enter") sendMessage();
   };
   const sendMessage = () => {
-    if (message) {
+    if (message.trim()) {
       axios
         .post(`${Host}api/messages`, {
           content: message,
