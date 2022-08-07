@@ -99,11 +99,13 @@
 
 .copyRecipe {
   cursor: pointer;
+  margin-left: 1rem;
   width: 2em;
   height: 2em;
 }
 .copiedRecipe {
   color: var(--dark-popote);
+  margin-left: 1rem;
   font-weight: 600;
   font-size: 1.2em;
 }

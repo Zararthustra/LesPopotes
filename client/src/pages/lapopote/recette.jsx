@@ -446,17 +446,6 @@ export const Recette = () => {
                           title="Ajouter aux recettes favorites"
                         />
                       )}
-                      {isCopied ? (
-                        <div className="copiedRecipe">Lien copié</div>
-                      ) : (
-                        <img
-                          src={require("../../assets/icons/copy.png").default}
-                          className="copyRecipe"
-                          onClick={() => copyRecipeUrl()}
-                          alt="copier le lien de la recette"
-                          title="Copier le lien de la recette"
-                        />
-                      )}
                     </>
                   )}
                   {capitalize(localStorage.getItem("username")) ===
@@ -479,6 +468,17 @@ export const Recette = () => {
                         title="Supprimer ma recette"
                       />
                     )}
+                    {isCopied ? (
+                        <div className="copiedRecipe">Lien copié</div>
+                      ) : (
+                        <img
+                          src={require("../../assets/icons/copy.png").default}
+                          className="copyRecipe"
+                          onClick={() => copyRecipeUrl()}
+                          alt="copier le lien de la recette"
+                          title="Copier le lien de la recette"
+                        />
+                      )}
                 </div>
                 <img
                   src={require("../../assets/icons/close.png").default}
